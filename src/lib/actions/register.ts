@@ -14,6 +14,9 @@ const registerSchema = z
     bio: z.string().optional(),
     specialties: z.string().optional(),
     whatsapp: z.string().optional(),
+    acceptedTerms: z.literal("on", {
+      message: "Você precisa aceitar os Termos de Uso e a Política de Privacidade",
+    }),
   })
   .refine(
     (data) =>
@@ -43,6 +46,7 @@ export async function registerAction(
     bio: formData.get("bio") || undefined,
     specialties: formData.get("specialties") || undefined,
     whatsapp: formData.get("whatsapp") || undefined,
+    acceptedTerms: formData.get("acceptedTerms") || undefined,
   });
 
   if (!parsed.success) {

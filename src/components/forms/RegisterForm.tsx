@@ -91,6 +91,26 @@ export default function RegisterForm() {
         </div>
       )}
 
+      <label className="flex items-start gap-2 text-xs text-primary-700/80">
+        <input
+          type="checkbox"
+          name="acceptedTerms"
+          required
+          className="mt-0.5 h-4 w-4 shrink-0 rounded border-primary-300"
+        />
+        <span>
+          Li e aceito os{" "}
+          <Link href="/termos" target="_blank" className="font-semibold underline">
+            Termos de Uso
+          </Link>{" "}
+          e a{" "}
+          <Link href="/privacidade" target="_blank" className="font-semibold underline">
+            Política de Privacidade
+          </Link>
+          .
+        </span>
+      </label>
+
       {state.error && (
         <p className="rounded-lg bg-red-50 px-4 py-2 text-sm text-red-600">
           {state.error}

@@ -53,21 +53,21 @@ const STEPS = [
   },
 ];
 
-const TESTIMONIALS = [
+const COMMITMENTS = [
   {
-    name: "Ana Paula, mãe do Bernardo (7 anos)",
-    quote:
-      "Eu não sabia mais o que fazer com as crises na escola. Depois de algumas aulas, o Bernardo já consegue conversar sobre o que sente antes de explodir.",
+    title: "Escuta antes de qualquer coisa",
+    description:
+      "Antes de sugerir qualquer estratégia, ouvimos o que você já tentou e o que realmente acontece no dia a dia com seu filho.",
   },
   {
-    name: "Camila, mãe da Sofia (5 anos)",
-    quote:
-      "A professora me ajudou a entender que eu também precisava mudar algumas atitudes em casa. Hoje nossa rotina é bem mais leve.",
+    title: "Orientação também para você",
+    description:
+      "As aulas não são só com a criança — você recebe orientação prática de como agir em casa entre um encontro e outro.",
   },
   {
-    name: "Renata, mãe do Théo (9 anos)",
-    quote:
-      "O contato pelo WhatsApp foi rápido e humano. Em uma semana já tínhamos a primeira aula agendada.",
+    title: "Contato direto e humano",
+    description:
+      "Sem burocracia: você fala com a professora pelo WhatsApp, no seu ritmo, sem depender de central de atendimento.",
   },
 ];
 
@@ -238,22 +238,20 @@ export default async function HomePage() {
         )}
       </section>
 
-      {/* Depoimentos */}
+      {/* Compromisso */}
       <section id="depoimentos" className="bg-primary-700 py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <h2 className="text-center text-3xl font-bold text-white">
-            Mães que já contam com a gente
+            Nosso compromisso com sua família
           </h2>
           <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {TESTIMONIALS.map((testimonial) => (
+            {COMMITMENTS.map((item) => (
               <div
-                key={testimonial.name}
+                key={item.title}
                 className="rounded-2xl bg-white/10 p-6 text-primary-50"
               >
-                <p className="text-sm italic">“{testimonial.quote}”</p>
-                <p className="mt-4 text-sm font-semibold text-accent-400">
-                  {testimonial.name}
-                </p>
+                <p className="font-semibold text-accent-400">{item.title}</p>
+                <p className="mt-2 text-sm">{item.description}</p>
               </div>
             ))}
           </div>

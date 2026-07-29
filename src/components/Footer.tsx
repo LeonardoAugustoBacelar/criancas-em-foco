@@ -48,7 +48,22 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-white/10 px-4 py-4 text-center text-xs text-primary-200 sm:px-6">
-        © {new Date().getFullYear()} Crianças em Foco. Todos os direitos reservados.
+        <p>
+          © {new Date().getFullYear()} Crianças em Foco. Todos os direitos
+          reservados.
+        </p>
+        <p className="mt-1">
+          <Link href="/termos" className="hover:text-white hover:underline">
+            Termos de Uso
+          </Link>{" "}
+          ·{" "}
+          <Link
+            href="/privacidade"
+            className="hover:text-white hover:underline"
+          >
+            Política de Privacidade
+          </Link>
+        </p>
       </div>
     </footer>
   );

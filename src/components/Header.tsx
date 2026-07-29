@@ -27,7 +27,7 @@ export default async function Header() {
             Planos
           </Link>
           <Link href="/#depoimentos" className="hover:text-accent-600">
-            Depoimentos
+            Como trabalhamos
           </Link>
           <Link href="/#contato" className="hover:text-accent-600">
             Contato
