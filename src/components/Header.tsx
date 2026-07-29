@@ -1,14 +1,16 @@
 import Link from "next/link";
-import { auth, signOut } from "@/auth";
+import { auth } from "@/auth";
+import { signOutAction } from "@/lib/actions/auth";
+import MobileNav from "@/components/MobileNav";
 
 export default async function Header() {
   const session = await auth();
 
   return (
     <header className="sticky top-0 z-40 border-b border-primary-100 bg-cream/90 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
+      <div className="relative mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
         <Link href="/" className="flex items-center gap-2">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary-500 text-lg font-bold text-white">
+          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-primary-400 to-primary-600 text-lg font-bold text-white shadow-sm">
             CF
           </span>
           <span className="text-lg font-bold text-primary-700">
@@ -17,24 +19,24 @@ export default async function Header() {
         </Link>
 
         <nav className="hidden items-center gap-6 text-sm font-medium text-primary-700 md:flex">
-          <Link href="/#servicos" className="hover:text-accent-600">
+          <Link href="/#servicos" className="transition hover:text-accent-600">
             Serviços
           </Link>
-          <Link href="/professoras" className="hover:text-accent-600">
+          <Link href="/professoras" className="transition hover:text-accent-600">
             Professoras
           </Link>
-          <Link href="/planos" className="hover:text-accent-600">
+          <Link href="/planos" className="transition hover:text-accent-600">
             Planos
           </Link>
-          <Link href="/#depoimentos" className="hover:text-accent-600">
+          <Link href="/#depoimentos" className="transition hover:text-accent-600">
             Como trabalhamos
           </Link>
-          <Link href="/#contato" className="hover:text-accent-600">
+          <Link href="/#contato" className="transition hover:text-accent-600">
             Contato
           </Link>
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="hidden items-center gap-3 md:flex">
           {session?.user ? (
             <>
               <Link
@@ -43,15 +45,10 @@ export default async function Header() {
               >
                 Minha área
               </Link>
-              <form
-                action={async () => {
-                  "use server";
-                  await signOut({ redirectTo: "/" });
-                }}
-              >
+              <form action={signOutAction}>
                 <button
                   type="submit"
-                  className="rounded-full border border-primary-300 px-4 py-2 text-sm font-semibold text-primary-700 hover:bg-primary-100"
+                  className="rounded-full border border-primary-300 px-4 py-2 text-sm font-semibold text-primary-700 transition hover:bg-primary-100"
                 >
                   Sair
                 </button>
@@ -61,7 +58,7 @@ export default async function Header() {
             <>
               <Link
                 href="/login"
-                className="hidden rounded-full px-4 py-2 text-sm font-semibold text-primary-700 hover:bg-primary-100 sm:block"
+                className="rounded-full px-4 py-2 text-sm font-semibold text-primary-700 hover:bg-primary-100"
               >
                 Entrar
               </Link>
@@ -74,6 +71,8 @@ export default async function Header() {
             </>
           )}
         </div>
+
+        <MobileNav isAuthed={Boolean(session?.user)} signOutAction={signOutAction} />
       </div>
     </header>
   );

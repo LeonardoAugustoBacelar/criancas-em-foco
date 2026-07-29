@@ -42,6 +42,17 @@ model User {
   teacherProfile TeacherProfile?
   bookingsAsMae  Booking[]        @relation("BookingsAsMae")
   subscription   Subscription?
+  resetTokens    PasswordResetToken[]
+}
+
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
 }
 
 model Plan {

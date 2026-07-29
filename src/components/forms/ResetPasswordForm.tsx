@@ -2,30 +2,42 @@
 
 import { useActionState } from "react";
 import Link from "next/link";
-import { loginAction, type LoginState } from "@/lib/actions/login";
+import {
+  resetPasswordAction,
+  type ResetPasswordState,
+} from "@/lib/actions/passwordReset";
 
-const initialState: LoginState = {};
+const initialState: ResetPasswordState = {};
 
-export default function LoginForm() {
+export default function ResetPasswordForm({ token }: { token: string }) {
   const [state, formAction, isPending] = useActionState(
-    loginAction,
+    resetPasswordAction,
     initialState
   );
 
+  if (state.success) {
+    return (
+      <div className="rounded-2xl bg-primary-50 p-6 text-center">
+        <p className="font-bold text-primary-700">Senha atualizada!</p>
+        <p className="mt-2 text-sm text-primary-700/80">
+          Agora você já pode entrar com a sua nova senha.
+        </p>
+        <Link
+          href="/login"
+          className="mt-4 inline-block rounded-full bg-accent-500 px-6 py-2.5 font-semibold text-white hover:bg-accent-600"
+        >
+          Ir para o login
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <form action={formAction} className="space-y-5">
-      <label className="block text-sm font-medium text-primary-700">
-        E-mail
-        <input
-          name="email"
-          type="email"
-          required
-          className="mt-1 w-full rounded-xl border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
-        />
-      </label>
+      <input type="hidden" name="token" value={token} />
 
       <label className="block text-sm font-medium text-primary-700">
-        Senha
+        Nova senha
         <input
           name="password"
           type="password"
@@ -34,14 +46,15 @@ export default function LoginForm() {
         />
       </label>
 
-      <p className="text-right text-sm">
-        <Link
-          href="/esqueci-senha"
-          className="font-semibold text-accent-600 hover:underline"
-        >
-          Esqueci minha senha
-        </Link>
-      </p>
+      <label className="block text-sm font-medium text-primary-700">
+        Confirmar nova senha
+        <input
+          name="confirmPassword"
+          type="password"
+          required
+          className="mt-1 w-full rounded-xl border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
+        />
+      </label>
 
       {state.error && (
         <p className="rounded-lg bg-red-50 px-4 py-2 text-sm text-red-600">
@@ -54,7 +67,7 @@ export default function LoginForm() {
         disabled={isPending}
         className="w-full rounded-full bg-accent-500 px-6 py-3 font-semibold text-white transition hover:bg-accent-600 disabled:opacity-60"
       >
-        {isPending ? "Entrando..." : "Entrar"}
+        {isPending ? "Salvando..." : "Salvar nova senha"}
       </button>
     </form>
   );

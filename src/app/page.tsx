@@ -1,55 +1,77 @@
 import Link from "next/link";
 import Image from "next/image";
+import {
+  ArrowRight,
+  CalendarCheck,
+  Ear,
+  Heart,
+  Home as HomeIcon,
+  LineChart,
+  MessageCircle,
+  Puzzle,
+  School,
+  TrendingUp,
+  UserCheck,
+} from "lucide-react";
 import { prisma } from "@/lib/prisma";
-import { buildWhatsAppLink, CLINIC_WHATSAPP } from "@/lib/whatsapp";
+import { CLINIC_WHATSAPP } from "@/lib/whatsapp";
+import WhatsAppInlineButton from "@/components/WhatsAppInlineButton";
 
 const SERVICES = [
   {
     title: "Aulas individuais",
     description:
       "Encontros um a um entre a criança e a professora especializada, com foco nas dificuldades específicas de comportamento.",
-    icon: "🧩",
+    icon: Puzzle,
   },
   {
     title: "Orientação para mães",
     description:
       "Conversas e materiais práticos para você entender o que está por trás do comportamento do seu filho e como agir no dia a dia.",
-    icon: "💬",
+    icon: MessageCircle,
   },
   {
     title: "Suporte escolar",
     description:
       "Estratégias combinadas com a escola para reduzir conflitos em sala de aula e melhorar a relação da criança com professores e colegas.",
-    icon: "🏫",
+    icon: School,
   },
   {
     title: "Acompanhamento contínuo",
     description:
       "Agendamento recorrente de aulas e relatórios de evolução, para acompanhar o progresso com o tempo.",
-    icon: "📈",
+    icon: TrendingUp,
   },
 ];
 
 const STEPS = [
   {
-    title: "1. Conte sua história",
+    step: "1",
+    title: "Conte sua história",
     description:
       "Fale com a gente pelo WhatsApp ou crie uma conta contando os desafios que você enfrenta com seu filho.",
+    icon: MessageCircle,
   },
   {
-    title: "2. Escolha uma professora",
+    step: "2",
+    title: "Escolha uma professora",
     description:
       "Veja perfis de professoras especializadas em comportamento infantil e escolha quem combina com sua família.",
+    icon: UserCheck,
   },
   {
-    title: "3. Agende as aulas",
+    step: "3",
+    title: "Agende as aulas",
     description:
       "Marque horários direto na plataforma, no dia e hora que funcionam para vocês.",
+    icon: CalendarCheck,
   },
   {
-    title: "4. Acompanhe a evolução",
+    step: "4",
+    title: "Acompanhe a evolução",
     description:
       "Receba retorno da professora após cada encontro e ajuste o plano conforme a criança avança.",
+    icon: LineChart,
   },
 ];
 
@@ -58,17 +80,26 @@ const COMMITMENTS = [
     title: "Escuta antes de qualquer coisa",
     description:
       "Antes de sugerir qualquer estratégia, ouvimos o que você já tentou e o que realmente acontece no dia a dia com seu filho.",
+    icon: Ear,
   },
   {
     title: "Orientação também para você",
     description:
       "As aulas não são só com a criança — você recebe orientação prática de como agir em casa entre um encontro e outro.",
+    icon: HomeIcon,
   },
   {
     title: "Contato direto e humano",
     description:
       "Sem burocracia: você fala com a professora pelo WhatsApp, no seu ritmo, sem depender de central de atendimento.",
+    icon: MessageCircle,
   },
+];
+
+const HERO_HIGHLIGHTS = [
+  { label: "Aulas individuais com professoras especializadas", icon: Puzzle },
+  { label: "Orientação prática para toda a família", icon: HomeIcon },
+  { label: "Contato direto pelo WhatsApp, sem burocracia", icon: MessageCircle },
 ];
 
 export default async function HomePage() {
@@ -79,10 +110,8 @@ export default async function HomePage() {
     orderBy: { createdAt: "desc" },
   });
 
-  const heroWhatsApp = buildWhatsAppLink(
-    CLINIC_WHATSAPP,
-    "Olá! Vim pelo site e gostaria de entender como funciona o acompanhamento para meu filho(a)."
-  );
+  const heroWhatsAppMessage =
+    "Olá! Vim pelo site e gostaria de entender como funciona o acompanhamento para meu filho(a).";
 
   return (
     <div>
@@ -104,31 +133,59 @@ export default async function HomePage() {
               WhatsApp.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <a
-                href={heroWhatsApp}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-6 py-3 font-semibold text-white shadow-md transition hover:bg-[#1fb857]"
-              >
-                Falar no WhatsApp agora
-              </a>
+              <WhatsAppInlineButton
+                phone={CLINIC_WHATSAPP}
+                message={heroWhatsAppMessage}
+                label="Falar no WhatsApp agora"
+                className="px-6 py-3 text-base shadow-md"
+              />
               <Link
                 href="/professoras"
-                className="inline-flex items-center gap-2 rounded-full border-2 border-primary-500 px-6 py-3 font-semibold text-primary-700 transition hover:bg-primary-100"
+                className="group inline-flex items-center gap-2 rounded-full border-2 border-primary-500 px-6 py-3 font-semibold text-primary-700 transition hover:bg-primary-100"
               >
                 Conhecer as professoras
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Link>
             </div>
           </div>
 
-          <div className="relative mx-auto aspect-square w-full max-w-md">
-            <div className="absolute inset-0 rounded-[2.5rem] bg-primary-400/20" />
-            <div className="absolute inset-4 flex items-center justify-center rounded-[2rem] bg-white shadow-xl">
-              <div className="p-8 text-center">
-                <p className="text-6xl">🧒👩‍🏫💛</p>
-                <p className="mt-4 font-semibold text-primary-700">
-                  Cada criança no seu tempo, com apoio especializado
-                </p>
+          <div className="relative mx-auto w-full max-w-md">
+            <div
+              aria-hidden="true"
+              className="absolute -left-8 -top-8 h-56 w-56 rounded-full bg-accent-400/30 blur-3xl"
+            />
+            <div
+              aria-hidden="true"
+              className="absolute -bottom-8 -right-4 h-56 w-56 rounded-full bg-primary-400/30 blur-3xl"
+            />
+
+            <div className="relative rounded-[2rem] border border-white bg-white/90 p-8 shadow-xl backdrop-blur">
+              <div className="flex items-center gap-3">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary-500 text-white">
+                  <Heart className="h-6 w-6" />
+                </span>
+                <div>
+                  <p className="font-bold text-primary-700">
+                    Cada criança no seu tempo
+                  </p>
+                  <p className="text-sm text-primary-700/70">
+                    com apoio especializado
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-6 space-y-3">
+                {HERO_HIGHLIGHTS.map((item) => (
+                  <div
+                    key={item.label}
+                    className="flex items-center gap-3 rounded-xl bg-primary-50 px-4 py-3"
+                  >
+                    <item.icon className="h-5 w-5 shrink-0 text-accent-600" />
+                    <span className="text-sm font-medium text-primary-700">
+                      {item.label}
+                    </span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -140,10 +197,19 @@ export default async function HomePage() {
         <h2 className="text-center text-3xl font-bold text-primary-700">
           Como funciona
         </h2>
-        <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((step) => (
-            <div key={step.title} className="rounded-2xl bg-white p-6 shadow-sm">
-              <p className="font-bold text-accent-600">{step.title}</p>
+            <div
+              key={step.title}
+              className="rounded-2xl border border-primary-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+            >
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-50 text-primary-600">
+                <step.icon className="h-5 w-5" />
+              </span>
+              <p className="mt-4 text-xs font-bold uppercase tracking-wide text-accent-600">
+                Passo {step.step}
+              </p>
+              <p className="mt-1 font-bold text-primary-700">{step.title}</p>
               <p className="mt-2 text-sm text-primary-700/80">
                 {step.description}
               </p>
@@ -162,9 +228,11 @@ export default async function HomePage() {
             {SERVICES.map((service) => (
               <div
                 key={service.title}
-                className="flex gap-4 rounded-2xl bg-white p-6 shadow-sm"
+                className="flex gap-4 rounded-2xl bg-white p-6 shadow-sm transition hover:shadow-md"
               >
-                <span className="text-3xl">{service.icon}</span>
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary-600">
+                  <service.icon className="h-6 w-6" />
+                </span>
                 <div>
                   <p className="font-bold text-primary-700">
                     {service.title}
@@ -187,9 +255,10 @@ export default async function HomePage() {
           </h2>
           <Link
             href="/professoras"
-            className="font-semibold text-accent-600 hover:underline"
+            className="group inline-flex items-center gap-1 font-semibold text-accent-600 hover:underline"
           >
-            Ver todas →
+            Ver todas
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </Link>
         </div>
 
@@ -203,7 +272,7 @@ export default async function HomePage() {
               <Link
                 key={teacher.id}
                 href={`/professoras/${teacher.id}`}
-                className="group rounded-2xl bg-white p-6 shadow-sm transition hover:shadow-md"
+                className="group rounded-2xl border border-primary-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
               >
                 <div className="flex items-center gap-4">
                   <div className="relative h-16 w-16 overflow-hidden rounded-full bg-primary-100">
@@ -250,7 +319,12 @@ export default async function HomePage() {
                 key={item.title}
                 className="rounded-2xl bg-white/10 p-6 text-primary-50"
               >
-                <p className="font-semibold text-accent-400">{item.title}</p>
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-accent-400">
+                  <item.icon className="h-5 w-5" />
+                </span>
+                <p className="mt-4 font-semibold text-accent-400">
+                  {item.title}
+                </p>
                 <p className="mt-2 text-sm">{item.description}</p>
               </div>
             ))}
@@ -268,14 +342,11 @@ export default async function HomePage() {
           para agendar uma aula com uma professora especializada.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-4">
-          <a
-            href={heroWhatsApp}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-6 py-3 font-semibold text-white shadow-md transition hover:bg-[#1fb857]"
-          >
-            Falar no WhatsApp
-          </a>
+          <WhatsAppInlineButton
+            phone={CLINIC_WHATSAPP}
+            message={heroWhatsAppMessage}
+            className="px-6 py-3 text-base shadow-md"
+          />
           <Link
             href="/cadastro"
             className="inline-flex items-center gap-2 rounded-full bg-accent-500 px-6 py-3 font-semibold text-white shadow-md transition hover:bg-accent-600"
@@ -284,9 +355,10 @@ export default async function HomePage() {
           </Link>
           <Link
             href="/planos"
-            className="inline-flex items-center gap-2 rounded-full border-2 border-primary-500 px-6 py-3 font-semibold text-primary-700 transition hover:bg-primary-100"
+            className="group inline-flex items-center gap-2 rounded-full border-2 border-primary-500 px-6 py-3 font-semibold text-primary-700 transition hover:bg-primary-100"
           >
             Ver planos
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </Link>
         </div>
       </section>
