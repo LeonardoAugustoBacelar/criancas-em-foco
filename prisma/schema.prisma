@@ -1,0 +1,110 @@
+// Prisma schema — Crianças em Foco
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  MAE
+  PROFESSORA
+  ADMIN
+}
+
+enum BookingStatus {
+  PENDENTE
+  CONFIRMADA
+  CANCELADA
+  CONCLUIDA
+}
+
+enum SubscriptionStatus {
+  PENDENTE
+  ATIVA
+  PAUSADA
+  CANCELADA
+}
+
+model User {
+  id            String   @id @default(cuid())
+  name          String
+  email         String   @unique
+  password      String
+  phone         String?
+  role          Role     @default(MAE)
+  createdAt     DateTime @default(now())
+
+  teacherProfile TeacherProfile?
+  bookingsAsMae  Booking[]        @relation("BookingsAsMae")
+  subscription   Subscription?
+}
+
+model Plan {
+  id           String   @id @default(cuid())
+  name         String
+  description  String
+  price        Float
+  aulasPerMes  Int?
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+
+  subscriptions Subscription[]
+}
+
+model Subscription {
+  id               String             @id @default(cuid())
+  maeId            String             @unique
+  mae              User               @relation(fields: [maeId], references: [id], onDelete: Cascade)
+  planId           String
+  plan             Plan               @relation(fields: [planId], references: [id])
+  status           SubscriptionStatus @default(PENDENTE)
+  mpPreapprovalId  String?            @unique
+  currentPeriodEnd DateTime?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+}
+
+model TeacherProfile {
+  id           String   @id @default(cuid())
+  userId       String   @unique
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bio          String
+  specialties  String
+  whatsapp     String
+  photoUrl     String?
+  pricePerHour Float    @default(0)
+  approved     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+
+  availabilities Availability[]
+  bookings       Booking[]       @relation("BookingsAsTeacher")
+}
+
+model Availability {
+  id        String         @id @default(cuid())
+  teacherId String
+  teacher   TeacherProfile @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  weekday   Int
+  startTime String
+  endTime   String
+}
+
+model Booking {
+  id         String        @id @default(cuid())
+  maeId      String
+  mae        User          @relation("BookingsAsMae", fields: [maeId], references: [id], onDelete: Cascade)
+  teacherId  String
+  teacher    TeacherProfile @relation("BookingsAsTeacher", fields: [teacherId], references: [id], onDelete: Cascade)
+  childName  String
+  date       DateTime
+  startTime  String
+  endTime    String
+  notes      String?
+  status     BookingStatus @default(PENDENTE)
+  createdAt  DateTime      @default(now())
+}
