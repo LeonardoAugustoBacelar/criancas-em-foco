@@ -1,8 +1,10 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import ForgotPasswordForm from "@/components/forms/ForgotPasswordForm";
 
-export const metadata = {
-  title: "Esqueci minha senha | Crianças em Foco",
+export const metadata: Metadata = {
+  title: "Esqueci minha senha",
+  robots: { index: false, follow: false },
 };
 
 export default function EsqueciSenhaPage() {

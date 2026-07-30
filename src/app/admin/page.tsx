@@ -1,7 +1,13 @@
 import { redirect } from "next/navigation";
+import type { Metadata } from "next";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import TeacherApprovalToggle from "@/components/dashboard/TeacherApprovalToggle";
+
+export const metadata: Metadata = {
+  title: "Administração",
+  robots: { index: false, follow: false },
+};
 
 export default async function AdminPage() {
   const session = await auth();

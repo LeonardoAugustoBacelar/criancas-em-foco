@@ -16,10 +16,43 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const siteDescription =
+  "Ajudamos mães a lidar com desafios de comportamento infantil em casa e na escola, com aulas e acompanhamento de professoras especializadas. Fale conosco pelo WhatsApp.";
+
 export const metadata: Metadata = {
-  title: "Crianças em Foco | Apoio para mães e professoras especializadas",
-  description:
-    "Ajudamos mães a lidar com desafios de comportamento infantil em casa e na escola, com aulas e acompanhamento de professoras especializadas. Fale conosco pelo WhatsApp.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Crianças em Foco | Apoio para mães e professoras especializadas",
+    template: "%s | Crianças em Foco",
+  },
+  description: siteDescription,
+  keywords: [
+    "comportamento infantil",
+    "aulas para crianças",
+    "professora especializada",
+    "TDAH",
+    "TEA",
+    "birras",
+    "apoio para mães",
+  ],
+  openGraph: {
+    title: "Crianças em Foco",
+    description: siteDescription,
+    url: siteUrl,
+    siteName: "Crianças em Foco",
+    locale: "pt_BR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Crianças em Foco",
+    description: siteDescription,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({

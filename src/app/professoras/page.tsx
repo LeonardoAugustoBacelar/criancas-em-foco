@@ -1,7 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { CSSProperties } from "react";
+import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
+
+export const metadata: Metadata = {
+  title: "Professoras especializadas",
+  description:
+    "Conheça professoras especializadas em comportamento infantil, prontas para ajudar seu filho em casa ou na escola.",
+};
 
 export default async function ProfessorasPage({
   searchParams,

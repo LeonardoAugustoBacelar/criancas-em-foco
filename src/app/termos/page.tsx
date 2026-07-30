@@ -1,7 +1,8 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 
-export const metadata = {
-  title: "Termos de Uso | Crianças em Foco",
+export const metadata: Metadata = {
+  title: "Termos de Uso",
 };
 
 export default function TermosPage() {

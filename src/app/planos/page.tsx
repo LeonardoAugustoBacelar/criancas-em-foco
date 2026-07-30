@@ -1,8 +1,15 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
+import type { Metadata } from "next";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import SubscribeButton from "@/components/forms/SubscribeButton";
+
+export const metadata: Metadata = {
+  title: "Planos de assinatura",
+  description:
+    "Assine um plano mensal e agende aulas com professoras especializadas em comportamento infantil.",
+};
 
 export default async function PlanosPage() {
   const session = await auth();

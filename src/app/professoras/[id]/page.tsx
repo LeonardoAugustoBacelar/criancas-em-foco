@@ -1,10 +1,37 @@
 import Image from "next/image";
 import Link from "next/link";
+import { cache } from "react";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import WhatsAppInlineButton from "@/components/WhatsAppInlineButton";
 import BookingForm from "@/components/forms/BookingForm";
+
+const getTeacher = cache(async (id: string) => {
+  return prisma.teacherProfile.findUnique({
+    where: { id },
+    include: { user: true, availabilities: true },
+  });
+});
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const teacher = await getTeacher(id);
+
+  if (!teacher || !teacher.approved) {
+    return { title: "Professora não encontrada" };
+  }
+
+  return {
+    title: teacher.user.name,
+    description: `${teacher.specialties} — conheça o trabalho de ${teacher.user.name}, professora especializada em comportamento infantil na Crianças em Foco.`,
+  };
+}
 
 export default async function TeacherProfilePage({
   params,
@@ -13,10 +40,7 @@ export default async function TeacherProfilePage({
 }) {
   const { id } = await params;
 
-  const teacher = await prisma.teacherProfile.findUnique({
-    where: { id },
-    include: { user: true, availabilities: true },
-  });
+  const teacher = await getTeacher(id);
 
   if (!teacher || !teacher.approved) {
     notFound();

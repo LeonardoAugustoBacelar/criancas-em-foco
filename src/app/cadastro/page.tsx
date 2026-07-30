@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import RegisterForm from "@/components/forms/RegisterForm";
+
+export const metadata: Metadata = {
+  title: "Criar conta",
+  description:
+    "Crie sua conta para agendar aulas com professoras especializadas ou oferecer seus serviços como professora.",
+};
 
 export default function CadastroPage() {
   return (

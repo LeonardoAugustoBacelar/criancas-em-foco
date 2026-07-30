@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import type { Metadata } from "next";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import BookingActions from "@/components/dashboard/BookingActions";
@@ -7,6 +8,11 @@ import AvailabilityManager from "@/components/dashboard/AvailabilityManager";
 import CancelSubscriptionButton from "@/components/dashboard/CancelSubscriptionButton";
 import TeacherProfileForm from "@/components/dashboard/TeacherProfileForm";
 import WhatsAppInlineButton from "@/components/WhatsAppInlineButton";
+
+export const metadata: Metadata = {
+  title: "Minha área",
+  robots: { index: false, follow: false },
+};
 
 const SUBSCRIPTION_STATUS_LABELS: Record<string, string> = {
   PENDENTE: "Aguardando confirmação de pagamento",

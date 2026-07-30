@@ -1,8 +1,10 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import ResetPasswordForm from "@/components/forms/ResetPasswordForm";
 
-export const metadata = {
-  title: "Redefinir senha | Crianças em Foco",
+export const metadata: Metadata = {
+  title: "Redefinir senha",
+  robots: { index: false, follow: false },
 };
 
 export default async function RedefinirSenhaPage({
