@@ -3,6 +3,8 @@ import Image from "next/image";
 import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
+import RatingStars from "@/components/RatingStars";
+import { summarizeRatings } from "@/lib/reviews";
 
 export const metadata: Metadata = {
   title: "Professoras especializadas",
@@ -30,7 +32,7 @@ export default async function ProfessorasPage({
           }
         : {}),
     },
-    include: { user: true },
+    include: { user: true, reviews: true },
     orderBy: { createdAt: "desc" },
   });
 
@@ -96,6 +98,9 @@ export default async function ProfessorasPage({
                   <p className="text-sm text-primary-700/70">
                     {teacher.specialties}
                   </p>
+                  <div className="mt-1">
+                    <RatingStars {...summarizeRatings(teacher.reviews)} />
+                  </div>
                 </div>
               </div>
               <p className="mt-4 line-clamp-3 text-sm text-primary-700/80">

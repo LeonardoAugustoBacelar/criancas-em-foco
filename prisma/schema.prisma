@@ -43,6 +43,7 @@ model User {
   bookingsAsMae  Booking[]        @relation("BookingsAsMae")
   subscription   Subscription?
   resetTokens    PasswordResetToken[]
+  reviews        Review[]         @relation("ReviewsAsMae")
 }
 
 model PasswordResetToken {
@@ -94,6 +95,7 @@ model TeacherProfile {
 
   availabilities Availability[]
   bookings       Booking[]       @relation("BookingsAsTeacher")
+  reviews        Review[]
 }
 
 model Availability {
@@ -118,4 +120,19 @@ model Booking {
   notes      String?
   status     BookingStatus @default(PENDENTE)
   createdAt  DateTime      @default(now())
+
+  review     Review?
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  bookingId String   @unique
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  maeId     String
+  mae       User     @relation("ReviewsAsMae", fields: [maeId], references: [id], onDelete: Cascade)
+  teacherId String
+  teacher   TeacherProfile @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  rating    Int
+  comment   String?
+  createdAt DateTime @default(now())
 }

@@ -6,8 +6,10 @@ import { prisma } from "@/lib/prisma";
 import BookingActions from "@/components/dashboard/BookingActions";
 import AvailabilityManager from "@/components/dashboard/AvailabilityManager";
 import CancelSubscriptionButton from "@/components/dashboard/CancelSubscriptionButton";
+import CancelBookingButton from "@/components/dashboard/CancelBookingButton";
 import TeacherProfileForm from "@/components/dashboard/TeacherProfileForm";
 import WhatsAppInlineButton from "@/components/WhatsAppInlineButton";
+import ReviewForm from "@/components/forms/ReviewForm";
 
 export const metadata: Metadata = {
   title: "Minha área",
@@ -56,7 +58,7 @@ async function MaeDashboard({ userId }: { userId: string }) {
   const [bookings, subscription] = await Promise.all([
     prisma.booking.findMany({
       where: { maeId: userId },
-      include: { teacher: { include: { user: true } } },
+      include: { teacher: { include: { user: true } }, review: true },
       orderBy: { date: "desc" },
     }),
     prisma.subscription.findUnique({
@@ -141,7 +143,7 @@ async function MaeDashboard({ userId }: { userId: string }) {
                   {STATUS_LABELS[booking.status]}
                 </span>
               </div>
-              <div className="mt-3">
+              <div className="mt-3 flex flex-wrap items-center gap-2">
                 <WhatsAppInlineButton
                   phone={booking.teacher.whatsapp}
                   message={`Olá, ${booking.teacher.user.name}! Sobre a aula do dia ${new Date(
@@ -150,7 +152,17 @@ async function MaeDashboard({ userId }: { userId: string }) {
                   label="Falar com a professora"
                   className="!px-4 !py-2 text-xs"
                 />
+                {(booking.status === "PENDENTE" ||
+                  booking.status === "CONFIRMADA") && (
+                  <CancelBookingButton bookingId={booking.id} />
+                )}
               </div>
+
+              {booking.status === "CONCLUIDA" && !booking.review && (
+                <div className="mt-3">
+                  <ReviewForm bookingId={booking.id} />
+                </div>
+              )}
             </div>
           ))}
         </div>

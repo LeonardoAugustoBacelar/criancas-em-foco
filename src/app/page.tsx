@@ -17,6 +17,8 @@ import {
 import { prisma } from "@/lib/prisma";
 import { CLINIC_WHATSAPP } from "@/lib/whatsapp";
 import WhatsAppInlineButton from "@/components/WhatsAppInlineButton";
+import RatingStars from "@/components/RatingStars";
+import { summarizeRatings } from "@/lib/reviews";
 
 const SERVICES = [
   {
@@ -106,7 +108,7 @@ const HERO_HIGHLIGHTS = [
 export default async function HomePage() {
   const teachers = await prisma.teacherProfile.findMany({
     where: { approved: true },
-    include: { user: true },
+    include: { user: true, reviews: true },
     take: 3,
     orderBy: { createdAt: "desc" },
   });
@@ -300,6 +302,9 @@ export default async function HomePage() {
                     <p className="text-sm text-primary-700/70">
                       {teacher.specialties}
                     </p>
+                    <div className="mt-1">
+                      <RatingStars {...summarizeRatings(teacher.reviews)} />
+                    </div>
                   </div>
                 </div>
                 <p className="mt-4 line-clamp-3 text-sm text-primary-700/80">

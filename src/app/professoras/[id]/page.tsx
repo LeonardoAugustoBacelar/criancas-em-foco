@@ -7,11 +7,20 @@ import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import WhatsAppInlineButton from "@/components/WhatsAppInlineButton";
 import BookingForm from "@/components/forms/BookingForm";
+import RatingStars from "@/components/RatingStars";
+import { summarizeRatings } from "@/lib/reviews";
 
 const getTeacher = cache(async (id: string) => {
   return prisma.teacherProfile.findUnique({
     where: { id },
-    include: { user: true, availabilities: true },
+    include: {
+      user: true,
+      availabilities: true,
+      reviews: {
+        include: { mae: { select: { name: true } } },
+        orderBy: { createdAt: "desc" },
+      },
+    },
   });
 });
 
@@ -54,6 +63,21 @@ export default async function TeacherProfilePage({
     : null;
   const hasActiveSubscription = subscription?.status === "ATIVA";
 
+  const upcomingBookings = await prisma.booking.findMany({
+    where: {
+      teacherId: teacher.id,
+      status: { in: ["PENDENTE", "CONFIRMADA"] },
+      date: { gte: new Date(new Date().toDateString()) },
+    },
+    select: { date: true, startTime: true },
+  });
+  const bookedSlots = upcomingBookings.map((b) => ({
+    date: b.date.toISOString().slice(0, 10),
+    startTime: b.startTime,
+  }));
+
+  const ratingSummary = summarizeRatings(teacher.reviews);
+
   const whatsappMessage = `Olá, ${teacher.user.name}! Vi seu perfil no site Crianças em Foco e gostaria de saber mais sobre suas aulas.`;
 
   return (
@@ -80,6 +104,12 @@ export default async function TeacherProfilePage({
                 {teacher.user.name}
               </h1>
               <p className="text-primary-700/70">{teacher.specialties}</p>
+              <div className="mt-1">
+                <RatingStars
+                  average={ratingSummary.average}
+                  count={ratingSummary.count}
+                />
+              </div>
             </div>
           </div>
 
@@ -99,6 +129,32 @@ export default async function TeacherProfilePage({
               message={whatsappMessage}
             />
           </div>
+
+          {teacher.reviews.length > 0 && (
+            <div className="mt-10">
+              <h2 className="font-bold text-primary-700">Avaliações</h2>
+              <div className="mt-4 space-y-4">
+                {teacher.reviews.map((review) => (
+                  <div
+                    key={review.id}
+                    className="rounded-lg border border-primary-100 bg-white p-4"
+                  >
+                    <div className="flex items-center justify-between gap-3">
+                      <p className="text-sm font-semibold text-primary-700">
+                        {review.mae.name}
+                      </p>
+                      <RatingStars average={review.rating} count={1} hideLabel />
+                    </div>
+                    {review.comment && (
+                      <p className="mt-2 text-sm text-primary-700/80">
+                        {review.comment}
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="rounded-lg border border-primary-100 bg-white p-6">
@@ -142,6 +198,7 @@ export default async function TeacherProfilePage({
               <BookingForm
                 teacherId={teacher.id}
                 availabilities={teacher.availabilities}
+                bookedSlots={bookedSlots}
               />
             </div>
           )}

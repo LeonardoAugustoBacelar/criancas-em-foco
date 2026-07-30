@@ -103,6 +103,30 @@ export async function createBookingAction(
   return { success: true };
 }
 
+export async function cancelOwnBookingAction(bookingId: string) {
+  const session = await auth();
+  if (!session?.user || session.user.role !== "MAE") {
+    throw new Error("Não autorizado");
+  }
+
+  const booking = await prisma.booking.findUnique({ where: { id: bookingId } });
+
+  if (!booking || booking.maeId !== session.user.id) {
+    throw new Error("Não autorizado");
+  }
+
+  if (booking.status !== "PENDENTE" && booking.status !== "CONFIRMADA") {
+    throw new Error("Esta aula não pode mais ser cancelada.");
+  }
+
+  await prisma.booking.update({
+    where: { id: bookingId },
+    data: { status: "CANCELADA" },
+  });
+
+  revalidatePath("/dashboard");
+}
+
 export async function updateBookingStatusAction(
   bookingId: string,
   status: "CONFIRMADA" | "CANCELADA" | "CONCLUIDA"

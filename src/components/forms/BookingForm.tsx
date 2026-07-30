@@ -18,9 +18,11 @@ const initialState: BookingState = {};
 export default function BookingForm({
   teacherId,
   availabilities,
+  bookedSlots = [],
 }: {
   teacherId: string;
   availabilities: { id: string; weekday: number; startTime: string; endTime: string }[];
+  bookedSlots?: { date: string; startTime: string }[];
 }) {
   const [state, formAction, isPending] = useActionState(
     createBookingAction,
@@ -30,13 +32,25 @@ export default function BookingForm({
 
   const weekdayOfDate = date ? new Date(`${date}T00:00:00`).getDay() : null;
 
+  const takenTimesForDate = useMemo(
+    () =>
+      new Set(
+        bookedSlots.filter((b) => b.date === date).map((b) => b.startTime)
+      ),
+    [bookedSlots, date]
+  );
+
   const slotsForDay = useMemo(
     () =>
       weekdayOfDate === null
         ? []
-        : availabilities.filter((a) => a.weekday === weekdayOfDate),
-    [availabilities, weekdayOfDate]
+        : availabilities
+            .filter((a) => a.weekday === weekdayOfDate)
+            .map((a) => ({ ...a, taken: takenTimesForDate.has(a.startTime) })),
+    [availabilities, weekdayOfDate, takenTimesForDate]
   );
+
+  const availableSlotsForDay = slotsForDay.filter((s) => !s.taken);
 
   if (state.success) {
     return (
@@ -103,6 +117,12 @@ export default function BookingForm({
         </p>
       )}
 
+      {date && slotsForDay.length > 0 && availableSlotsForDay.length === 0 && (
+        <p className="text-sm text-accent-600">
+          Todos os horários desse dia já estão reservados. Escolha outra data.
+        </p>
+      )}
+
       {slotsForDay.length > 0 && (
         <label className="block text-sm font-medium text-primary-700">
           Horário
@@ -119,8 +139,13 @@ export default function BookingForm({
           >
             <option value="">Selecione...</option>
             {slotsForDay.map((slot) => (
-              <option key={slot.id} value={`${slot.startTime}|${slot.endTime}`}>
+              <option
+                key={slot.id}
+                value={`${slot.startTime}|${slot.endTime}`}
+                disabled={slot.taken}
+              >
                 {slot.startTime} às {slot.endTime}
+                {slot.taken ? " (indisponível)" : ""}
               </option>
             ))}
           </select>
@@ -146,7 +171,7 @@ export default function BookingForm({
 
       <button
         type="submit"
-        disabled={isPending || slotsForDay.length === 0}
+        disabled={isPending || availableSlotsForDay.length === 0}
         className="btn-press w-full rounded-md bg-accent-500 px-6 py-3 font-semibold text-white hover:bg-accent-600 disabled:opacity-50"
       >
         {isPending ? "Enviando..." : "Solicitar aula"}
