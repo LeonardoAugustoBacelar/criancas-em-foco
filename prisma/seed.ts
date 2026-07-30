@@ -20,7 +20,7 @@ const GILDA = {
   specialties:
     "TDAH, TEA, birras, ansiedade infantil, dificuldades escolares e regulação emocional",
   bio: "Pedagoga e psicopedagoga com mais de 15 anos de experiência, a Gilda atende crianças com os mais diversos desafios de comportamento: crises de birra, dificuldade de concentração (TDAH), características do espectro autista (TEA), ansiedade, conflitos na escola e dificuldades de rotina em casa. Cada aula é adaptada à realidade da família, sempre com orientação direta para a mãe sobre como agir no dia a dia.",
-  pricePerHour: 130,
+  pricePerHour: 35,
   availabilities: [
     { weekday: 1, startTime: "09:00", endTime: "12:00" },
     { weekday: 2, startTime: "08:00", endTime: "11:00" },
@@ -96,19 +96,19 @@ async function main() {
     {
       name: "Essencial",
       description: "Ideal para começar o acompanhamento com uma professora.",
-      price: 149,
+      price: 70,
       aulasPerMes: 2,
     },
     {
       name: "Equilíbrio",
       description: "Acompanhamento mais próximo, com aulas semanais.",
-      price: 279,
+      price: 140,
       aulasPerMes: 4,
     },
     {
       name: "Ilimitado",
       description: "Quantas aulas forem necessárias, sem limite mensal.",
-      price: 499,
+      price: 250,
       aulasPerMes: null,
     },
   ];
