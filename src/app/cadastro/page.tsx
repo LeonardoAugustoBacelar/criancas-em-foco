@@ -10,7 +10,7 @@ export default function CadastroPage() {
         Mães podem buscar professoras e agendar aulas. Professoras podem
         criar seu perfil e receber agendamentos.
       </p>
-      <div className="mt-8 rounded-2xl bg-white p-6 shadow-sm">
+      <div className="mt-8 rounded-lg border border-primary-100 bg-white p-6">
         <RegisterForm />
       </div>
     </div>

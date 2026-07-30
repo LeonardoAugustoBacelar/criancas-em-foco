@@ -67,13 +67,13 @@ async function MaeDashboard({ userId }: { userId: string }) {
         </h1>
         <Link
           href="/professoras"
-          className="rounded-full bg-accent-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-accent-600"
+          className="rounded-md bg-accent-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-accent-600"
         >
           Agendar nova aula
         </Link>
       </div>
 
-      <div className="mt-6 rounded-2xl bg-white p-5 shadow-sm">
+      <div className="mt-6 rounded-lg border border-primary-100 bg-white p-5">
         <p className="font-bold text-primary-700">Minha assinatura</p>
         {subscription ? (
           <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
@@ -97,7 +97,7 @@ async function MaeDashboard({ userId }: { userId: string }) {
             </p>
             <Link
               href="/planos"
-              className="rounded-full bg-primary-500 px-4 py-2 text-xs font-semibold text-white hover:bg-primary-600"
+              className="rounded-md bg-primary-700 px-4 py-2 text-xs font-semibold text-white hover:bg-primary-600"
             >
               Ver planos
             </Link>
@@ -114,7 +114,7 @@ async function MaeDashboard({ userId }: { userId: string }) {
           {bookings.map((booking) => (
             <div
               key={booking.id}
-              className="rounded-2xl bg-white p-5 shadow-sm"
+              className="rounded-lg border border-primary-100 bg-white p-5"
             >
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
@@ -181,7 +181,7 @@ async function ProfessoraDashboard({ userId }: { userId: string }) {
         Painel da professora
       </h1>
 
-      <section className="mt-8 rounded-2xl bg-white p-6 shadow-sm">
+      <section className="mt-8 rounded-lg border border-primary-100 bg-white p-6">
         <h2 className="font-bold text-primary-700">Meu perfil público</h2>
         <div className="mt-4">
           <TeacherProfileForm
@@ -194,7 +194,7 @@ async function ProfessoraDashboard({ userId }: { userId: string }) {
         </div>
       </section>
 
-      <section className="mt-8 rounded-2xl bg-white p-6 shadow-sm">
+      <section className="mt-8 rounded-lg border border-primary-100 bg-white p-6">
         <h2 className="font-bold text-primary-700">Meus horários</h2>
         <div className="mt-4">
           <AvailabilityManager availabilities={teacherProfile.availabilities} />
@@ -215,7 +215,7 @@ async function ProfessoraDashboard({ userId }: { userId: string }) {
             {teacherProfile.bookings.map((booking) => (
               <div
                 key={booking.id}
-                className="rounded-2xl bg-white p-5 shadow-sm"
+                className="rounded-lg border border-primary-100 bg-white p-5"
               >
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>

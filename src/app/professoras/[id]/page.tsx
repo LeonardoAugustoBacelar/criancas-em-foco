@@ -77,7 +77,7 @@ export default async function TeacherProfilePage({
           </div>
         </div>
 
-        <div className="rounded-2xl bg-white p-6 shadow-sm">
+        <div className="rounded-lg border border-primary-100 bg-white p-6">
           <h2 className="font-bold text-primary-700">Agendar aula</h2>
 
           {!session?.user ? (
@@ -85,13 +85,13 @@ export default async function TeacherProfilePage({
               <p>Entre ou crie uma conta de mãe para agendar aulas.</p>
               <Link
                 href="/login"
-                className="block rounded-full bg-primary-500 px-4 py-2 text-center font-semibold text-white hover:bg-primary-600"
+                className="block rounded-md bg-primary-700 px-4 py-2 text-center font-semibold text-white hover:bg-primary-600"
               >
                 Entrar
               </Link>
               <Link
                 href="/cadastro"
-                className="block rounded-full border border-primary-300 px-4 py-2 text-center font-semibold text-primary-700 hover:bg-primary-50"
+                className="block rounded-md border border-primary-100 px-4 py-2 text-center font-semibold text-primary-700 hover:bg-primary-50"
               >
                 Criar conta
               </Link>
@@ -108,7 +108,7 @@ export default async function TeacherProfilePage({
               </p>
               <Link
                 href="/planos"
-                className="block rounded-full bg-accent-500 px-4 py-2 text-center font-semibold text-white hover:bg-accent-600"
+                className="block rounded-md bg-accent-500 px-4 py-2 text-center font-semibold text-white hover:bg-accent-600"
               >
                 Ver planos
               </Link>

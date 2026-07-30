@@ -16,7 +16,7 @@ export default function ForgotPasswordForm() {
 
   if (state.message) {
     return (
-      <div className="rounded-2xl bg-primary-50 p-6 text-center text-sm text-primary-700">
+      <div className="rounded-lg border border-primary-100 bg-primary-50 p-6 text-center text-sm text-primary-700">
         {state.message}
       </div>
     );
@@ -30,7 +30,7 @@ export default function ForgotPasswordForm() {
           name="email"
           type="email"
           required
-          className="mt-1 w-full rounded-xl border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
+          className="mt-1 w-full rounded-md border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
         />
       </label>
 
@@ -43,7 +43,7 @@ export default function ForgotPasswordForm() {
       <button
         type="submit"
         disabled={isPending}
-        className="w-full rounded-full bg-accent-500 px-6 py-3 font-semibold text-white transition hover:bg-accent-600 disabled:opacity-60"
+        className="w-full rounded-md bg-accent-500 px-6 py-3 font-semibold text-white transition hover:bg-accent-600 disabled:opacity-60"
       >
         {isPending ? "Enviando..." : "Enviar link de redefinição"}
       </button>

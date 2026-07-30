@@ -28,20 +28,20 @@ export default function MobileNav({
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-label={open ? "Fechar menu" : "Abrir menu"}
-        className="flex h-10 w-10 items-center justify-center rounded-full text-primary-700 hover:bg-primary-100"
+        className="flex h-10 w-10 items-center justify-center rounded-md text-primary-700 hover:bg-primary-50"
       >
         {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
       </button>
 
       {open && (
-        <div className="absolute inset-x-0 top-full border-b border-primary-100 bg-cream px-4 pb-6 pt-2 shadow-lg sm:px-6">
+        <div className="absolute inset-x-0 top-full border-b border-primary-100 bg-white px-4 pb-6 pt-2 shadow-lg sm:px-6">
           <nav className="flex flex-col gap-1 text-sm font-medium text-primary-700">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="rounded-lg px-3 py-2.5 hover:bg-primary-100"
+                className="rounded-md px-3 py-2.5 hover:bg-primary-50"
               >
                 {link.label}
               </Link>
@@ -54,14 +54,14 @@ export default function MobileNav({
                 <Link
                   href="/dashboard"
                   onClick={() => setOpen(false)}
-                  className="rounded-full px-4 py-2.5 text-center text-sm font-semibold text-primary-700 hover:bg-primary-100"
+                  className="rounded-md px-4 py-2.5 text-center text-sm font-semibold text-primary-700 hover:bg-primary-50"
                 >
                   Minha área
                 </Link>
                 <form action={signOutAction}>
                   <button
                     type="submit"
-                    className="w-full rounded-full border border-primary-300 px-4 py-2.5 text-sm font-semibold text-primary-700 hover:bg-primary-100"
+                    className="w-full rounded-md border border-primary-100 px-4 py-2.5 text-sm font-semibold text-primary-700 hover:bg-primary-50"
                   >
                     Sair
                   </button>
@@ -72,14 +72,14 @@ export default function MobileNav({
                 <Link
                   href="/login"
                   onClick={() => setOpen(false)}
-                  className="rounded-full px-4 py-2.5 text-center text-sm font-semibold text-primary-700 hover:bg-primary-100"
+                  className="rounded-md px-4 py-2.5 text-center text-sm font-semibold text-primary-700 hover:bg-primary-50"
                 >
                   Entrar
                 </Link>
                 <Link
                   href="/cadastro"
                   onClick={() => setOpen(false)}
-                  className="rounded-full bg-accent-500 px-4 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-accent-600"
+                  className="rounded-md bg-primary-700 px-4 py-2.5 text-center text-sm font-semibold text-white hover:bg-primary-600"
                 >
                   Criar conta
                 </Link>

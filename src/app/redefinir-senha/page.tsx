@@ -18,7 +18,7 @@ export default async function RedefinirSenhaPage({
         Redefinir senha
       </h1>
 
-      <div className="mt-8 rounded-2xl bg-white p-6 shadow-sm">
+      <div className="mt-8 rounded-lg border border-primary-100 bg-white p-6">
         {token ? (
           <ResetPasswordForm token={token} />
         ) : (
@@ -26,7 +26,7 @@ export default async function RedefinirSenhaPage({
             <p>Link inválido. Solicite um novo link de redefinição.</p>
             <Link
               href="/esqueci-senha"
-              className="inline-block rounded-full bg-accent-500 px-6 py-2.5 font-semibold text-white hover:bg-accent-600"
+              className="inline-block rounded-md bg-accent-500 px-6 py-2.5 font-semibold text-white hover:bg-accent-600"
             >
               Solicitar novo link
             </Link>

@@ -7,31 +7,31 @@ export default async function Header() {
   const session = await auth();
 
   return (
-    <header className="sticky top-0 z-40 border-b border-primary-100 bg-cream/90 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-primary-100 bg-white/90 backdrop-blur">
       <div className="relative mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-primary-400 to-primary-600 text-lg font-bold text-white shadow-sm">
+        <Link href="/" className="flex items-center gap-2.5">
+          <span className="flex h-9 w-9 items-center justify-center rounded-md bg-primary-700 text-lg font-bold text-white">
             CF
           </span>
-          <span className="text-lg font-bold text-primary-700">
+          <span className="text-lg font-bold tracking-tight text-primary-700">
             Crianças em Foco
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-6 text-sm font-medium text-primary-700 md:flex">
-          <Link href="/#servicos" className="transition hover:text-accent-600">
+        <nav className="hidden items-center gap-6 text-sm font-medium text-primary-600 md:flex">
+          <Link href="/#servicos" className="transition hover:text-primary-700">
             Serviços
           </Link>
-          <Link href="/professoras" className="transition hover:text-accent-600">
+          <Link href="/professoras" className="transition hover:text-primary-700">
             Professoras
           </Link>
-          <Link href="/planos" className="transition hover:text-accent-600">
+          <Link href="/planos" className="transition hover:text-primary-700">
             Planos
           </Link>
-          <Link href="/#depoimentos" className="transition hover:text-accent-600">
+          <Link href="/#depoimentos" className="transition hover:text-primary-700">
             Como trabalhamos
           </Link>
-          <Link href="/#contato" className="transition hover:text-accent-600">
+          <Link href="/#contato" className="transition hover:text-primary-700">
             Contato
           </Link>
         </nav>
@@ -41,14 +41,14 @@ export default async function Header() {
             <>
               <Link
                 href="/dashboard"
-                className="rounded-full px-4 py-2 text-sm font-semibold text-primary-700 hover:bg-primary-100"
+                className="rounded-md px-4 py-2 text-sm font-semibold text-primary-700 hover:bg-primary-50"
               >
                 Minha área
               </Link>
               <form action={signOutAction}>
                 <button
                   type="submit"
-                  className="rounded-full border border-primary-300 px-4 py-2 text-sm font-semibold text-primary-700 transition hover:bg-primary-100"
+                  className="rounded-md border border-primary-100 px-4 py-2 text-sm font-semibold text-primary-700 transition hover:bg-primary-50"
                 >
                   Sair
                 </button>
@@ -58,13 +58,13 @@ export default async function Header() {
             <>
               <Link
                 href="/login"
-                className="rounded-full px-4 py-2 text-sm font-semibold text-primary-700 hover:bg-primary-100"
+                className="rounded-md px-4 py-2 text-sm font-semibold text-primary-700 hover:bg-primary-50"
               >
                 Entrar
               </Link>
               <Link
                 href="/cadastro"
-                className="rounded-full bg-accent-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-accent-600"
+                className="rounded-md bg-primary-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary-600"
               >
                 Criar conta
               </Link>

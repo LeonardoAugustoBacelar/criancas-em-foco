@@ -40,7 +40,7 @@ export default function BookingForm({
 
   if (state.success) {
     return (
-      <div className="rounded-2xl bg-primary-50 p-6 text-center">
+      <div className="rounded-lg border border-primary-100 bg-primary-50 p-6 text-center">
         <p className="font-bold text-primary-700">
           Solicitação de aula enviada!
         </p>
@@ -54,7 +54,7 @@ export default function BookingForm({
 
   if (availabilities.length === 0) {
     return (
-      <p className="rounded-2xl bg-primary-50 p-4 text-sm text-primary-700/80">
+      <p className="rounded-lg border border-primary-100 bg-primary-50 p-4 text-sm text-primary-700/80">
         Esta professora ainda não cadastrou horários disponíveis. Fale com
         ela pelo WhatsApp para combinar um horário.
       </p>
@@ -65,7 +65,7 @@ export default function BookingForm({
     <form action={formAction} className="space-y-4">
       <input type="hidden" name="teacherId" value={teacherId} />
 
-      <div className="rounded-xl bg-primary-50 p-3 text-xs text-primary-700/80">
+      <div className="rounded-md bg-primary-50 p-3 text-xs text-primary-700/80">
         <p className="font-semibold text-primary-700">Dias disponíveis:</p>
         <p className="mt-1">
           {[...new Set(availabilities.map((a) => a.weekday))]
@@ -80,7 +80,7 @@ export default function BookingForm({
         <input
           name="childName"
           required
-          className="mt-1 w-full rounded-xl border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
+          className="mt-1 w-full rounded-md border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
         />
       </label>
 
@@ -92,7 +92,7 @@ export default function BookingForm({
           required
           value={date}
           onChange={(e) => setDate(e.target.value)}
-          className="mt-1 w-full rounded-xl border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
+          className="mt-1 w-full rounded-md border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
         />
       </label>
 
@@ -109,7 +109,7 @@ export default function BookingForm({
           <select
             name="slot"
             required
-            className="mt-1 w-full rounded-xl border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
+            className="mt-1 w-full rounded-md border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
             onChange={(e) => {
               const [start, end] = e.target.value.split("|");
               const form = e.target.closest("form")!;
@@ -134,7 +134,7 @@ export default function BookingForm({
         <textarea
           name="notes"
           rows={3}
-          className="mt-1 w-full rounded-xl border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
+          className="mt-1 w-full rounded-md border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
         />
       </label>
 
@@ -147,7 +147,7 @@ export default function BookingForm({
       <button
         type="submit"
         disabled={isPending || slotsForDay.length === 0}
-        className="w-full rounded-full bg-accent-500 px-6 py-3 font-semibold text-white transition hover:bg-accent-600 disabled:opacity-50"
+        className="w-full rounded-md bg-accent-500 px-6 py-3 font-semibold text-white transition hover:bg-accent-600 disabled:opacity-50"
       >
         {isPending ? "Enviando..." : "Solicitar aula"}
       </button>

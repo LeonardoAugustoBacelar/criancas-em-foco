@@ -52,7 +52,7 @@ export default async function PlanosPage() {
           {plans.map((plan) => (
             <div
               key={plan.id}
-              className="flex flex-col rounded-2xl bg-white p-6 shadow-sm"
+              className="flex flex-col rounded-lg border border-primary-100 bg-white p-6"
             >
               <p className="text-lg font-bold text-primary-700">{plan.name}</p>
               <p className="mt-2 text-sm text-primary-700/80">
@@ -75,7 +75,7 @@ export default async function PlanosPage() {
                 {!session?.user ? (
                   <Link
                     href="/login"
-                    className="block rounded-full bg-primary-500 px-6 py-3 text-center font-semibold text-white hover:bg-primary-600"
+                    className="block rounded-md bg-primary-700 px-6 py-3 text-center font-semibold text-white hover:bg-primary-600"
                   >
                     Entrar para assinar
                   </Link>
@@ -87,7 +87,7 @@ export default async function PlanosPage() {
                   subscription.planId === plan.id ? (
                   <button
                     disabled
-                    className="w-full rounded-full bg-primary-100 px-6 py-3 font-semibold text-primary-700"
+                    className="w-full rounded-md bg-primary-100 px-6 py-3 font-semibold text-primary-700"
                   >
                     Seu plano atual
                   </button>

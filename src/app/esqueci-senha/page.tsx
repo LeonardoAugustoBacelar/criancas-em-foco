@@ -15,7 +15,7 @@ export default function EsqueciSenhaPage() {
         Informe o e-mail da sua conta e enviaremos um link para você criar
         uma nova senha.
       </p>
-      <div className="mt-8 rounded-2xl bg-white p-6 shadow-sm">
+      <div className="mt-8 rounded-lg border border-primary-100 bg-white p-6">
         <ForgotPasswordForm />
       </div>
       <p className="mt-6 text-center text-sm text-primary-700/80">

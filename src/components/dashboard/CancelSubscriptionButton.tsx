@@ -15,7 +15,7 @@ export default function CancelSubscriptionButton() {
           cancelSubscriptionAction();
         });
       }}
-      className="rounded-full border border-red-200 px-4 py-2 text-xs font-semibold text-red-600 hover:bg-red-50 disabled:opacity-50"
+      className="rounded-md border border-red-200 px-4 py-2 text-xs font-semibold text-red-600 hover:bg-red-50 disabled:opacity-50"
     >
       {isPending ? "Cancelando..." : "Cancelar assinatura"}
     </button>

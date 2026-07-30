@@ -26,7 +26,7 @@ export default function SubscribeButton({
       <button
         type="submit"
         disabled={isPending}
-        className="w-full rounded-full bg-accent-500 px-6 py-3 font-semibold text-white transition hover:bg-accent-600 disabled:opacity-60"
+        className="w-full rounded-md bg-accent-500 px-6 py-3 font-semibold text-white transition hover:bg-accent-600 disabled:opacity-60"
       >
         {isPending ? "Redirecionando..." : label}
       </button>

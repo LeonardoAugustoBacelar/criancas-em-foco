@@ -44,7 +44,7 @@ export default function AvailabilityManager({
           .map((slot) => (
             <div
               key={slot.id}
-              className="flex items-center justify-between rounded-xl bg-primary-50 px-4 py-2 text-sm"
+              className="flex items-center justify-between rounded-md bg-primary-50 px-4 py-2 text-sm"
             >
               <span className="text-primary-700">
                 {WEEKDAY_LABELS[slot.weekday]}: {slot.startTime} às {slot.endTime}
@@ -69,7 +69,7 @@ export default function AvailabilityManager({
           Dia da semana
           <select
             name="weekday"
-            className="mt-1 block rounded-xl border border-primary-100 bg-white px-3 py-2 text-sm text-primary-700"
+            className="mt-1 block rounded-md border border-primary-100 bg-white px-3 py-2 text-sm text-primary-700"
           >
             {WEEKDAY_LABELS.map((label, index) => (
               <option key={label} value={index}>
@@ -85,7 +85,7 @@ export default function AvailabilityManager({
             type="time"
             name="startTime"
             required
-            className="mt-1 block rounded-xl border border-primary-100 bg-white px-3 py-2 text-sm text-primary-700"
+            className="mt-1 block rounded-md border border-primary-100 bg-white px-3 py-2 text-sm text-primary-700"
           />
         </label>
 
@@ -95,14 +95,14 @@ export default function AvailabilityManager({
             type="time"
             name="endTime"
             required
-            className="mt-1 block rounded-xl border border-primary-100 bg-white px-3 py-2 text-sm text-primary-700"
+            className="mt-1 block rounded-md border border-primary-100 bg-white px-3 py-2 text-sm text-primary-700"
           />
         </label>
 
         <button
           type="submit"
           disabled={isPending}
-          className="rounded-full bg-primary-500 px-4 py-2 text-sm font-semibold text-white hover:bg-primary-600 disabled:opacity-50"
+          className="rounded-md bg-primary-700 px-4 py-2 text-sm font-semibold text-white hover:bg-primary-600 disabled:opacity-50"
         >
           {isPending ? "Adicionando..." : "Adicionar horário"}
         </button>

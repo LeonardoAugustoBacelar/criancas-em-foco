@@ -116,17 +116,17 @@ export default async function HomePage() {
   return (
     <div>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-primary-50 to-cream">
+      <section className="border-b border-primary-100 bg-white">
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 sm:px-6 md:grid-cols-2 md:py-24">
           <div>
-            <span className="inline-block rounded-full bg-accent-100 px-4 py-1 text-sm font-semibold text-accent-600">
+            <span className="text-sm font-semibold uppercase tracking-wide text-accent-600">
               Para mães que precisam de apoio de verdade
             </span>
-            <h1 className="mt-5 text-4xl font-extrabold leading-tight text-primary-700 sm:text-5xl">
+            <h1 className="mt-5 text-4xl font-extrabold leading-tight tracking-tight text-primary-700 sm:text-5xl">
               Ajudamos seu filho a lidar com os desafios de comportamento,
               em casa e na escola
             </h1>
-            <p className="mt-5 text-lg text-primary-700/80">
+            <p className="mt-5 text-lg text-primary-500">
               Conectamos mães a professoras especializadas em comportamento
               infantil, com aulas individuais, orientação para a família e
               acompanhamento contínuo — tudo começando por uma conversa no
@@ -137,11 +137,11 @@ export default async function HomePage() {
                 phone={CLINIC_WHATSAPP}
                 message={heroWhatsAppMessage}
                 label="Falar no WhatsApp agora"
-                className="px-6 py-3 text-base shadow-md"
+                className="px-6 py-3 text-base"
               />
               <Link
                 href="/professoras"
-                className="group inline-flex items-center gap-2 rounded-full border-2 border-primary-500 px-6 py-3 font-semibold text-primary-700 transition hover:bg-primary-100"
+                className="group inline-flex items-center gap-2 rounded-md border border-primary-100 px-6 py-3 font-semibold text-primary-700 transition hover:bg-primary-50"
               >
                 Conhecer as professoras
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -150,25 +150,16 @@ export default async function HomePage() {
           </div>
 
           <div className="relative mx-auto w-full max-w-md">
-            <div
-              aria-hidden="true"
-              className="absolute -left-8 -top-8 h-56 w-56 rounded-full bg-accent-400/30 blur-3xl"
-            />
-            <div
-              aria-hidden="true"
-              className="absolute -bottom-8 -right-4 h-56 w-56 rounded-full bg-primary-400/30 blur-3xl"
-            />
-
-            <div className="relative rounded-[2rem] border border-white bg-white/90 p-8 shadow-xl backdrop-blur">
+            <div className="relative rounded-lg border border-primary-100 bg-white p-8 shadow-sm">
               <div className="flex items-center gap-3">
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary-500 text-white">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-primary-700 text-white">
                   <Heart className="h-6 w-6" />
                 </span>
                 <div>
                   <p className="font-bold text-primary-700">
                     Cada criança no seu tempo
                   </p>
-                  <p className="text-sm text-primary-700/70">
+                  <p className="text-sm text-primary-500">
                     com apoio especializado
                   </p>
                 </div>
@@ -178,7 +169,7 @@ export default async function HomePage() {
                 {HERO_HIGHLIGHTS.map((item) => (
                   <div
                     key={item.label}
-                    className="flex items-center gap-3 rounded-xl bg-primary-50 px-4 py-3"
+                    className="flex items-center gap-3 rounded-md bg-primary-50 px-4 py-3"
                   >
                     <item.icon className="h-5 w-5 shrink-0 text-accent-600" />
                     <span className="text-sm font-medium text-primary-700">
@@ -201,9 +192,9 @@ export default async function HomePage() {
           {STEPS.map((step) => (
             <div
               key={step.title}
-              className="rounded-2xl border border-primary-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+              className="rounded-lg border border-primary-100 bg-white p-6 transition hover:shadow-sm"
             >
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-50 text-primary-600">
+              <span className="flex h-11 w-11 items-center justify-center rounded-md bg-primary-50 text-primary-600">
                 <step.icon className="h-5 w-5" />
               </span>
               <p className="mt-4 text-xs font-bold uppercase tracking-wide text-accent-600">
@@ -228,9 +219,9 @@ export default async function HomePage() {
             {SERVICES.map((service) => (
               <div
                 key={service.title}
-                className="flex gap-4 rounded-2xl bg-white p-6 shadow-sm transition hover:shadow-md"
+                className="flex gap-4 rounded-lg border border-primary-100 bg-white p-6 transition hover:shadow-sm"
               >
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary-600">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-primary-50 text-primary-600">
                   <service.icon className="h-6 w-6" />
                 </span>
                 <div>
@@ -272,7 +263,7 @@ export default async function HomePage() {
               <Link
                 key={teacher.id}
                 href={`/professoras/${teacher.id}`}
-                className="group rounded-2xl border border-primary-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+                className="group rounded-lg border border-primary-100 bg-white p-6 transition hover:shadow-sm"
               >
                 <div className="flex items-center gap-4">
                   <div className="relative h-16 w-16 overflow-hidden rounded-full bg-primary-100">
@@ -317,9 +308,9 @@ export default async function HomePage() {
             {COMMITMENTS.map((item) => (
               <div
                 key={item.title}
-                className="rounded-2xl bg-white/10 p-6 text-primary-50"
+                className="rounded-lg border border-white/10 bg-white/5 p-6 text-primary-50"
               >
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-accent-400">
+                <span className="flex h-10 w-10 items-center justify-center rounded-md bg-white/10 text-accent-400">
                   <item.icon className="h-5 w-5" />
                 </span>
                 <p className="mt-4 font-semibold text-accent-400">
@@ -345,17 +336,17 @@ export default async function HomePage() {
           <WhatsAppInlineButton
             phone={CLINIC_WHATSAPP}
             message={heroWhatsAppMessage}
-            className="px-6 py-3 text-base shadow-md"
+            className="px-6 py-3 text-base"
           />
           <Link
             href="/cadastro"
-            className="inline-flex items-center gap-2 rounded-full bg-accent-500 px-6 py-3 font-semibold text-white shadow-md transition hover:bg-accent-600"
+            className="inline-flex items-center gap-2 rounded-md bg-primary-700 px-6 py-3 font-semibold text-white transition hover:bg-primary-600"
           >
             Criar minha conta
           </Link>
           <Link
             href="/planos"
-            className="group inline-flex items-center gap-2 rounded-full border-2 border-primary-500 px-6 py-3 font-semibold text-primary-700 transition hover:bg-primary-100"
+            className="group inline-flex items-center gap-2 rounded-md border border-primary-100 px-6 py-3 font-semibold text-primary-700 transition hover:bg-primary-50"
           >
             Ver planos
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />

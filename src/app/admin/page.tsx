@@ -34,7 +34,7 @@ export default async function AdminPage() {
           {teachers.map((teacher) => (
             <div
               key={teacher.id}
-              className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-white p-5 shadow-sm"
+              className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-primary-100 bg-white p-5"
             >
               <div>
                 <p className="font-bold text-primary-700">
@@ -78,7 +78,7 @@ export default async function AdminPage() {
             {subscriptions.map((sub) => (
               <div
                 key={sub.id}
-                className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-white p-5 shadow-sm"
+                className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-primary-100 bg-white p-5"
               >
                 <div>
                   <p className="font-bold text-primary-700">{sub.mae.name}</p>

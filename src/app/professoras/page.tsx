@@ -42,11 +42,11 @@ export default async function ProfessorasPage({
           name="q"
           defaultValue={q}
           placeholder="Buscar por especialidade (ex: TDAH, birras...)"
-          className="flex-1 rounded-full border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
+          className="flex-1 rounded-md border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
         />
         <button
           type="submit"
-          className="rounded-full bg-primary-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-600"
+          className="rounded-md bg-primary-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-600"
         >
           Buscar
         </button>
@@ -62,7 +62,7 @@ export default async function ProfessorasPage({
             <Link
               key={teacher.id}
               href={`/professoras/${teacher.id}`}
-              className="group rounded-2xl bg-white p-6 shadow-sm transition hover:shadow-md"
+              className="group rounded-lg border border-primary-100 bg-white p-6 transition hover:shadow-sm"
             >
               <div className="flex items-center gap-4">
                 <div className="relative h-16 w-16 overflow-hidden rounded-full bg-primary-100">

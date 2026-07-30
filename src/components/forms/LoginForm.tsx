@@ -20,7 +20,7 @@ export default function LoginForm() {
           name="email"
           type="email"
           required
-          className="mt-1 w-full rounded-xl border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
+          className="mt-1 w-full rounded-md border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
         />
       </label>
 
@@ -30,7 +30,7 @@ export default function LoginForm() {
           name="password"
           type="password"
           required
-          className="mt-1 w-full rounded-xl border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
+          className="mt-1 w-full rounded-md border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
         />
       </label>
 
@@ -52,7 +52,7 @@ export default function LoginForm() {
       <button
         type="submit"
         disabled={isPending}
-        className="w-full rounded-full bg-accent-500 px-6 py-3 font-semibold text-white transition hover:bg-accent-600 disabled:opacity-60"
+        className="w-full rounded-md bg-accent-500 px-6 py-3 font-semibold text-white transition hover:bg-accent-600 disabled:opacity-60"
       >
         {isPending ? "Entrando..." : "Entrar"}
       </button>

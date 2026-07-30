@@ -10,11 +10,11 @@ export default function Footer() {
   const whatsappHref = buildWhatsAppLink(CLINIC_WHATSAPP, DEFAULT_WHATSAPP_MESSAGE);
 
   return (
-    <footer id="contato" className="border-t border-primary-100 bg-primary-700 text-primary-50">
+    <footer id="contato" className="border-t border-primary-600 bg-primary-700 text-primary-50">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-3">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-primary-300 to-accent-400 text-sm font-bold text-primary-700">
+          <div className="flex items-center gap-2.5">
+            <span className="flex h-8 w-8 items-center justify-center rounded-md bg-white/10 text-sm font-bold text-white">
               CF
             </span>
             <p className="text-lg font-bold text-white">Crianças em Foco</p>
@@ -83,7 +83,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-white/10 px-4 py-5 text-center text-xs text-primary-200 sm:px-6">
+      <div className="border-t border-white/10 px-4 py-5 text-center text-xs text-primary-100/70 sm:px-6">
         <p>
           © {new Date().getFullYear()} Crianças em Foco. Todos os direitos
           reservados.

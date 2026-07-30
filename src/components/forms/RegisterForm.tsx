@@ -15,7 +15,7 @@ export default function RegisterForm() {
 
   if (state.success) {
     return (
-      <div className="rounded-2xl bg-primary-50 p-6 text-center">
+      <div className="rounded-lg border border-primary-100 bg-primary-50 p-6 text-center">
         <p className="text-lg font-bold text-primary-700">
           Conta criada com sucesso!
         </p>
@@ -24,7 +24,7 @@ export default function RegisterForm() {
         </p>
         <Link
           href="/login"
-          className="mt-4 inline-block rounded-full bg-accent-500 px-6 py-2.5 font-semibold text-white hover:bg-accent-600"
+          className="mt-4 inline-block rounded-md bg-accent-500 px-6 py-2.5 font-semibold text-white hover:bg-accent-600"
         >
           Ir para o login
         </Link>
@@ -34,13 +34,13 @@ export default function RegisterForm() {
 
   return (
     <form action={formAction} className="space-y-5">
-      <div className="flex gap-3 rounded-full bg-primary-50 p-1">
+      <div className="flex gap-1 rounded-md border border-primary-100 bg-primary-50 p-1">
         <button
           type="button"
           onClick={() => setRole("MAE")}
-          className={`flex-1 rounded-full px-4 py-2 text-sm font-semibold transition ${
+          className={`flex-1 rounded-md px-4 py-2 text-sm font-semibold transition ${
             role === "MAE"
-              ? "bg-primary-500 text-white"
+              ? "bg-primary-700 text-white"
               : "text-primary-700"
           }`}
         >
@@ -49,9 +49,9 @@ export default function RegisterForm() {
         <button
           type="button"
           onClick={() => setRole("PROFESSORA")}
-          className={`flex-1 rounded-full px-4 py-2 text-sm font-semibold transition ${
+          className={`flex-1 rounded-md px-4 py-2 text-sm font-semibold transition ${
             role === "PROFESSORA"
-              ? "bg-primary-500 text-white"
+              ? "bg-primary-700 text-white"
               : "text-primary-700"
           }`}
         >
@@ -120,7 +120,7 @@ export default function RegisterForm() {
       <button
         type="submit"
         disabled={isPending}
-        className="w-full rounded-full bg-accent-500 px-6 py-3 font-semibold text-white transition hover:bg-accent-600 disabled:opacity-60"
+        className="w-full rounded-md bg-accent-500 px-6 py-3 font-semibold text-white transition hover:bg-accent-600 disabled:opacity-60"
       >
         {isPending ? "Criando conta..." : "Criar conta"}
       </button>

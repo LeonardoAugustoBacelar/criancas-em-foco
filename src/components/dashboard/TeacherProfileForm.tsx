@@ -35,7 +35,7 @@ export default function TeacherProfileForm({
           defaultValue={bio}
           rows={4}
           required
-          className="mt-1 w-full rounded-xl border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
+          className="mt-1 w-full rounded-md border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
         />
       </label>
 
@@ -45,7 +45,7 @@ export default function TeacherProfileForm({
           name="specialties"
           defaultValue={specialties}
           required
-          className="mt-1 w-full rounded-xl border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
+          className="mt-1 w-full rounded-md border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
         />
       </label>
 
@@ -56,7 +56,7 @@ export default function TeacherProfileForm({
             name="whatsapp"
             defaultValue={whatsapp}
             required
-            className="mt-1 w-full rounded-xl border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
+            className="mt-1 w-full rounded-md border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
           />
         </label>
 
@@ -68,7 +68,7 @@ export default function TeacherProfileForm({
             min={0}
             step="0.01"
             defaultValue={pricePerHour}
-            className="mt-1 w-full rounded-xl border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
+            className="mt-1 w-full rounded-md border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
           />
         </label>
       </div>
@@ -80,7 +80,7 @@ export default function TeacherProfileForm({
           type="url"
           placeholder="https://..."
           defaultValue={photoUrl ?? ""}
-          className="mt-1 w-full rounded-xl border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
+          className="mt-1 w-full rounded-md border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
         />
         <span className="mt-1 block text-xs text-primary-700/60">
           Cole o link de uma foto hospedada (ex: Google Drive público, Imgur).
@@ -101,7 +101,7 @@ export default function TeacherProfileForm({
       <button
         type="submit"
         disabled={isPending}
-        className="rounded-full bg-primary-500 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-primary-600 disabled:opacity-60"
+        className="rounded-md bg-primary-700 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-primary-600 disabled:opacity-60"
       >
         {isPending ? "Salvando..." : "Salvar perfil"}
       </button>
