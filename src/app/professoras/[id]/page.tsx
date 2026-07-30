@@ -6,8 +6,10 @@ import type { Metadata } from "next";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import WhatsAppInlineButton from "@/components/WhatsAppInlineButton";
+import CallButton from "@/components/CallButton";
 import BookingForm from "@/components/forms/BookingForm";
 import RatingStars from "@/components/RatingStars";
+import SpecialtyTags from "@/components/SpecialtyTags";
 import { summarizeRatings } from "@/lib/reviews";
 
 const getTeacher = cache(async (id: string) => {
@@ -103,8 +105,10 @@ export default async function TeacherProfilePage({
               <h1 className="text-2xl font-bold text-primary-700">
                 {teacher.user.name}
               </h1>
-              <p className="text-primary-700/70">{teacher.specialties}</p>
-              <div className="mt-1">
+              <div className="mt-1.5">
+                <SpecialtyTags specialties={teacher.specialties} size="md" />
+              </div>
+              <div className="mt-2">
                 <RatingStars
                   average={ratingSummary.average}
                   count={ratingSummary.count}
@@ -123,11 +127,12 @@ export default async function TeacherProfilePage({
             </p>
           )}
 
-          <div className="mt-6">
+          <div className="mt-6 flex flex-wrap gap-3">
             <WhatsAppInlineButton
               phone={teacher.whatsapp}
               message={whatsappMessage}
             />
+            <CallButton phone={teacher.whatsapp} />
           </div>
 
           {teacher.reviews.length > 0 && (

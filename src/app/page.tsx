@@ -18,6 +18,7 @@ import { prisma } from "@/lib/prisma";
 import { CLINIC_WHATSAPP } from "@/lib/whatsapp";
 import WhatsAppInlineButton from "@/components/WhatsAppInlineButton";
 import RatingStars from "@/components/RatingStars";
+import SpecialtyTags from "@/components/SpecialtyTags";
 import { summarizeRatings } from "@/lib/reviews";
 
 const SERVICES = [
@@ -111,6 +112,13 @@ export default async function HomePage() {
     include: { user: true, reviews: true },
     take: 3,
     orderBy: { createdAt: "desc" },
+  });
+
+  const featuredReviews = await prisma.review.findMany({
+    where: { comment: { not: null } },
+    include: { mae: true, teacher: { include: { user: true } } },
+    orderBy: { createdAt: "desc" },
+    take: 3,
   });
 
   const heroWhatsAppMessage =
@@ -299,10 +307,10 @@ export default async function HomePage() {
                     <p className="font-bold text-primary-700 group-hover:text-accent-600">
                       {teacher.user.name}
                     </p>
-                    <p className="text-sm text-primary-700/70">
-                      {teacher.specialties}
-                    </p>
                     <div className="mt-1">
+                      <SpecialtyTags specialties={teacher.specialties} />
+                    </div>
+                    <div className="mt-1.5">
                       <RatingStars {...summarizeRatings(teacher.reviews)} />
                     </div>
                   </div>
@@ -315,6 +323,41 @@ export default async function HomePage() {
           </div>
         )}
       </section>
+
+      {/* Avaliações reais */}
+      {featuredReviews.length > 0 && (
+        <section className="bg-primary-50 py-16">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <h2
+              data-reveal
+              className="text-center text-3xl font-bold text-primary-700"
+            >
+              O que as famílias dizem
+            </h2>
+            <div className="mt-10 grid gap-6 md:grid-cols-3">
+              {featuredReviews.map((review, index) => (
+                <div
+                  key={review.id}
+                  data-reveal
+                  style={{ "--reveal-delay": `${index * 80}ms` } as CSSProperties}
+                  className="rounded-lg border border-primary-100 bg-white p-6"
+                >
+                  <RatingStars average={review.rating} count={1} hideLabel />
+                  <p className="mt-3 text-sm text-primary-700/90">
+                    &quot;{review.comment}&quot;
+                  </p>
+                  <p className="mt-4 text-sm font-semibold text-primary-700">
+                    {review.mae.name}
+                  </p>
+                  <p className="text-xs text-primary-700/60">
+                    aula com {review.teacher.user.name}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Compromisso */}
       <section id="depoimentos" className="bg-primary-700 py-16">

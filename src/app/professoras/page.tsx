@@ -4,6 +4,7 @@ import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import RatingStars from "@/components/RatingStars";
+import SpecialtyTags from "@/components/SpecialtyTags";
 import { summarizeRatings } from "@/lib/reviews";
 
 export const metadata: Metadata = {
@@ -95,10 +96,10 @@ export default async function ProfessorasPage({
                   <p className="font-bold text-primary-700 group-hover:text-accent-600">
                     {teacher.user.name}
                   </p>
-                  <p className="text-sm text-primary-700/70">
-                    {teacher.specialties}
-                  </p>
                   <div className="mt-1">
+                    <SpecialtyTags specialties={teacher.specialties} />
+                  </div>
+                  <div className="mt-1.5">
                     <RatingStars {...summarizeRatings(teacher.reviews)} />
                   </div>
                 </div>
