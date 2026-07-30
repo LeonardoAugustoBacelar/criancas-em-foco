@@ -27,7 +27,7 @@ export default function Footer() {
         </div>
 
         <div>
-          <p className="text-sm font-semibold uppercase tracking-wide text-accent-400">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent-400">
             Navegação
           </p>
           <ul className="mt-4 space-y-2.5 text-sm text-primary-100">
@@ -55,7 +55,7 @@ export default function Footer() {
         </div>
 
         <div>
-          <p className="text-sm font-semibold uppercase tracking-wide text-accent-400">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent-400">
             Contato
           </p>
           <ul className="mt-4 space-y-3 text-sm text-primary-100">

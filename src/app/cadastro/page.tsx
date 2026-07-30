@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function CadastroPage() {
   return (
     <div className="mx-auto max-w-lg px-4 py-16 sm:px-6">
-      <h1 className="text-center text-3xl font-bold text-primary-700">
+      <h1 className="text-center font-serif-display text-3xl font-semibold text-primary-700">
         Crie sua conta
       </h1>
       <p className="mt-2 text-center text-sm text-primary-700/80">

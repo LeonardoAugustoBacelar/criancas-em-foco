@@ -39,7 +39,7 @@ export default async function ProfessorasPage({
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-      <h1 className="text-3xl font-bold text-primary-700">
+      <h1 className="font-serif-display text-3xl font-semibold text-primary-700">
         Nossas professoras
       </h1>
       <p className="mt-2 max-w-2xl text-primary-700/80">

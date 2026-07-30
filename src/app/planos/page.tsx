@@ -30,7 +30,7 @@ export default async function PlanosPage() {
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
       <div className="text-center">
-        <h1 className="text-3xl font-bold text-primary-700">
+        <h1 className="font-serif-display text-3xl font-semibold text-primary-700">
           Planos de assinatura
         </h1>
         <p className="mt-2 text-primary-700/80">

@@ -102,7 +102,7 @@ export default async function TeacherProfilePage({
               )}
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-primary-700">
+              <h1 className="font-serif-display text-2xl font-semibold text-primary-700">
                 {teacher.user.name}
               </h1>
               <div className="mt-1.5">

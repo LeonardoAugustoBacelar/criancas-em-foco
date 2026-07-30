@@ -16,7 +16,7 @@ export default async function RedefinirSenhaPage({
 
   return (
     <div className="mx-auto max-w-md px-4 py-16 sm:px-6">
-      <h1 className="text-center text-3xl font-bold text-primary-700">
+      <h1 className="text-center font-serif-display text-3xl font-semibold text-primary-700">
         Redefinir senha
       </h1>
 

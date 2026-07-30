@@ -70,7 +70,7 @@ async function MaeDashboard({ userId }: { userId: string }) {
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <h1 className="text-3xl font-bold text-primary-700">
+        <h1 className="font-serif-display text-3xl font-semibold text-primary-700">
           Minhas aulas
         </h1>
         <Link
@@ -195,7 +195,7 @@ async function ProfessoraDashboard({ userId }: { userId: string }) {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-      <h1 className="text-3xl font-bold text-primary-700">
+      <h1 className="font-serif-display text-3xl font-semibold text-primary-700">
         Painel da professora
       </h1>
 
