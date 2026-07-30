@@ -19,19 +19,19 @@ export default async function Header() {
         </Link>
 
         <nav className="hidden items-center gap-6 text-sm font-medium text-primary-600 md:flex">
-          <Link href="/#servicos" className="transition hover:text-primary-700">
+          <Link href="/#servicos" className="nav-link transition-colors hover:text-primary-700">
             Serviços
           </Link>
-          <Link href="/professoras" className="transition hover:text-primary-700">
+          <Link href="/professoras" className="nav-link transition-colors hover:text-primary-700">
             Professoras
           </Link>
-          <Link href="/planos" className="transition hover:text-primary-700">
+          <Link href="/planos" className="nav-link transition-colors hover:text-primary-700">
             Planos
           </Link>
-          <Link href="/#depoimentos" className="transition hover:text-primary-700">
+          <Link href="/#depoimentos" className="nav-link transition-colors hover:text-primary-700">
             Como trabalhamos
           </Link>
-          <Link href="/#contato" className="transition hover:text-primary-700">
+          <Link href="/#contato" className="nav-link transition-colors hover:text-primary-700">
             Contato
           </Link>
         </nav>
@@ -41,14 +41,14 @@ export default async function Header() {
             <>
               <Link
                 href="/dashboard"
-                className="rounded-md px-4 py-2 text-sm font-semibold text-primary-700 hover:bg-primary-50"
+                className="rounded-md px-4 py-2 text-sm font-semibold text-primary-700 transition-colors hover:bg-primary-50"
               >
                 Minha área
               </Link>
               <form action={signOutAction}>
                 <button
                   type="submit"
-                  className="rounded-md border border-primary-100 px-4 py-2 text-sm font-semibold text-primary-700 transition hover:bg-primary-50"
+                  className="btn-press rounded-md border border-primary-100 px-4 py-2 text-sm font-semibold text-primary-700 hover:bg-primary-50"
                 >
                   Sair
                 </button>
@@ -58,13 +58,13 @@ export default async function Header() {
             <>
               <Link
                 href="/login"
-                className="rounded-md px-4 py-2 text-sm font-semibold text-primary-700 hover:bg-primary-50"
+                className="rounded-md px-4 py-2 text-sm font-semibold text-primary-700 transition-colors hover:bg-primary-50"
               >
                 Entrar
               </Link>
               <Link
                 href="/cadastro"
-                className="rounded-md bg-primary-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary-600"
+                className="btn-press rounded-md bg-primary-700 px-4 py-2 text-sm font-semibold text-white hover:bg-primary-600"
               >
                 Criar conta
               </Link>

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import type { CSSProperties } from "react";
 import {
   ArrowRight,
   CalendarCheck,
@@ -137,11 +138,11 @@ export default async function HomePage() {
                 phone={CLINIC_WHATSAPP}
                 message={heroWhatsAppMessage}
                 label="Falar no WhatsApp agora"
-                className="px-6 py-3 text-base"
+                className="btn-press px-6 py-3 text-base"
               />
               <Link
                 href="/professoras"
-                className="group inline-flex items-center gap-2 rounded-md border border-primary-100 px-6 py-3 font-semibold text-primary-700 transition hover:bg-primary-50"
+                className="btn-press group inline-flex items-center gap-2 rounded-md border border-primary-100 px-6 py-3 font-semibold text-primary-700 transition-colors hover:bg-primary-50"
               >
                 Conhecer as professoras
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -185,13 +186,18 @@ export default async function HomePage() {
 
       {/* Como funciona */}
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-        <h2 className="text-center text-3xl font-bold text-primary-700">
+        <h2
+          data-reveal
+          className="text-center text-3xl font-bold text-primary-700"
+        >
           Como funciona
         </h2>
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {STEPS.map((step) => (
+          {STEPS.map((step, index) => (
             <div
               key={step.title}
+              data-reveal
+              style={{ "--reveal-delay": `${index * 80}ms` } as CSSProperties}
               className="rounded-lg border border-primary-100 bg-white p-6 transition hover:shadow-sm"
             >
               <span className="flex h-11 w-11 items-center justify-center rounded-md bg-primary-50 text-primary-600">
@@ -212,13 +218,18 @@ export default async function HomePage() {
       {/* Serviços */}
       <section id="servicos" className="bg-primary-50 py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <h2 className="text-center text-3xl font-bold text-primary-700">
+          <h2
+            data-reveal
+            className="text-center text-3xl font-bold text-primary-700"
+          >
             Nossos serviços
           </h2>
           <div className="mt-10 grid gap-6 sm:grid-cols-2">
-            {SERVICES.map((service) => (
+            {SERVICES.map((service, index) => (
               <div
                 key={service.title}
+                data-reveal
+                style={{ "--reveal-delay": `${index * 80}ms` } as CSSProperties}
                 className="flex gap-4 rounded-lg border border-primary-100 bg-white p-6 transition hover:shadow-sm"
               >
                 <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-primary-50 text-primary-600">
@@ -259,10 +270,12 @@ export default async function HomePage() {
           </p>
         ) : (
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {teachers.map((teacher) => (
+            {teachers.map((teacher, index) => (
               <Link
                 key={teacher.id}
                 href={`/professoras/${teacher.id}`}
+                data-reveal
+                style={{ "--reveal-delay": `${index * 80}ms` } as CSSProperties}
                 className="group rounded-lg border border-primary-100 bg-white p-6 transition hover:shadow-sm"
               >
                 <div className="flex items-center gap-4">
@@ -272,7 +285,7 @@ export default async function HomePage() {
                         src={teacher.photoUrl}
                         alt={teacher.user.name}
                         fill
-                        className="object-cover"
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
                       />
                     ) : (
                       <span className="flex h-full w-full items-center justify-center text-xl font-bold text-primary-500">
@@ -301,13 +314,15 @@ export default async function HomePage() {
       {/* Compromisso */}
       <section id="depoimentos" className="bg-primary-700 py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <h2 className="text-center text-3xl font-bold text-white">
+          <h2 data-reveal className="text-center text-3xl font-bold text-white">
             Nosso compromisso com sua família
           </h2>
           <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {COMMITMENTS.map((item) => (
+            {COMMITMENTS.map((item, index) => (
               <div
                 key={item.title}
+                data-reveal
+                style={{ "--reveal-delay": `${index * 80}ms` } as CSSProperties}
                 className="rounded-lg border border-white/10 bg-white/5 p-6 text-primary-50"
               >
                 <span className="flex h-10 w-10 items-center justify-center rounded-md bg-white/10 text-accent-400">
@@ -324,7 +339,10 @@ export default async function HomePage() {
       </section>
 
       {/* CTA final */}
-      <section className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6">
+      <section
+        data-reveal
+        className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6"
+      >
         <h2 className="text-3xl font-bold text-primary-700">
           Não precisa enfrentar isso sozinha
         </h2>
@@ -336,17 +354,17 @@ export default async function HomePage() {
           <WhatsAppInlineButton
             phone={CLINIC_WHATSAPP}
             message={heroWhatsAppMessage}
-            className="px-6 py-3 text-base"
+            className="btn-press px-6 py-3 text-base"
           />
           <Link
             href="/cadastro"
-            className="inline-flex items-center gap-2 rounded-md bg-primary-700 px-6 py-3 font-semibold text-white transition hover:bg-primary-600"
+            className="btn-press inline-flex items-center gap-2 rounded-md bg-primary-700 px-6 py-3 font-semibold text-white transition-colors hover:bg-primary-600"
           >
             Criar minha conta
           </Link>
           <Link
             href="/planos"
-            className="group inline-flex items-center gap-2 rounded-md border border-primary-100 px-6 py-3 font-semibold text-primary-700 transition hover:bg-primary-50"
+            className="btn-press group inline-flex items-center gap-2 rounded-md border border-primary-100 px-6 py-3 font-semibold text-primary-700 transition-colors hover:bg-primary-50"
           >
             Ver planos
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />

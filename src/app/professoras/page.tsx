@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import type { CSSProperties } from "react";
 import { prisma } from "@/lib/prisma";
 
 export default async function ProfessorasPage({
@@ -46,7 +47,7 @@ export default async function ProfessorasPage({
         />
         <button
           type="submit"
-          className="rounded-md bg-primary-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-600"
+          className="btn-press rounded-md bg-primary-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-600"
         >
           Buscar
         </button>
@@ -58,10 +59,12 @@ export default async function ProfessorasPage({
         </p>
       ) : (
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {teachers.map((teacher) => (
+          {teachers.map((teacher, index) => (
             <Link
               key={teacher.id}
               href={`/professoras/${teacher.id}`}
+              data-reveal
+              style={{ "--reveal-delay": `${index * 80}ms` } as CSSProperties}
               className="group rounded-lg border border-primary-100 bg-white p-6 transition hover:shadow-sm"
             >
               <div className="flex items-center gap-4">
@@ -71,7 +74,7 @@ export default async function ProfessorasPage({
                       src={teacher.photoUrl}
                       alt={teacher.user.name}
                       fill
-                      className="object-cover"
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   ) : (
                     <span className="flex h-full w-full items-center justify-center text-xl font-bold text-primary-500">

@@ -147,7 +147,7 @@ export default function BookingForm({
       <button
         type="submit"
         disabled={isPending || slotsForDay.length === 0}
-        className="w-full rounded-md bg-accent-500 px-6 py-3 font-semibold text-white transition hover:bg-accent-600 disabled:opacity-50"
+        className="btn-press w-full rounded-md bg-accent-500 px-6 py-3 font-semibold text-white hover:bg-accent-600 disabled:opacity-50"
       >
         {isPending ? "Enviando..." : "Solicitar aula"}
       </button>

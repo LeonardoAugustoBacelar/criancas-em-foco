@@ -66,7 +66,7 @@ export default function RegisterForm() {
       <Field label="Senha" name="password" type="password" required />
 
       {role === "PROFESSORA" && (
-        <div className="space-y-5 rounded-2xl bg-primary-50 p-4">
+        <div className="space-y-5 rounded-lg border border-primary-100 bg-primary-50 p-4">
           <p className="text-sm font-semibold text-primary-700">
             Conte um pouco sobre seu trabalho
           </p>
@@ -120,7 +120,7 @@ export default function RegisterForm() {
       <button
         type="submit"
         disabled={isPending}
-        className="w-full rounded-md bg-accent-500 px-6 py-3 font-semibold text-white transition hover:bg-accent-600 disabled:opacity-60"
+        className="btn-press w-full rounded-md bg-accent-500 px-6 py-3 font-semibold text-white hover:bg-accent-600 disabled:opacity-60"
       >
         {isPending ? "Criando conta..." : "Criar conta"}
       </button>
@@ -140,7 +140,7 @@ function Field({
   required?: boolean;
 }) {
   const baseClass =
-    "mt-1 w-full rounded-xl border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400";
+    "mt-1 w-full rounded-md border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400";
 
   return (
     <label className="block text-sm font-medium text-primary-700">

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { CSSProperties } from "react";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import SubscribeButton from "@/components/forms/SubscribeButton";
@@ -32,7 +33,7 @@ export default async function PlanosPage() {
       </div>
 
       {subscription?.status === "ATIVA" && (
-        <div className="mx-auto mt-8 max-w-md rounded-2xl bg-primary-50 p-4 text-center text-sm text-primary-700">
+        <div className="mx-auto mt-8 max-w-md rounded-lg border border-primary-100 bg-primary-50 p-4 text-center text-sm text-primary-700">
           Você já está no plano <strong>{subscription.plan.name}</strong>.
           Pode trocar de plano a qualquer momento escolhendo outro abaixo, ou
           gerenciar sua assinatura em{" "}
@@ -49,10 +50,12 @@ export default async function PlanosPage() {
         </p>
       ) : (
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {plans.map((plan) => (
+          {plans.map((plan, index) => (
             <div
               key={plan.id}
-              className="flex flex-col rounded-lg border border-primary-100 bg-white p-6"
+              data-reveal
+              style={{ "--reveal-delay": `${index * 80}ms` } as CSSProperties}
+              className="flex flex-col rounded-lg border border-primary-100 bg-white p-6 transition hover:shadow-sm"
             >
               <p className="text-lg font-bold text-primary-700">{plan.name}</p>
               <p className="mt-2 text-sm text-primary-700/80">
@@ -75,7 +78,7 @@ export default async function PlanosPage() {
                 {!session?.user ? (
                   <Link
                     href="/login"
-                    className="block rounded-md bg-primary-700 px-6 py-3 text-center font-semibold text-white hover:bg-primary-600"
+                    className="btn-press block rounded-md bg-primary-700 px-6 py-3 text-center font-semibold text-white transition-colors hover:bg-primary-600"
                   >
                     Entrar para assinar
                   </Link>
