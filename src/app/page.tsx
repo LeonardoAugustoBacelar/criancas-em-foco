@@ -4,9 +4,9 @@ import type { CSSProperties } from "react";
 import {
   ArrowRight,
   CalendarCheck,
+  CheckCheck,
   CheckCircle2,
   Ear,
-  Heart,
   Home as HomeIcon,
   LineChart,
   MessageCircle,
@@ -25,7 +25,7 @@ import { summarizeRatings } from "@/lib/reviews";
 const STOCK_PHOTOS = {
   hug: "https://images.unsplash.com/photo-1752652011858-302f08a6dc9f?auto=format&fit=crop&w=1200&q=80",
   homework:
-    "https://images.unsplash.com/photo-1758685733907-42e9651721f5?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1752652012034-b28eca1e2faa?auto=format&fit=crop&w=1200&q=80",
   couch:
     "https://images.unsplash.com/photo-1758598737810-7489fde716af?auto=format&fit=crop&w=1200&q=80",
 };
@@ -150,10 +150,15 @@ const COMMITMENTS: {
   },
 ];
 
-const HERO_HIGHLIGHTS = [
-  { label: "Aulas individuais com professoras especializadas", icon: Puzzle },
-  { label: "Orientação prática para toda a família", icon: HomeIcon },
-  { label: "Contato direto pelo WhatsApp, sem burocracia", icon: MessageCircle },
+const HERO_CONVERSATION = [
+  {
+    from: "mae" as const,
+    text: "Oi... meu filho tem crises de birra fortes e eu não sei mais o que fazer.",
+  },
+  {
+    from: "gilda" as const,
+    text: "Oi! Entendo. Vamos conversar com calma — me conta como costuma acontecer?",
+  },
 ];
 
 export default async function HomePage() {
@@ -180,10 +185,10 @@ export default async function HomePage() {
       <section className="border-b border-primary-100 bg-white">
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 sm:px-6 md:grid-cols-2 md:py-24">
           <div>
-            <span className="text-sm font-semibold uppercase tracking-wide text-accent-600">
+            <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent-600">
               Para mães que precisam de apoio de verdade
             </span>
-            <h1 className="mt-5 text-4xl font-extrabold leading-tight tracking-tight text-primary-700 sm:text-5xl">
+            <h1 className="mt-5 font-serif-display text-4xl font-semibold leading-[1.1] tracking-tight text-primary-700 sm:text-5xl">
               Ajudamos seu filho a lidar com os desafios de comportamento,
               em casa e na escola
             </h1>
@@ -220,33 +225,38 @@ export default async function HomePage() {
                 className="object-cover"
               />
             </div>
-            <div className="relative -mt-8 ml-6 mr-2 rounded-lg border border-primary-100 bg-white p-6 shadow-sm sm:ml-10">
-              <div className="flex items-center gap-3">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-primary-700 text-white">
-                  <Heart className="h-5 w-5" />
+            <div className="relative -mt-8 ml-6 mr-2 rounded-lg border border-primary-100 bg-white p-5 shadow-sm sm:ml-10">
+              <div className="flex items-center gap-2.5 border-b border-primary-100 pb-3">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-700 text-xs font-bold text-white">
+                  G
                 </span>
                 <div>
-                  <p className="font-bold text-primary-700">
-                    Cada criança no seu tempo
+                  <p className="text-sm font-bold text-primary-700">
+                    Gilda Bacelar
                   </p>
-                  <p className="text-sm text-primary-500">
-                    com apoio especializado
+                  <p className="font-mono text-[11px] uppercase tracking-wide text-accent-600">
+                    responde no WhatsApp
                   </p>
                 </div>
               </div>
 
-              <div className="mt-5 space-y-3">
-                {HERO_HIGHLIGHTS.map((item) => (
+              <div className="mt-4 space-y-2.5">
+                {HERO_CONVERSATION.map((message) => (
                   <div
-                    key={item.label}
-                    className="flex items-center gap-3 rounded-md bg-primary-50 px-4 py-3"
+                    key={message.text}
+                    className={
+                      message.from === "gilda"
+                        ? "ml-auto max-w-[85%] rounded-lg rounded-br-none bg-accent-100 px-3.5 py-2.5 text-sm text-primary-700"
+                        : "max-w-[85%] rounded-lg rounded-bl-none bg-primary-50 px-3.5 py-2.5 text-sm text-primary-700"
+                    }
                   >
-                    <item.icon className="h-5 w-5 shrink-0 text-accent-600" />
-                    <span className="text-sm font-medium text-primary-700">
-                      {item.label}
-                    </span>
+                    {message.text}
                   </div>
                 ))}
+                <div className="flex items-center justify-end gap-1 pr-1 text-accent-500">
+                  <span className="font-mono text-[10px] text-primary-400">09:41</span>
+                  <CheckCheck className="h-3.5 w-3.5" />
+                </div>
               </div>
             </div>
           </div>
@@ -257,7 +267,7 @@ export default async function HomePage() {
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
         <h2
           data-reveal
-          className="text-center text-3xl font-bold text-primary-700"
+          className="text-center font-serif-display text-3xl font-semibold text-primary-700"
         >
           Como funciona
         </h2>
@@ -274,7 +284,7 @@ export default async function HomePage() {
               >
                 <step.icon className="h-5 w-5" />
               </span>
-              <p className="mt-4 text-xs font-bold uppercase tracking-wide text-accent-600">
+              <p className="mt-4 font-mono text-xs uppercase tracking-[0.2em] text-accent-600">
                 Passo {step.step}
               </p>
               <p className="mt-1 font-bold text-primary-700">{step.title}</p>
@@ -291,7 +301,7 @@ export default async function HomePage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <h2
             data-reveal
-            className="text-center text-3xl font-bold text-primary-700"
+            className="text-center font-serif-display text-3xl font-semibold text-primary-700"
           >
             Nossos serviços
           </h2>
@@ -339,16 +349,16 @@ export default async function HomePage() {
           >
             <Image
               src={STOCK_PHOTOS.homework}
-              alt="Professora ajudando criança em atividade escolar"
+              alt="Mãe ajudando a filha com a lição de casa"
               fill
               className="object-cover"
             />
           </div>
           <div className="order-1 md:order-2" data-reveal>
-            <span className="text-sm font-semibold uppercase tracking-wide text-warm-600">
+            <span className="font-mono text-xs uppercase tracking-[0.2em] text-warm-600">
               Para quem é o Crianças em Foco
             </span>
-            <h2 className="mt-3 text-3xl font-bold text-primary-700">
+            <h2 className="mt-3 font-serif-display text-3xl font-semibold text-primary-700">
               Se você se identifica com alguma dessas situações,
               estamos aqui para ajudar
             </h2>
@@ -369,7 +379,7 @@ export default async function HomePage() {
       {/* Professoras em destaque */}
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <h2 className="text-3xl font-bold text-primary-700">
+          <h2 className="font-serif-display text-3xl font-semibold text-primary-700">
             Professoras especializadas
           </h2>
           <Link
@@ -437,7 +447,7 @@ export default async function HomePage() {
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
             <h2
               data-reveal
-              className="text-center text-3xl font-bold text-primary-700"
+              className="text-center font-serif-display text-3xl font-semibold text-primary-700"
             >
               O que as famílias dizem
             </h2>
@@ -469,7 +479,7 @@ export default async function HomePage() {
       {/* Compromisso */}
       <section id="depoimentos" className="bg-primary-700 py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <h2 data-reveal className="text-center text-3xl font-bold text-white">
+          <h2 data-reveal className="text-center font-serif-display text-3xl font-semibold text-white">
             Nosso compromisso com sua família
           </h2>
           <div className="mt-10 grid items-center gap-10 md:grid-cols-2">
@@ -515,7 +525,7 @@ export default async function HomePage() {
         data-reveal
         className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6"
       >
-        <h2 className="text-3xl font-bold text-primary-700">
+        <h2 className="font-serif-display text-3xl font-semibold text-primary-700">
           Não precisa enfrentar isso sozinha
         </h2>
         <p className="mt-4 text-primary-700/80">
