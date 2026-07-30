@@ -16,6 +16,16 @@
   --color-accent-500: #2f6f6b;
   --color-accent-600: #235654;
 
+  --color-warm-100: #fbe8da;
+  --color-warm-400: #e2965d;
+  --color-warm-500: #d17a3c;
+  --color-warm-600: #a85b28;
+
+  --color-sky-100: #dfeaf3;
+  --color-sky-400: #6f9dbf;
+  --color-sky-500: #4d7ea8;
+  --color-sky-600: #3a6485;
+
   --color-cream: #ffffff;
   --color-cream-dark: #f4f4f5;
 }
@@ -37,6 +47,16 @@
   --color-accent-400: var(--color-accent-400);
   --color-accent-500: var(--color-accent-500);
   --color-accent-600: var(--color-accent-600);
+
+  --color-warm-100: var(--color-warm-100);
+  --color-warm-400: var(--color-warm-400);
+  --color-warm-500: var(--color-warm-500);
+  --color-warm-600: var(--color-warm-600);
+
+  --color-sky-100: var(--color-sky-100);
+  --color-sky-400: var(--color-sky-400);
+  --color-sky-500: var(--color-sky-500);
+  --color-sky-600: var(--color-sky-600);
 
   --color-cream: var(--color-cream);
   --color-cream-dark: var(--color-cream-dark);
