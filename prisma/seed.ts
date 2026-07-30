@@ -13,7 +13,7 @@ const REMOVED_TEACHER_EMAILS = [
 ];
 
 const GILDA = {
-  name: "Gilda Ferreira",
+  name: "Gilda Bacelar",
   email: "gilda@criancasemfoco.com.br",
   phone: "11988887777",
   whatsapp: "5511988887777",
