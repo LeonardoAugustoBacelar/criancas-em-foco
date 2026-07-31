@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import RatingStars from "@/components/RatingStars";
 import SpecialtyTags from "@/components/SpecialtyTags";
+import SectionMark from "@/components/SectionMark";
 import { summarizeRatings } from "@/lib/reviews";
 
 export const metadata: Metadata = {
@@ -42,6 +43,7 @@ export default async function ProfessorasPage({
       <h1 className="font-serif-display text-3xl font-semibold text-primary-700">
         Nossas professoras
       </h1>
+      <SectionMark color="sky" align="left" />
       <p className="mt-2 max-w-2xl text-primary-700/80">
         Profissionais especializadas em comportamento infantil, prontas para
         ajudar seu filho em casa ou na escola.

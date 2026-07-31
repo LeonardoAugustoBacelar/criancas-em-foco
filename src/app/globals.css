@@ -16,15 +16,25 @@
   --color-accent-500: #2f6f6b;
   --color-accent-600: #235654;
 
-  --color-warm-100: #fbe8da;
-  --color-warm-400: #e2965d;
-  --color-warm-500: #d17a3c;
-  --color-warm-600: #a85b28;
+  --color-warm-100: #fbdcd2;
+  --color-warm-400: #e37a5c;
+  --color-warm-500: #d15a3a;
+  --color-warm-600: #a8432a;
 
   --color-sky-100: #dfeaf3;
   --color-sky-400: #6f9dbf;
   --color-sky-500: #4d7ea8;
   --color-sky-600: #3a6485;
+
+  --color-sun-100: #faecc4;
+  --color-sun-400: #e3b03f;
+  --color-sun-500: #c9922a;
+  --color-sun-600: #9c7020;
+
+  --color-grass-100: #dcefdf;
+  --color-grass-400: #5fac79;
+  --color-grass-500: #3d8c58;
+  --color-grass-600: #2c6c41;
 
   --color-cream: #ffffff;
   --color-cream-dark: #f4f4f5;
@@ -58,6 +68,16 @@
   --color-sky-400: var(--color-sky-400);
   --color-sky-500: var(--color-sky-500);
   --color-sky-600: var(--color-sky-600);
+
+  --color-sun-100: var(--color-sun-100);
+  --color-sun-400: var(--color-sun-400);
+  --color-sun-500: var(--color-sun-500);
+  --color-sun-600: var(--color-sun-600);
+
+  --color-grass-100: var(--color-grass-100);
+  --color-grass-400: var(--color-grass-400);
+  --color-grass-500: var(--color-grass-500);
+  --color-grass-600: var(--color-grass-600);
 
   --color-cream: var(--color-cream);
   --color-cream-dark: var(--color-cream-dark);

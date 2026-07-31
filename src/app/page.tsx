@@ -20,6 +20,7 @@ import { CLINIC_WHATSAPP } from "@/lib/whatsapp";
 import WhatsAppInlineButton from "@/components/WhatsAppInlineButton";
 import RatingStars from "@/components/RatingStars";
 import SpecialtyTags from "@/components/SpecialtyTags";
+import SectionMark from "@/components/SectionMark";
 import { summarizeRatings } from "@/lib/reviews";
 
 const STOCK_PHOTOS = {
@@ -34,6 +35,8 @@ const COLOR_STYLES = {
   accent: { bg: "bg-accent-100", text: "text-accent-600", dark: "text-accent-400" },
   warm: { bg: "bg-warm-100", text: "text-warm-600", dark: "text-warm-400" },
   sky: { bg: "bg-sky-100", text: "text-sky-600", dark: "text-sky-400" },
+  sun: { bg: "bg-sun-100", text: "text-sun-600", dark: "text-sun-400" },
+  grass: { bg: "bg-grass-100", text: "text-grass-600", dark: "text-grass-400" },
 } as const;
 
 const SERVICES: {
@@ -68,7 +71,7 @@ const SERVICES: {
     description:
       "Nada de aula avulsa que não leva a lugar nenhum. Agende aulas recorrentes e receba relatórios de evolução após cada encontro, para acompanhar de perto — e comemorar — cada progresso do seu filho com o tempo.",
     icon: TrendingUp,
-    color: "warm",
+    color: "sun",
   },
 ];
 
@@ -117,7 +120,7 @@ const STEPS: {
     description:
       "Receba retorno da professora após cada encontro e ajuste o plano conforme a criança avança.",
     icon: LineChart,
-    color: "accent",
+    color: "grass",
   },
 ];
 
@@ -132,14 +135,14 @@ const COMMITMENTS: {
     description:
       "Antes de sugerir qualquer estratégia, ouvimos o que você já tentou e o que realmente acontece no dia a dia com seu filho.",
     icon: Ear,
-    color: "warm",
+    color: "sun",
   },
   {
     title: "Orientação também para você",
     description:
       "As aulas não são só com a criança — você recebe orientação prática de como agir em casa entre um encontro e outro.",
     icon: HomeIcon,
-    color: "sky",
+    color: "grass",
   },
   {
     title: "Contato direto e humano",
@@ -160,6 +163,14 @@ const HERO_CONVERSATION = [
     text: "Oi! Entendo. Vamos conversar com calma — me conta como costuma acontecer?",
   },
 ];
+
+const BORDER_TOP = {
+  accent: "border-t-accent-500",
+  warm: "border-t-warm-500",
+  sky: "border-t-sky-500",
+  sun: "border-t-sun-500",
+  grass: "border-t-grass-500",
+} as const;
 
 export default async function HomePage() {
   const teachers = await prisma.teacherProfile.findMany({
@@ -271,6 +282,7 @@ export default async function HomePage() {
         >
           Como funciona
         </h2>
+        <SectionMark color="accent" />
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((step, index) => (
             <div
@@ -305,6 +317,7 @@ export default async function HomePage() {
           >
             Nossos serviços
           </h2>
+          <SectionMark color="warm" />
           <p
             data-reveal
             className="mx-auto mt-4 max-w-2xl text-center text-primary-700/80"
@@ -319,7 +332,7 @@ export default async function HomePage() {
                 key={service.title}
                 data-reveal
                 style={{ "--reveal-delay": `${index * 80}ms` } as CSSProperties}
-                className="flex gap-4 rounded-lg border border-primary-100 bg-white p-6 transition hover:shadow-sm"
+                className={`flex gap-4 rounded-lg border-x border-b border-primary-100 border-t-4 bg-white p-6 transition hover:shadow-sm ${BORDER_TOP[service.color]}`}
               >
                 <span
                   className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-md ${COLOR_STYLES[service.color].bg} ${COLOR_STYLES[service.color].text}`}
@@ -362,6 +375,7 @@ export default async function HomePage() {
               Se você se identifica com alguma dessas situações,
               estamos aqui para ajudar
             </h2>
+            <SectionMark color="warm" align="left" />
             <ul className="mt-6 space-y-3">
               {TARGET_SITUATIONS.map((situation) => (
                 <li key={situation} className="flex items-start gap-3">
@@ -379,9 +393,12 @@ export default async function HomePage() {
       {/* Professoras em destaque */}
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <h2 className="font-serif-display text-3xl font-semibold text-primary-700">
-            Professoras especializadas
-          </h2>
+          <div>
+            <h2 className="font-serif-display text-3xl font-semibold text-primary-700">
+              Professoras especializadas
+            </h2>
+            <SectionMark color="sky" align="left" />
+          </div>
           <Link
             href="/professoras"
             className="group inline-flex items-center gap-1 font-semibold text-accent-600 hover:underline"
@@ -451,6 +468,7 @@ export default async function HomePage() {
             >
               O que as famílias dizem
             </h2>
+            <SectionMark color="grass" />
             <div className="mt-10 grid gap-6 md:grid-cols-3">
               {featuredReviews.map((review, index) => (
                 <div
@@ -482,6 +500,7 @@ export default async function HomePage() {
           <h2 data-reveal className="text-center font-serif-display text-3xl font-semibold text-white">
             Nosso compromisso com sua família
           </h2>
+          <SectionMark color="sun" />
           <div className="mt-10 grid items-center gap-10 md:grid-cols-2">
             <div
               data-reveal
@@ -528,6 +547,7 @@ export default async function HomePage() {
         <h2 className="font-serif-display text-3xl font-semibold text-primary-700">
           Não precisa enfrentar isso sozinha
         </h2>
+        <SectionMark color="accent" />
         <p className="mt-4 text-primary-700/80">
           Fale com a nossa equipe agora mesmo pelo WhatsApp ou crie sua conta
           para agendar uma aula com uma professora especializada.

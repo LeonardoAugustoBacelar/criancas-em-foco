@@ -4,6 +4,16 @@ import type { Metadata } from "next";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import SubscribeButton from "@/components/forms/SubscribeButton";
+import SectionMark, { type MarkColor } from "@/components/SectionMark";
+
+const PLAN_COLORS: MarkColor[] = ["sky", "warm", "grass", "sun", "accent"];
+const PLAN_BORDER_TOP: Record<MarkColor, string> = {
+  accent: "border-t-accent-500",
+  warm: "border-t-warm-500",
+  sky: "border-t-sky-500",
+  sun: "border-t-sun-500",
+  grass: "border-t-grass-500",
+};
 
 export const metadata: Metadata = {
   title: "Planos de assinatura",
@@ -33,6 +43,7 @@ export default async function PlanosPage() {
         <h1 className="font-serif-display text-3xl font-semibold text-primary-700">
           Planos de assinatura
         </h1>
+        <SectionMark color="accent" />
         <p className="mt-2 text-primary-700/80">
           Assine um plano mensal e agende aulas com nossas professoras
           especializadas.
@@ -62,7 +73,7 @@ export default async function PlanosPage() {
               key={plan.id}
               data-reveal
               style={{ "--reveal-delay": `${index * 80}ms` } as CSSProperties}
-              className="flex flex-col rounded-lg border border-primary-100 bg-white p-6 transition hover:shadow-sm"
+              className={`flex flex-col rounded-lg border-x border-b border-primary-100 border-t-4 bg-white p-6 transition hover:shadow-sm ${PLAN_BORDER_TOP[PLAN_COLORS[index % PLAN_COLORS.length]]}`}
             >
               <p className="text-lg font-bold text-primary-700">{plan.name}</p>
               <p className="mt-2 text-sm text-primary-700/80">
