@@ -40,7 +40,7 @@ export async function generateMetadata({
 
   return {
     title: teacher.user.name,
-    description: `${teacher.specialties} — conheça o trabalho de ${teacher.user.name}, professora especializada em comportamento infantil na Crianças em Foco.`,
+    description: `${teacher.specialties} — conheça o trabalho de ${teacher.user.name}, professora especializada em comportamento infantil e pedagogia na Crianças em Foco.`,
   };
 }
 
@@ -86,8 +86,8 @@ export default async function TeacherProfilePage({
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
       <div className="grid gap-10 md:grid-cols-[2fr_1fr]">
         <div>
-          <div className="flex items-center gap-4">
-            <div className="relative h-20 w-20 overflow-hidden rounded-full bg-primary-100">
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-start">
+            <div className="relative mx-auto h-36 w-36 shrink-0 overflow-hidden rounded-2xl bg-primary-100 sm:mx-0 sm:h-44 sm:w-44">
               {teacher.photoUrl ? (
                 <Image
                   src={teacher.photoUrl}
@@ -96,28 +96,28 @@ export default async function TeacherProfilePage({
                   className="object-cover"
                 />
               ) : (
-                <span className="flex h-full w-full items-center justify-center text-2xl font-bold text-primary-500">
+                <span className="flex h-full w-full items-center justify-center text-4xl font-bold text-primary-500">
                   {teacher.user.name.charAt(0)}
                 </span>
               )}
             </div>
             <div>
-              <h1 className="font-serif-display text-2xl font-semibold text-primary-700">
+              <h1 className="font-serif-display text-3xl font-semibold text-primary-700">
                 {teacher.user.name}
               </h1>
-              <div className="mt-1.5">
-                <SpecialtyTags specialties={teacher.specialties} size="md" />
-              </div>
               <div className="mt-2">
                 <RatingStars
                   average={ratingSummary.average}
                   count={ratingSummary.count}
                 />
               </div>
+              <div className="mt-3">
+                <SpecialtyTags specialties={teacher.specialties} size="md" />
+              </div>
             </div>
           </div>
 
-          <p className="mt-6 whitespace-pre-line text-primary-700/90">
+          <p className="mt-8 whitespace-pre-line text-lg leading-relaxed text-primary-700/90">
             {teacher.bio}
           </p>
 

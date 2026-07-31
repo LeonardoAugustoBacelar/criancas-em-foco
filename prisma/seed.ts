@@ -19,7 +19,13 @@ const GILDA = {
   whatsapp: "5511988887777",
   specialties:
     "TDAH, TEA, birras, ansiedade infantil, dificuldades escolares e regulação emocional, Alfabetização e letramento, Leitura e escrita, Matemática, Auxílio nas tarefas escolares, Desenvolvimento da autonomia e da confiança",
-  bio: "Pedagoga e psicopedagoga com mais de 15 anos de experiência, a Gilda atende crianças com os mais diversos desafios de comportamento — crises de birra, dificuldade de concentração (TDAH), características do espectro autista (TEA), ansiedade e conflitos na escola — e também oferece acompanhamento pedagógico completo, com atenção, carinho e atividades adequadas ao ritmo de cada criança: alfabetização e letramento, leitura e escrita, matemática, auxílio nas tarefas escolares e desenvolvimento da autonomia e da confiança. Cada aula é adaptada à realidade da família, sempre com orientação direta para a mãe sobre como agir no dia a dia.",
+  bio: `Pedagoga e psicopedagoga com mais de 15 anos de experiência, Gilda acredita que cada criança aprende e se desenvolve no seu próprio tempo. Por isso, toda aula é construída a partir da realidade específica da sua família — nunca de um roteiro pronto.
+
+No apoio comportamental, ela trabalha com crianças que têm crises de birra frequentes, dificuldade de concentração (TDAH), características do espectro autista (TEA) ou sinais de ansiedade. Antes de qualquer estratégia, ela escuta o que você já tentou e o que realmente acontece no dia a dia — e te orienta sobre como agir em casa, entre um encontro e outro.
+
+No apoio pedagógico, ela acompanha o processo de alfabetização e letramento, leitura e escrita, matemática e as tarefas escolares, com atividades adequadas ao ritmo de cada criança. O objetivo não é só o conteúdo: é fortalecer, aos poucos, a autonomia e a confiança da criança nos próprios estudos.
+
+Cada aula é adaptada à realidade da família, sempre com orientação direta para a mãe sobre como agir no dia a dia.`,
   pricePerHour: 35,
   availabilities: [
     { weekday: 1, startTime: "09:00", endTime: "12:00" },
