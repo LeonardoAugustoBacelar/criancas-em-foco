@@ -5,7 +5,7 @@ export function buildWhatsAppLink(phone: string, message: string) {
 }
 
 export const CLINIC_WHATSAPP =
-  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "5511999999999";
+  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "5511970406208";
 
 export const DEFAULT_WHATSAPP_MESSAGE =
   "Olá! Encontrei o site Crianças em Foco e gostaria de saber mais sobre como vocês podem ajudar meu filho(a).";
