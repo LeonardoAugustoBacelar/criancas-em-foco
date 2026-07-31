@@ -48,21 +48,21 @@ const SERVICES: {
   {
     title: "Aulas individuais",
     description:
-      "Encontros só entre a professora e o seu filho — sem roteiro pronto. Cada aula é montada em cima do que realmente acontece na sua casa: birras frequentes, dificuldade de concentração, características do espectro autista (TEA), TDAH ou dificuldade de lidar com frustração.",
+      "Encontros só entre a professora e o seu filho — sem roteiro pronto. Cada aula é montada em cima do que a criança precisa: birras frequentes, TDAH, TEA e dificuldade de concentração, ou alfabetização, leitura, escrita e matemática, sempre no ritmo dela.",
     icon: Puzzle,
     color: "accent",
   },
   {
     title: "Orientação para mães",
     description:
-      "Você não precisa adivinhar sozinha o que fazer. A professora explica o que está por trás de cada comportamento e te dá orientações práticas para aplicar entre uma aula e outra — porque a mudança acontece em casa, no dia a dia, não só durante a aula.",
+      "Você não precisa adivinhar sozinha o que fazer. A professora explica o que está por trás de cada comportamento ou dificuldade e te dá orientações práticas para aplicar entre uma aula e outra — porque a mudança acontece em casa, no dia a dia, não só durante a aula.",
     icon: MessageCircle,
     color: "warm",
   },
   {
-    title: "Suporte escolar",
+    title: "Alfabetização e reforço escolar",
     description:
-      "Quando a escola liga com frequência, dói. Alinhamos estratégias com professores e coordenação para reduzir conflitos em sala de aula e melhorar a relação do seu filho com colegas e professores, respeitando o ritmo dele.",
+      "Alfabetização e letramento, leitura e escrita, matemática e auxílio nas tarefas de casa, com atenção, carinho e atividades adequadas ao ritmo de cada criança. Quando a escola liga por conflitos de comportamento, também alinhamos estratégias com professores e coordenação.",
     icon: School,
     color: "sky",
   },
@@ -78,6 +78,8 @@ const SERVICES: {
 const TARGET_SITUATIONS = [
   "Seu filho tem crises de birra frequentes e você já não sabe mais como agir",
   "Ele foi diagnosticado com TDAH ou TEA e você quer apoio especializado no dia a dia",
+  "Ele tem dificuldade para aprender a ler e escrever, mesmo com apoio em casa",
+  "Ele trava nas tarefas escolares ou tem dificuldade em matemática",
   "A escola te chama com frequência por causa de conflitos de comportamento",
   "Ele mostra sinais de ansiedade, choro fácil ou dificuldade de se regular emocionalmente",
   "Você sente que está sozinha nessa rotina e gostaria de orientação de quem entende",
@@ -200,14 +202,14 @@ export default async function HomePage() {
               Para mães que precisam de apoio de verdade
             </span>
             <h1 className="mt-5 font-serif-display text-4xl font-semibold leading-[1.1] tracking-tight text-primary-700 sm:text-5xl">
-              Ajudamos seu filho a lidar com os desafios de comportamento,
-              em casa e na escola
+              Ajudamos seu filho a lidar com os desafios de comportamento
+              e a avançar nos estudos
             </h1>
             <p className="mt-5 text-lg text-primary-500">
               Conectamos mães a professoras especializadas em comportamento
-              infantil, com aulas individuais, orientação para a família e
-              acompanhamento contínuo — tudo começando por uma conversa no
-              WhatsApp.
+              infantil e pedagogia, com aulas individuais de alfabetização,
+              reforço escolar, orientação para a família e acompanhamento
+              contínuo — tudo começando por uma conversa no WhatsApp.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <WhatsAppInlineButton

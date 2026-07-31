@@ -15,6 +15,10 @@ const KEYWORD_COLORS: { match: string; color: keyof typeof TAG_COLORS }[] = [
   { match: "ansiedade", color: "grass" },
   { match: "escolar", color: "accent" },
   { match: "emocional", color: "grass" },
+  { match: "alfabetiz", color: "sun" },
+  { match: "leitura", color: "sky" },
+  { match: "matem", color: "grass" },
+  { match: "autonomia", color: "warm" },
 ];
 
 function colorForTag(tag: string, index: number): keyof typeof TAG_COLORS {

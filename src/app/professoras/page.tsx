@@ -11,7 +11,7 @@ import { summarizeRatings } from "@/lib/reviews";
 export const metadata: Metadata = {
   title: "Professoras especializadas",
   description:
-    "Conheça professoras especializadas em comportamento infantil, prontas para ajudar seu filho em casa ou na escola.",
+    "Conheça professoras especializadas em comportamento infantil e pedagogia — alfabetização, reforço escolar e apoio comportamental — prontas para ajudar seu filho em casa ou na escola.",
 };
 
 export default async function ProfessorasPage({
@@ -45,8 +45,8 @@ export default async function ProfessorasPage({
       </h1>
       <SectionMark color="sky" align="left" />
       <p className="mt-2 max-w-2xl text-primary-700/80">
-        Profissionais especializadas em comportamento infantil, prontas para
-        ajudar seu filho em casa ou na escola.
+        Profissionais especializadas em comportamento infantil e pedagogia,
+        prontas para ajudar seu filho em casa ou na escola.
       </p>
 
       <form className="mt-6 flex max-w-md gap-2">
