@@ -79,8 +79,8 @@ export default async function ProfessorasPage({
               style={{ "--reveal-delay": `${index * 80}ms` } as CSSProperties}
               className="group rounded-lg border border-primary-100 bg-white p-6 transition hover:shadow-sm"
             >
-              <div className="flex items-center gap-4">
-                <div className="relative h-16 w-16 overflow-hidden rounded-full bg-primary-100">
+              <div className="flex items-start gap-4">
+                <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-full bg-primary-100">
                   {teacher.photoUrl ? (
                     <Image
                       src={teacher.photoUrl}
@@ -89,7 +89,7 @@ export default async function ProfessorasPage({
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   ) : (
-                    <span className="flex h-full w-full items-center justify-center text-xl font-bold text-primary-500">
+                    <span className="flex h-full w-full items-center justify-center text-3xl font-bold text-primary-500">
                       {teacher.user.name.charAt(0)}
                     </span>
                   )}
