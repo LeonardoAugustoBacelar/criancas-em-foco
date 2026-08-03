@@ -7,10 +7,15 @@ export default async function PixPaymentInfo() {
 
   return (
     <div className="rounded-lg border border-primary-100 bg-white p-6">
-      <p className="font-bold text-primary-700">Pagamento via PIX</p>
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <p className="font-bold text-primary-700">Pagamento via PIX</p>
+        <p className="text-lg font-bold text-accent-600">
+          R$ {PIX_CONFIG.amount.toFixed(2)}
+        </p>
+      </div>
       <p className="mt-1 text-sm text-primary-700/80">
         Depois de agendar, pague a aula direto para a professora — escaneie o
-        QR code ou copie a chave abaixo.
+        QR code (já vem com o valor preenchido) ou copie a chave abaixo.
       </p>
 
       <div className="mt-5 flex flex-col items-center gap-4 sm:flex-row sm:items-start">

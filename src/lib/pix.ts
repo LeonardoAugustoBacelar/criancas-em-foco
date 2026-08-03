@@ -9,6 +9,9 @@ export const PIX_CONFIG = {
   name: "Gilda Bacelar",
   // Campo "cidade" do BR Code exige texto em ASCII, sem acentuação.
   city: "Sao Paulo",
+  // Valor fixo de uma aula. O QR sempre pede esse valor ao ser escaneado
+  // (o app do banco ainda deixa a pessoa editar antes de confirmar).
+  amount: 35,
 } as const;
 
 function crc16(payload: string): string {
@@ -28,8 +31,8 @@ function emvField(id: string, value: string): string {
   return `${id}${length}${value}`;
 }
 
-/** Monta o payload "PIX copia e cola" (BR Code) para um QR estático, sem valor fixo. */
-export function buildPixPayload(): string {
+/** Monta o payload "PIX copia e cola" (BR Code) para um QR estático com valor pré-definido. */
+export function buildPixPayload(amount: number = PIX_CONFIG.amount): string {
   const merchantAccountInfo =
     emvField("00", "br.gov.bcb.pix") + emvField("01", PIX_CONFIG.keyFormatted);
   const additionalData = emvField("05", "***");
@@ -40,6 +43,7 @@ export function buildPixPayload(): string {
     emvField("26", merchantAccountInfo) +
     emvField("52", "0000") + // Merchant Category Code
     emvField("53", "986") + // Moeda: Real (BRL)
+    (amount > 0 ? emvField("54", amount.toFixed(2)) : "") + // Valor da transação
     emvField("58", "BR") +
     emvField("59", PIX_CONFIG.name.slice(0, 25)) +
     emvField("60", PIX_CONFIG.city.slice(0, 15)) +
