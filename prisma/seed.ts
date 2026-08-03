@@ -15,8 +15,9 @@ const REMOVED_TEACHER_EMAILS = [
 const GILDA = {
   name: "Gilda Bacelar",
   email: "gilda@criancasemfoco.com.br",
-  phone: "11988887777",
-  whatsapp: "5511988887777",
+  phone: "11970406208",
+  whatsapp: "5511970406208",
+  photoUrl: "/images/gilda.jpg",
   specialties:
     "TDAH, TEA, birras, ansiedade infantil, dificuldades escolares e regulação emocional, Alfabetização e letramento, Leitura e escrita, Matemática, Auxílio nas tarefas escolares, Desenvolvimento da autonomia e da confiança",
   bio: `Pedagoga e psicopedagoga com mais de 15 anos de experiência, Gilda acredita que cada criança aprende e se desenvolve no seu próprio tempo. Por isso, toda aula é construída a partir da realidade específica da sua família — nunca de um roteiro pronto.
@@ -54,6 +55,7 @@ async function main() {
             specialties: GILDA.specialties,
             whatsapp: GILDA.whatsapp,
             pricePerHour: GILDA.pricePerHour,
+            photoUrl: GILDA.photoUrl,
           },
         },
       },
