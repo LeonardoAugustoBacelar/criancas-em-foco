@@ -27,13 +27,6 @@ No apoio pedagógico, ela acompanha o processo de alfabetização e letramento, 
 
 Cada aula é adaptada à realidade da família, sempre com orientação direta para a mãe sobre como agir no dia a dia.`,
   pricePerHour: 35,
-  availabilities: [
-    { weekday: 1, startTime: "09:00", endTime: "12:00" },
-    { weekday: 2, startTime: "08:00", endTime: "11:00" },
-    { weekday: 3, startTime: "14:00", endTime: "17:00" },
-    { weekday: 4, startTime: "13:00", endTime: "16:00" },
-    { weekday: 5, startTime: "09:00", endTime: "12:00" },
-  ],
 };
 
 async function main() {
@@ -61,9 +54,6 @@ async function main() {
             specialties: GILDA.specialties,
             whatsapp: GILDA.whatsapp,
             pricePerHour: GILDA.pricePerHour,
-            availabilities: {
-              create: GILDA.availabilities,
-            },
           },
         },
       },
@@ -96,33 +86,6 @@ async function main() {
         role: "ADMIN",
       },
     });
-  }
-
-  const PLANS = [
-    {
-      name: "Essencial",
-      description: "Ideal para começar o acompanhamento com uma professora.",
-      price: 70,
-      aulasPerMes: 2,
-    },
-    {
-      name: "Equilíbrio",
-      description: "Acompanhamento mais próximo, com aulas semanais.",
-      price: 140,
-      aulasPerMes: 4,
-    },
-    {
-      name: "Ilimitado",
-      description: "Quantas aulas forem necessárias, sem limite mensal.",
-      price: 250,
-      aulasPerMes: null,
-    },
-  ];
-
-  for (const plan of PLANS) {
-    const existingPlan = await prisma.plan.findFirst({ where: { name: plan.name } });
-    if (existingPlan) continue;
-    await prisma.plan.create({ data: plan });
   }
 
   console.log("Seed concluído. Logins de teste (senha: senha123):");

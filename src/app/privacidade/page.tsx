@@ -42,12 +42,11 @@ export default function PrivacidadePage() {
               horário e observações que a mãe/responsável opte por
               informar sobre a aula.
             </li>
-            <li>
-              <strong>Dados de pagamento:</strong> processados diretamente
-              pelo Mercado Pago — não temos acesso nem armazenamos número
-              de cartão de crédito.
-            </li>
           </ul>
+          <p className="mt-2">
+            As aulas são pagas diretamente por PIX, entre mãe/responsável e
+            professora — não processamos nem armazenamos dados de pagamento.
+          </p>
         </section>
 
         <section>
@@ -72,8 +71,8 @@ export default function PrivacidadePage() {
           </h2>
           <p className="mt-2">
             Usamos seus dados para: criar e gerenciar sua conta, viabilizar
-            o agendamento de aulas, processar assinaturas, e permitir
-            contato via WhatsApp entre mãe e professora. A base legal é a
+            o agendamento de aulas, e permitir contato via WhatsApp entre
+            mãe e professora. A base legal é a
             execução do contrato de uso da plataforma e o seu
             consentimento, dado no momento do cadastro.
           </p>
@@ -88,10 +87,6 @@ export default function PrivacidadePage() {
             funcionamento do serviço:
           </p>
           <ul className="mt-2 list-disc space-y-1 pl-5">
-            <li>
-              <strong>Mercado Pago</strong> — processamento de pagamentos e
-              assinaturas.
-            </li>
             <li>
               <strong>Vercel</strong> — hospedagem da aplicação.
             </li>

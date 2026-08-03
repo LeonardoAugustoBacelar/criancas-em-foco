@@ -567,10 +567,10 @@ export default async function HomePage() {
             Criar minha conta
           </Link>
           <Link
-            href="/planos"
+            href="/horarios"
             className="btn-press group inline-flex items-center gap-2 rounded-md border border-primary-100 px-6 py-3 font-semibold text-primary-700 transition-colors hover:bg-primary-50"
           >
-            Ver planos
+            Ver horários
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </Link>
         </div>

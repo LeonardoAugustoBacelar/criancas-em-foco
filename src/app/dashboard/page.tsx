@@ -4,8 +4,6 @@ import type { Metadata } from "next";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import BookingActions from "@/components/dashboard/BookingActions";
-import AvailabilityManager from "@/components/dashboard/AvailabilityManager";
-import CancelSubscriptionButton from "@/components/dashboard/CancelSubscriptionButton";
 import CancelBookingButton from "@/components/dashboard/CancelBookingButton";
 import TeacherProfileForm from "@/components/dashboard/TeacherProfileForm";
 import WhatsAppInlineButton from "@/components/WhatsAppInlineButton";
@@ -14,13 +12,6 @@ import ReviewForm from "@/components/forms/ReviewForm";
 export const metadata: Metadata = {
   title: "Minha área",
   robots: { index: false, follow: false },
-};
-
-const SUBSCRIPTION_STATUS_LABELS: Record<string, string> = {
-  PENDENTE: "Aguardando confirmação de pagamento",
-  ATIVA: "Ativa",
-  PAUSADA: "Pausada",
-  CANCELADA: "Cancelada",
 };
 
 const STATUS_LABELS: Record<string, string> = {
@@ -55,17 +46,11 @@ export default async function DashboardPage() {
 }
 
 async function MaeDashboard({ userId }: { userId: string }) {
-  const [bookings, subscription] = await Promise.all([
-    prisma.booking.findMany({
-      where: { maeId: userId },
-      include: { teacher: { include: { user: true } }, review: true },
-      orderBy: { date: "desc" },
-    }),
-    prisma.subscription.findUnique({
-      where: { maeId: userId },
-      include: { plan: true },
-    }),
-  ]);
+  const bookings = await prisma.booking.findMany({
+    where: { maeId: userId },
+    include: { teacher: { include: { user: true } }, review: true },
+    orderBy: { date: "desc" },
+  });
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
@@ -79,38 +64,6 @@ async function MaeDashboard({ userId }: { userId: string }) {
         >
           Agendar nova aula
         </Link>
-      </div>
-
-      <div className="mt-6 rounded-lg border border-primary-100 bg-white p-5">
-        <p className="font-bold text-primary-700">Minha assinatura</p>
-        {subscription ? (
-          <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
-            <div className="text-sm text-primary-700/80">
-              <p>
-                Plano <strong>{subscription.plan.name}</strong> —{" "}
-                {SUBSCRIPTION_STATUS_LABELS[subscription.status]}
-              </p>
-              {subscription.status === "PENDENTE" && (
-                <p className="mt-1 text-xs text-primary-700/60">
-                  O pagamento ainda está sendo confirmado pelo Mercado Pago.
-                </p>
-              )}
-            </div>
-            {subscription.status === "ATIVA" && <CancelSubscriptionButton />}
-          </div>
-        ) : (
-          <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
-            <p className="text-sm text-primary-700/80">
-              Você ainda não tem um plano ativo.
-            </p>
-            <Link
-              href="/planos"
-              className="rounded-md bg-primary-700 px-4 py-2 text-xs font-semibold text-white hover:bg-primary-600"
-            >
-              Ver planos
-            </Link>
-          </div>
-        )}
       </div>
 
       {bookings.length === 0 ? (
@@ -175,7 +128,6 @@ async function ProfessoraDashboard({ userId }: { userId: string }) {
   const teacherProfile = await prisma.teacherProfile.findUnique({
     where: { userId },
     include: {
-      availabilities: true,
       bookings: {
         include: { mae: true },
         orderBy: { date: "desc" },
@@ -209,13 +161,6 @@ async function ProfessoraDashboard({ userId }: { userId: string }) {
             pricePerHour={teacherProfile.pricePerHour}
             photoUrl={teacherProfile.photoUrl}
           />
-        </div>
-      </section>
-
-      <section className="mt-8 rounded-lg border border-primary-100 bg-white p-6">
-        <h2 className="font-bold text-primary-700">Meus horários</h2>
-        <div className="mt-4">
-          <AvailabilityManager availabilities={teacherProfile.availabilities} />
         </div>
       </section>
 

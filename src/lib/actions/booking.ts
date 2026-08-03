@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { isValidSlot, SCHEDULE_RULES } from "@/lib/schedule";
 
 export type BookingState = {
   error?: string;
@@ -28,37 +29,6 @@ export async function createBookingAction(
     return { error: "Você precisa entrar com uma conta de mãe para agendar." };
   }
 
-  const subscription = await prisma.subscription.findUnique({
-    where: { maeId: session.user.id },
-    include: { plan: true },
-  });
-
-  if (subscription?.status !== "ATIVA") {
-    return {
-      error: "Você precisa de uma assinatura ativa para agendar aulas. Veja os planos disponíveis.",
-    };
-  }
-
-  if (subscription.plan.aulasPerMes) {
-    const now = new Date();
-    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-    const startOfNextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
-
-    const bookingsThisMonth = await prisma.booking.count({
-      where: {
-        maeId: session.user.id,
-        date: { gte: startOfMonth, lt: startOfNextMonth },
-        status: { in: ["PENDENTE", "CONFIRMADA", "CONCLUIDA"] },
-      },
-    });
-
-    if (bookingsThisMonth >= subscription.plan.aulasPerMes) {
-      return {
-        error: `Você já usou as ${subscription.plan.aulasPerMes} aulas incluídas no seu plano este mês.`,
-      };
-    }
-  }
-
   const parsed = bookingSchema.safeParse({
     teacherId: formData.get("teacherId"),
     childName: formData.get("childName"),
@@ -73,11 +43,16 @@ export async function createBookingAction(
   }
 
   const data = parsed.data;
+  const bookingDate = new Date(data.date);
+
+  if (!isValidSlot(bookingDate, data.startTime, data.endTime)) {
+    return { error: "Horário inválido. Escolha um dos horários disponíveis." };
+  }
 
   const conflict = await prisma.booking.findFirst({
     where: {
       teacherId: data.teacherId,
-      date: new Date(data.date),
+      date: bookingDate,
       startTime: data.startTime,
       status: { in: ["PENDENTE", "CONFIRMADA"] },
     },
@@ -87,12 +62,26 @@ export async function createBookingAction(
     return { error: "Esse horário já está reservado. Escolha outro." };
   }
 
+  const bookingsThisDay = await prisma.booking.count({
+    where: {
+      teacherId: data.teacherId,
+      date: bookingDate,
+      status: { in: ["PENDENTE", "CONFIRMADA"] },
+    },
+  });
+
+  if (bookingsThisDay >= SCHEDULE_RULES.maxBookingsPerDay) {
+    return {
+      error: `Esse dia já atingiu o limite de ${SCHEDULE_RULES.maxBookingsPerDay} aulas. Escolha outro dia.`,
+    };
+  }
+
   await prisma.booking.create({
     data: {
       maeId: session.user.id,
       teacherId: data.teacherId,
       childName: data.childName,
-      date: new Date(data.date),
+      date: bookingDate,
       startTime: data.startTime,
       endTime: data.endTime,
       notes: data.notes,

@@ -10,6 +10,7 @@ import CallButton from "@/components/CallButton";
 import BookingForm from "@/components/forms/BookingForm";
 import RatingStars from "@/components/RatingStars";
 import SpecialtyTags from "@/components/SpecialtyTags";
+import PixPaymentInfo from "@/components/PixPaymentInfo";
 import { summarizeRatings } from "@/lib/reviews";
 
 const getTeacher = cache(async (id: string) => {
@@ -17,7 +18,6 @@ const getTeacher = cache(async (id: string) => {
     where: { id },
     include: {
       user: true,
-      availabilities: true,
       reviews: {
         include: { mae: { select: { name: true } } },
         orderBy: { createdAt: "desc" },
@@ -59,11 +59,6 @@ export default async function TeacherProfilePage({
 
   const session = await auth();
   const isMae = session?.user?.role === "MAE";
-
-  const subscription = isMae
-    ? await prisma.subscription.findUnique({ where: { maeId: session!.user.id } })
-    : null;
-  const hasActiveSubscription = subscription?.status === "ATIVA";
 
   const upcomingBookings = await prisma.booking.findMany({
     where: {
@@ -162,51 +157,38 @@ export default async function TeacherProfilePage({
           )}
         </div>
 
-        <div className="rounded-lg border border-primary-100 bg-white p-6">
-          <h2 className="font-bold text-primary-700">Agendar aula</h2>
+        <div className="space-y-6">
+          <div className="rounded-lg border border-primary-100 bg-white p-6">
+            <h2 className="font-bold text-primary-700">Agendar aula</h2>
 
-          {!session?.user ? (
-            <div className="mt-4 space-y-3 text-sm text-primary-700/80">
-              <p>Entre ou crie uma conta de mãe para agendar aulas.</p>
-              <Link
-                href="/login"
-                className="block rounded-md bg-primary-700 px-4 py-2 text-center font-semibold text-white hover:bg-primary-600"
-              >
-                Entrar
-              </Link>
-              <Link
-                href="/cadastro"
-                className="block rounded-md border border-primary-100 px-4 py-2 text-center font-semibold text-primary-700 hover:bg-primary-50"
-              >
-                Criar conta
-              </Link>
-            </div>
-          ) : !isMae ? (
-            <p className="mt-4 text-sm text-primary-700/80">
-              Apenas contas de mãe podem agendar aulas.
-            </p>
-          ) : !hasActiveSubscription ? (
-            <div className="mt-4 space-y-3 text-sm text-primary-700/80">
-              <p>
-                Você precisa de uma assinatura ativa para agendar aulas com
-                nossas professoras.
+            {!session?.user ? (
+              <div className="mt-4 space-y-3 text-sm text-primary-700/80">
+                <p>Entre ou crie uma conta de mãe para agendar aulas.</p>
+                <Link
+                  href="/login"
+                  className="block rounded-md bg-primary-700 px-4 py-2 text-center font-semibold text-white hover:bg-primary-600"
+                >
+                  Entrar
+                </Link>
+                <Link
+                  href="/cadastro"
+                  className="block rounded-md border border-primary-100 px-4 py-2 text-center font-semibold text-primary-700 hover:bg-primary-50"
+                >
+                  Criar conta
+                </Link>
+              </div>
+            ) : !isMae ? (
+              <p className="mt-4 text-sm text-primary-700/80">
+                Apenas contas de mãe podem agendar aulas.
               </p>
-              <Link
-                href="/planos"
-                className="block rounded-md bg-accent-500 px-4 py-2 text-center font-semibold text-white hover:bg-accent-600"
-              >
-                Ver planos
-              </Link>
-            </div>
-          ) : (
-            <div className="mt-4">
-              <BookingForm
-                teacherId={teacher.id}
-                availabilities={teacher.availabilities}
-                bookedSlots={bookedSlots}
-              />
-            </div>
-          )}
+            ) : (
+              <div className="mt-4">
+                <BookingForm teacherId={teacher.id} bookedSlots={bookedSlots} />
+              </div>
+            )}
+          </div>
+
+          <PixPaymentInfo />
         </div>
       </div>
     </div>

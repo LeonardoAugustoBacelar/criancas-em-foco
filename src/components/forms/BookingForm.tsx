@@ -2,26 +2,15 @@
 
 import { useActionState, useMemo, useState } from "react";
 import { createBookingAction, type BookingState } from "@/lib/actions/booking";
-
-const WEEKDAY_LABELS = [
-  "Domingo",
-  "Segunda",
-  "Terça",
-  "Quarta",
-  "Quinta",
-  "Sexta",
-  "Sábado",
-];
+import { getDaySlots, SCHEDULE_RULES } from "@/lib/schedule";
 
 const initialState: BookingState = {};
 
 export default function BookingForm({
   teacherId,
-  availabilities,
   bookedSlots = [],
 }: {
   teacherId: string;
-  availabilities: { id: string; weekday: number; startTime: string; endTime: string }[];
   bookedSlots?: { date: string; startTime: string }[];
 }) {
   const [state, formAction, isPending] = useActionState(
@@ -29,8 +18,6 @@ export default function BookingForm({
     initialState
   );
   const [date, setDate] = useState("");
-
-  const weekdayOfDate = date ? new Date(`${date}T00:00:00`).getDay() : null;
 
   const takenTimesForDate = useMemo(
     () =>
@@ -40,17 +27,27 @@ export default function BookingForm({
     [bookedSlots, date]
   );
 
-  const slotsForDay = useMemo(
-    () =>
-      weekdayOfDate === null
-        ? []
-        : availabilities
-            .filter((a) => a.weekday === weekdayOfDate)
-            .map((a) => ({ ...a, taken: takenTimesForDate.has(a.startTime) })),
-    [availabilities, weekdayOfDate, takenTimesForDate]
+  const bookedCountForDate = useMemo(
+    () => bookedSlots.filter((b) => b.date === date).length,
+    [bookedSlots, date]
   );
 
-  const availableSlotsForDay = slotsForDay.filter((s) => !s.taken);
+  const dayIsFull = bookedCountForDate >= SCHEDULE_RULES.maxBookingsPerDay;
+
+  const slotsForDay = useMemo(
+    () =>
+      date
+        ? getDaySlots(new Date(`${date}T00:00:00`)).map((slot) => ({
+            ...slot,
+            taken: takenTimesForDate.has(slot.startTime),
+          }))
+        : [],
+    [date, takenTimesForDate]
+  );
+
+  const availableSlotsForDay = dayIsFull
+    ? []
+    : slotsForDay.filter((s) => !s.taken);
 
   if (state.success) {
     return (
@@ -66,26 +63,16 @@ export default function BookingForm({
     );
   }
 
-  if (availabilities.length === 0) {
-    return (
-      <p className="rounded-lg border border-primary-100 bg-primary-50 p-4 text-sm text-primary-700/80">
-        Esta professora ainda não cadastrou horários disponíveis. Fale com
-        ela pelo WhatsApp para combinar um horário.
-      </p>
-    );
-  }
-
   return (
     <form action={formAction} className="space-y-4">
       <input type="hidden" name="teacherId" value={teacherId} />
 
       <div className="rounded-md bg-primary-50 p-3 text-xs text-primary-700/80">
-        <p className="font-semibold text-primary-700">Dias disponíveis:</p>
+        <p className="font-semibold text-primary-700">Horários de atendimento:</p>
         <p className="mt-1">
-          {[...new Set(availabilities.map((a) => a.weekday))]
-            .sort()
-            .map((w) => WEEKDAY_LABELS[w])
-            .join(", ")}
+          Segunda a sexta, a partir das {SCHEDULE_RULES.weekdayStart}. Sábado
+          e domingo, a partir das {SCHEDULE_RULES.weekendStart}. Até no máximo{" "}
+          {SCHEDULE_RULES.maxBookingsPerDay} aulas por dia.
         </p>
       </div>
 
@@ -110,14 +97,14 @@ export default function BookingForm({
         />
       </label>
 
-      {date && slotsForDay.length === 0 && (
+      {date && dayIsFull && (
         <p className="text-sm text-accent-600">
-          A professora não atende em {WEEKDAY_LABELS[weekdayOfDate!]}s.
-          Escolha outra data.
+          Esse dia já atingiu o limite de {SCHEDULE_RULES.maxBookingsPerDay}{" "}
+          aulas. Escolha outra data.
         </p>
       )}
 
-      {date && slotsForDay.length > 0 && availableSlotsForDay.length === 0 && (
+      {date && !dayIsFull && availableSlotsForDay.length === 0 && (
         <p className="text-sm text-accent-600">
           Todos os horários desse dia já estão reservados. Escolha outra data.
         </p>
@@ -140,12 +127,12 @@ export default function BookingForm({
             <option value="">Selecione...</option>
             {slotsForDay.map((slot) => (
               <option
-                key={slot.id}
+                key={slot.startTime}
                 value={`${slot.startTime}|${slot.endTime}`}
-                disabled={slot.taken}
+                disabled={dayIsFull || slot.taken}
               >
                 {slot.startTime} às {slot.endTime}
-                {slot.taken ? " (indisponível)" : ""}
+                {dayIsFull || slot.taken ? " (indisponível)" : ""}
               </option>
             ))}
           </select>

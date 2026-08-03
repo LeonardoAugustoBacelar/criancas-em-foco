@@ -65,16 +65,13 @@ export default function TermosPage() {
 
         <section>
           <h2 className="text-lg font-bold text-primary-700">
-            4. Assinaturas e pagamentos
+            4. Pagamentos
           </h2>
           <p className="mt-2">
-            Os planos são cobrados mensalmente, com renovação automática,
-            através do Mercado Pago. Você pode cancelar sua assinatura a
-            qualquer momento pelo seu painel — o cancelamento interrompe a
-            renovação automática, mas não gera reembolso proporcional do
-            período já pago, salvo disposição legal em contrário. Não
-            armazenamos dados do seu cartão de crédito: o pagamento é
-            processado inteiramente pelo Mercado Pago.
+            As aulas são pagas por PIX, diretamente para a professora, após o
+            agendamento. A Crianças em Foco não processa nem armazena dados
+            de pagamento — a chave PIX e o QR code exibidos no site
+            pertencem à professora responsável pela aula.
           </p>
         </section>
 

@@ -23,9 +23,10 @@ export default async function AdminPage() {
     orderBy: { createdAt: "desc" },
   });
 
-  const subscriptions = await prisma.subscription.findMany({
-    include: { mae: true, plan: true },
-    orderBy: { createdAt: "desc" },
+  const recentBookings = await prisma.booking.findMany({
+    include: { mae: true, teacher: { include: { user: true } } },
+    orderBy: { date: "desc" },
+    take: 20,
   });
 
   return (
@@ -74,26 +75,38 @@ export default async function AdminPage() {
       </section>
 
       <section className="mt-10">
-        <h2 className="text-xl font-bold text-primary-700">Assinaturas</h2>
-        {subscriptions.length === 0 ? (
+        <h2 className="text-xl font-bold text-primary-700">
+          Últimas reservas
+        </h2>
+        <p className="mt-1 text-sm text-primary-700/70">
+          Pagamento é combinado direto por PIX entre mãe e professora — aqui é
+          só um acompanhamento dos agendamentos.
+        </p>
+        {recentBookings.length === 0 ? (
           <p className="mt-4 text-primary-700/80">
-            Nenhuma assinatura criada ainda.
+            Nenhuma reserva ainda.
           </p>
         ) : (
           <div className="mt-4 space-y-3">
-            {subscriptions.map((sub) => (
+            {recentBookings.map((booking) => (
               <div
-                key={sub.id}
+                key={booking.id}
                 className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-primary-100 bg-white p-5"
               >
                 <div>
-                  <p className="font-bold text-primary-700">{sub.mae.name}</p>
+                  <p className="font-bold text-primary-700">
+                    {booking.mae.name}{" "}
+                    <span className="font-normal text-primary-700/60">
+                      com {booking.teacher.user.name}
+                    </span>
+                  </p>
                   <p className="text-sm text-primary-700/70">
-                    Plano {sub.plan.name} · {sub.mae.email}
+                    {new Date(booking.date).toLocaleDateString("pt-BR")} ·{" "}
+                    {booking.startTime} às {booking.endTime}
                   </p>
                 </div>
                 <span className="rounded-full bg-primary-50 px-3 py-1 text-xs font-semibold text-primary-700">
-                  {sub.status}
+                  {booking.status}
                 </span>
               </div>
             ))}

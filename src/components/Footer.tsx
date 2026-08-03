@@ -37,8 +37,8 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/planos" className="transition hover:text-white">
-                Planos
+              <Link href="/horarios" className="transition hover:text-white">
+                Horários
               </Link>
             </li>
             <li>
