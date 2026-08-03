@@ -183,7 +183,11 @@ export default async function TeacherProfilePage({
               </p>
             ) : (
               <div className="mt-4">
-                <BookingForm teacherId={teacher.id} bookedSlots={bookedSlots} />
+                <BookingForm
+                  teacherId={teacher.id}
+                  teacherWhatsapp={teacher.whatsapp}
+                  bookedSlots={bookedSlots}
+                />
               </div>
             )}
           </div>

@@ -37,6 +37,11 @@ export default async function PixPaymentInfo() {
           </p>
         </div>
       </div>
+
+      <p className="mt-5 rounded-md bg-primary-50 p-3 text-xs text-primary-700/80">
+        Depois de pagar, envie o comprovante pelo WhatsApp para confirmar sua
+        vaga — o link aparece assim que você agenda a aula.
+      </p>
     </div>
   );
 }

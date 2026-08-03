@@ -107,6 +107,17 @@ async function MaeDashboard({ userId }: { userId: string }) {
                 />
                 {(booking.status === "PENDENTE" ||
                   booking.status === "CONFIRMADA") && (
+                  <WhatsAppInlineButton
+                    phone={booking.teacher.whatsapp}
+                    message={`Olá, ${booking.teacher.user.name}! Segue o comprovante do PIX da aula do dia ${new Date(
+                      booking.date
+                    ).toLocaleDateString("pt-BR")} às ${booking.startTime}:`}
+                    label="Enviar comprovante PIX"
+                    className="!bg-accent-500 !px-4 !py-2 text-xs hover:!bg-accent-600"
+                  />
+                )}
+                {(booking.status === "PENDENTE" ||
+                  booking.status === "CONFIRMADA") && (
                   <CancelBookingButton bookingId={booking.id} />
                 )}
               </div>

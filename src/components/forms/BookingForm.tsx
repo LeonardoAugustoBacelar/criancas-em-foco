@@ -3,14 +3,17 @@
 import { useActionState, useMemo, useState } from "react";
 import { createBookingAction, type BookingState } from "@/lib/actions/booking";
 import { getDaySlots, SCHEDULE_RULES } from "@/lib/schedule";
+import WhatsAppInlineButton from "@/components/WhatsAppInlineButton";
 
 const initialState: BookingState = {};
 
 export default function BookingForm({
   teacherId,
+  teacherWhatsapp,
   bookedSlots = [],
 }: {
   teacherId: string;
+  teacherWhatsapp: string;
   bookedSlots?: { date: string; startTime: string }[];
 }) {
   const [state, formAction, isPending] = useActionState(
@@ -18,6 +21,11 @@ export default function BookingForm({
     initialState
   );
   const [date, setDate] = useState("");
+  const [childName, setChildName] = useState("");
+  const [selectedSlot, setSelectedSlot] = useState<{
+    startTime: string;
+    endTime: string;
+  } | null>(null);
 
   const takenTimesForDate = useMemo(
     () =>
@@ -50,6 +58,15 @@ export default function BookingForm({
     : slotsForDay.filter((s) => !s.taken);
 
   if (state.success) {
+    const dateLabel = date
+      ? new Date(`${date}T00:00:00`).toLocaleDateString("pt-BR")
+      : "";
+    const receiptMessage = `Olá! Acabei de agendar uma aula${
+      childName ? ` para ${childName}` : ""
+    }${dateLabel ? ` no dia ${dateLabel}` : ""}${
+      selectedSlot ? ` às ${selectedSlot.startTime}` : ""
+    }. Segue o comprovante do PIX:`;
+
     return (
       <div className="rounded-lg border border-primary-100 bg-primary-50 p-6 text-center">
         <p className="font-bold text-primary-700">
@@ -59,6 +76,16 @@ export default function BookingForm({
           A professora vai confirmar o horário em breve. Acompanhe em
           &quot;Minha área&quot;.
         </p>
+        <p className="mt-4 text-sm text-primary-700/80">
+          Já pagou pelo PIX? Envie o comprovante para confirmar sua vaga:
+        </p>
+        <div className="mt-3 flex justify-center">
+          <WhatsAppInlineButton
+            phone={teacherWhatsapp}
+            message={receiptMessage}
+            label="Enviar comprovante no WhatsApp"
+          />
+        </div>
       </div>
     );
   }
@@ -81,6 +108,8 @@ export default function BookingForm({
         <input
           name="childName"
           required
+          value={childName}
+          onChange={(e) => setChildName(e.target.value)}
           className="mt-1 w-full rounded-md border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
         />
       </label>
@@ -92,7 +121,10 @@ export default function BookingForm({
           type="date"
           required
           value={date}
-          onChange={(e) => setDate(e.target.value)}
+          onChange={(e) => {
+            setDate(e.target.value);
+            setSelectedSlot(null);
+          }}
           className="mt-1 w-full rounded-md border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
         />
       </label>
@@ -122,6 +154,7 @@ export default function BookingForm({
               const form = e.target.closest("form")!;
               (form.elements.namedItem("startTime") as HTMLInputElement).value = start;
               (form.elements.namedItem("endTime") as HTMLInputElement).value = end;
+              setSelectedSlot(start && end ? { startTime: start, endTime: end } : null);
             }}
           >
             <option value="">Selecione...</option>
