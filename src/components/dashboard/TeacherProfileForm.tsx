@@ -14,12 +14,14 @@ export default function TeacherProfileForm({
   whatsapp,
   pricePerHour,
   photoUrl,
+  videoCallLink,
 }: {
   bio: string;
   specialties: string;
   whatsapp: string;
   pricePerHour: number;
   photoUrl: string | null;
+  videoCallLink: string | null;
 }) {
   const [state, formAction, isPending] = useActionState(
     updateTeacherProfileAction,
@@ -84,6 +86,22 @@ export default function TeacherProfileForm({
         />
         <span className="mt-1 block text-xs text-primary-700/60">
           Cole o link de uma foto hospedada (ex: Google Drive público, Imgur).
+        </span>
+      </label>
+
+      <label className="block text-sm font-medium text-primary-700">
+        Link da videochamada (Google Meet)
+        <input
+          name="videoCallLink"
+          type="url"
+          placeholder="https://meet.google.com/xxx-xxxx-xxx"
+          defaultValue={videoCallLink ?? ""}
+          className="mt-1 w-full rounded-md border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
+        />
+        <span className="mt-1 block text-xs text-primary-700/60">
+          Use um link fixo do Google Meet (crie um espaço reutilizável em
+          meet.google.com). Ele aparece automaticamente pra mãe depois que
+          ela agenda, e no lembrete por e-mail no dia anterior.
         </span>
       </label>
 

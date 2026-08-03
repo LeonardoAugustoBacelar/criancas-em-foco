@@ -3,6 +3,7 @@ import Link from "next/link";
 import { cache } from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { Video } from "lucide-react";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import WhatsAppInlineButton from "@/components/WhatsAppInlineButton";
@@ -121,6 +122,10 @@ export default async function TeacherProfilePage({
               R$ {teacher.pricePerHour.toFixed(2)} / hora
             </p>
           )}
+          <p className="mt-1 flex items-center gap-1.5 text-sm text-primary-700/70">
+            <Video className="h-4 w-4 text-accent-600" />
+            Atendimento 100% online, por videochamada
+          </p>
 
           <div className="mt-6 flex flex-wrap gap-3">
             <WhatsAppInlineButton

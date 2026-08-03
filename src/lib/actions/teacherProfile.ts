@@ -22,6 +22,13 @@ const profileSchema = z.object({
     .refine((value) => !value || /^https?:\/\//.test(value), {
       message: "A foto precisa ser uma URL válida (http/https)",
     }),
+  videoCallLink: z
+    .string()
+    .trim()
+    .optional()
+    .refine((value) => !value || /^https?:\/\//.test(value), {
+      message: "O link da videochamada precisa ser uma URL válida (http/https)",
+    }),
 });
 
 export async function updateTeacherProfileAction(
@@ -39,6 +46,7 @@ export async function updateTeacherProfileAction(
     whatsapp: formData.get("whatsapp"),
     pricePerHour: formData.get("pricePerHour"),
     photoUrl: formData.get("photoUrl") || undefined,
+    videoCallLink: formData.get("videoCallLink") || undefined,
   });
 
   if (!parsed.success) {
@@ -55,6 +63,7 @@ export async function updateTeacherProfileAction(
       whatsapp: data.whatsapp,
       pricePerHour: data.pricePerHour,
       photoUrl: data.photoUrl || null,
+      videoCallLink: data.videoCallLink || null,
     },
   });
 

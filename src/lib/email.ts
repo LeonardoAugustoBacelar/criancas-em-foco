@@ -36,6 +36,7 @@ export async function sendBookingReminderEmail(
     date: string;
     startTime: string;
     whatsappUrl: string;
+    videoCallLink?: string | null;
   }
 ) {
   const { error } = await resend.emails.send({
@@ -46,10 +47,19 @@ export async function sendBookingReminderEmail(
       <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto;">
         <h2 style="color: #18181b;">Sua aula é amanhã</h2>
         <p>
-          Passando para lembrar que ${data.childName} tem aula com
+          Passando para lembrar que ${data.childName} tem aula (online) com
           <strong>${data.teacherName}</strong> amanhã, dia ${data.date}, às
           <strong>${data.startTime}</strong>.
         </p>
+        ${
+          data.videoCallLink
+            ? `<p>
+                <a href="${data.videoCallLink}" style="display:inline-block; background:#2f6f6b; color:white; padding:12px 24px; border-radius:8px; text-decoration:none; font-weight:bold;">
+                  Entrar na videochamada
+                </a>
+              </p>`
+            : ""
+        }
         <p>
           <a href="${data.whatsappUrl}" style="display:inline-block; background:#18181b; color:white; padding:12px 24px; border-radius:8px; text-decoration:none; font-weight:bold;">
             Falar com a professora

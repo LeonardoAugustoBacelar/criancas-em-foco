@@ -73,9 +73,10 @@ export default async function HorariosPage() {
       </h1>
       <SectionMark color="accent" align="left" />
       <p className="mt-4 max-w-2xl text-primary-700/80">
-        Aulas de {SCHEDULE_RULES.slotDurationMinutes} minutos. Segunda a
-        sexta, a partir das {SCHEDULE_RULES.weekdayStart}. Sábado e domingo, a
-        partir das {SCHEDULE_RULES.weekendStart}. Até no máximo{" "}
+        Aulas 100% online, por videochamada (Google Meet), de{" "}
+        {SCHEDULE_RULES.slotDurationMinutes} minutos. Segunda a sexta, a
+        partir das {SCHEDULE_RULES.weekdayStart}. Sábado e domingo, a partir
+        das {SCHEDULE_RULES.weekendStart}. Até no máximo{" "}
         {SCHEDULE_RULES.maxBookingsPerDay} aulas por dia.
       </p>
 

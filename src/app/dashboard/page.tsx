@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
+import { Video } from "lucide-react";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import BookingActions from "@/components/dashboard/BookingActions";
@@ -97,6 +98,17 @@ async function MaeDashboard({ userId }: { userId: string }) {
                 </span>
               </div>
               <div className="mt-3 flex flex-wrap items-center gap-2">
+                {booking.status === "CONFIRMADA" && booking.teacher.videoCallLink && (
+                  <a
+                    href={booking.teacher.videoCallLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-press inline-flex items-center gap-1.5 rounded-full bg-primary-700 px-4 py-2 text-xs font-semibold text-white hover:bg-primary-600"
+                  >
+                    <Video className="h-3.5 w-3.5" />
+                    Entrar na videochamada
+                  </a>
+                )}
                 <WhatsAppInlineButton
                   phone={booking.teacher.whatsapp}
                   message={`Olá, ${booking.teacher.user.name}! Sobre a aula do dia ${new Date(
@@ -171,6 +183,7 @@ async function ProfessoraDashboard({ userId }: { userId: string }) {
             whatsapp={teacherProfile.whatsapp}
             pricePerHour={teacherProfile.pricePerHour}
             photoUrl={teacherProfile.photoUrl}
+            videoCallLink={teacherProfile.videoCallLink}
           />
         </div>
       </section>

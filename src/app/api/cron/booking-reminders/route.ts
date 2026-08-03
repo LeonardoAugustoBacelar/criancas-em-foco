@@ -37,6 +37,7 @@ export async function GET(request: NextRequest) {
       date: booking.date.toLocaleDateString("pt-BR"),
       startTime: booking.startTime,
       whatsappUrl,
+      videoCallLink: booking.teacher.videoCallLink,
     });
     sent += 1;
   }

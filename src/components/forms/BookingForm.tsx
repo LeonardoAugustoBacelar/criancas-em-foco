@@ -74,7 +74,8 @@ export default function BookingForm({
         </p>
         <p className="mt-2 text-sm text-primary-700/80">
           A professora vai confirmar o horário em breve. Acompanhe em
-          &quot;Minha área&quot;.
+          &quot;Minha área&quot; — o link da videochamada aparece lá assim que
+          a aula for confirmada.
         </p>
         <p className="mt-4 text-sm text-primary-700/80">
           Já pagou pelo PIX? Envie o comprovante para confirmar sua vaga:
