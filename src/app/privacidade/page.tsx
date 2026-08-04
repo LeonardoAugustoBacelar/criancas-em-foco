@@ -111,10 +111,10 @@ export default function PrivacidadePage() {
             e revogação do consentimento. Para exercer esses direitos,
             entre em contato pelo e-mail{" "}
             <a
-              href="mailto:contato@florescerkids.com.br"
+              href="mailto:florescerkiids@gmail.com"
               className="font-semibold text-accent-600 hover:underline"
             >
-              contato@florescerkids.com.br
+              florescerkiids@gmail.com
             </a>
             .
           </p>

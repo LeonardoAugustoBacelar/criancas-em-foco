@@ -72,11 +72,11 @@ export default function Footer() {
             </li>
             <li>
               <a
-                href="mailto:contato@florescerkids.com.br"
+                href="mailto:florescerkiids@gmail.com"
                 className="flex items-center gap-2 transition hover:text-white"
               >
                 <Mail className="h-4 w-4 shrink-0" />
-                contato@florescerkids.com.br
+                florescerkiids@gmail.com
               </a>
             </li>
           </ul>

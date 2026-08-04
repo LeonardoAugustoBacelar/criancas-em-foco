@@ -117,10 +117,10 @@ export default function TermosPage() {
           <p className="mt-2">
             Dúvidas sobre estes termos podem ser enviadas para{" "}
             <a
-              href="mailto:contato@florescerkids.com.br"
+              href="mailto:florescerkiids@gmail.com"
               className="font-semibold text-accent-600 hover:underline"
             >
-              contato@florescerkids.com.br
+              florescerkiids@gmail.com
             </a>{" "}
             ou pelo WhatsApp disponível no site.
           </p>
