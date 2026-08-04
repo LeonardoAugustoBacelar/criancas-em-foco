@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
-import { Video } from "lucide-react";
+import { CheckCircle2, Clock, Video } from "lucide-react";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import BookingActions from "@/components/dashboard/BookingActions";
@@ -153,7 +153,7 @@ async function ProfessoraDashboard({ userId }: { userId: string }) {
     include: {
       bookings: {
         include: { mae: true },
-        orderBy: { date: "desc" },
+        orderBy: { date: "asc" },
       },
     },
   });
@@ -168,14 +168,101 @@ async function ProfessoraDashboard({ userId }: { userId: string }) {
     );
   }
 
+  const pending = teacherProfile.bookings.filter((b) => b.status === "PENDENTE");
+  const confirmed = teacherProfile.bookings.filter((b) => b.status === "CONFIRMADA");
+  const history = teacherProfile.bookings
+    .filter((b) => b.status === "CONCLUIDA" || b.status === "CANCELADA")
+    .reverse();
+
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-      <h1 className="font-serif-display text-3xl font-semibold text-primary-700">
-        Painel da professora
-      </h1>
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <h1 className="font-serif-display text-3xl font-semibold text-primary-700">
+          Painel da professora
+        </h1>
+        {(pending.length > 0 || confirmed.length > 0) && (
+          <div className="flex flex-wrap gap-2">
+            {pending.length > 0 && (
+              <span className="rounded-full bg-amber-50 px-3 py-1 text-sm font-semibold text-amber-700">
+                {pending.length} aguardando confirmação
+              </span>
+            )}
+            {confirmed.length > 0 && (
+              <span className="rounded-full bg-primary-50 px-3 py-1 text-sm font-semibold text-primary-700">
+                {confirmed.length} confirmada{confirmed.length > 1 ? "s" : ""}
+              </span>
+            )}
+          </div>
+        )}
+      </div>
 
-      <section className="mt-8 rounded-lg border border-primary-100 bg-white p-6">
-        <h2 className="font-bold text-primary-700">Meu perfil público</h2>
+      <section className="mt-6">
+        {pending.length === 0 && confirmed.length === 0 ? (
+          <p className="text-primary-700/80">
+            Nenhuma aula agendada até agora.
+          </p>
+        ) : (
+          <div className="space-y-6">
+            {pending.length > 0 && (
+              <div>
+                <h2 className="flex items-center gap-1.5 text-sm font-bold uppercase tracking-wide text-amber-700">
+                  <Clock className="h-4 w-4" />
+                  Aguardando confirmação
+                </h2>
+                <div className="mt-3 space-y-3">
+                  {pending.map((booking) => (
+                    <TeacherBookingCard
+                      key={booking.id}
+                      booking={booking}
+                      accent="amber"
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {confirmed.length > 0 && (
+              <div>
+                <h2 className="flex items-center gap-1.5 text-sm font-bold uppercase tracking-wide text-primary-700">
+                  <CheckCircle2 className="h-4 w-4" />
+                  Próximas aulas confirmadas
+                </h2>
+                <div className="mt-3 space-y-3">
+                  {confirmed.map((booking) => (
+                    <TeacherBookingCard
+                      key={booking.id}
+                      booking={booking}
+                      accent="primary"
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </section>
+
+      {history.length > 0 && (
+        <details className="mt-8 rounded-lg border border-primary-100 bg-white p-5">
+          <summary className="cursor-pointer text-sm font-semibold text-primary-700/70">
+            Histórico ({history.length})
+          </summary>
+          <div className="mt-4 space-y-3">
+            {history.map((booking) => (
+              <TeacherBookingCard
+                key={booking.id}
+                booking={booking}
+                accent="muted"
+              />
+            ))}
+          </div>
+        </details>
+      )}
+
+      <section className="mt-10 rounded-lg border border-primary-100 bg-primary-50/40 p-6">
+        <h2 className="text-sm font-bold uppercase tracking-wide text-primary-700/70">
+          Meu perfil público
+        </h2>
         <div className="mt-4">
           <TeacherProfileForm
             bio={teacherProfile.bio}
@@ -187,59 +274,64 @@ async function ProfessoraDashboard({ userId }: { userId: string }) {
           />
         </div>
       </section>
+    </div>
+  );
+}
 
-      <section className="mt-8">
-        <h2 className="text-xl font-bold text-primary-700">
-          Solicitações de aula
-        </h2>
+function TeacherBookingCard({
+  booking,
+  accent,
+}: {
+  booking: {
+    id: string;
+    mae: { name: string };
+    childName: string;
+    date: Date;
+    startTime: string;
+    endTime: string;
+    notes: string | null;
+    status: string;
+  };
+  accent: "amber" | "primary" | "muted";
+}) {
+  const accentBorder = {
+    amber: "border-l-4 border-l-amber-400",
+    primary: "border-l-4 border-l-primary-400",
+    muted: "border-l-4 border-l-primary-100",
+  }[accent];
 
-        {teacherProfile.bookings.length === 0 ? (
-          <p className="mt-4 text-primary-700/80">
-            Nenhuma solicitação de aula até agora.
+  return (
+    <div
+      className={`rounded-lg border border-primary-100 bg-white p-5 ${accentBorder}`}
+    >
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <p className="font-bold text-primary-700">{booking.mae.name}</p>
+          <p className="text-sm text-primary-700/70">
+            Criança: {booking.childName}
           </p>
-        ) : (
-          <div className="mt-4 space-y-4">
-            {teacherProfile.bookings.map((booking) => (
-              <div
-                key={booking.id}
-                className="rounded-lg border border-primary-100 bg-white p-5"
-              >
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <div>
-                    <p className="font-bold text-primary-700">
-                      {booking.mae.name}
-                    </p>
-                    <p className="text-sm text-primary-700/70">
-                      Criança: {booking.childName}
-                    </p>
-                    <p className="text-sm text-primary-700/70">
-                      {new Date(booking.date).toLocaleDateString("pt-BR")} ·{" "}
-                      {booking.startTime} às {booking.endTime}
-                    </p>
-                    {booking.notes && (
-                      <p className="mt-1 text-sm italic text-primary-700/60">
-                        &quot;{booking.notes}&quot;
-                      </p>
-                    )}
-                  </div>
-                  <span
-                    className={`rounded-full px-3 py-1 text-xs font-semibold ${STATUS_COLORS[booking.status]}`}
-                  >
-                    {STATUS_LABELS[booking.status]}
-                  </span>
-                </div>
+          <p className="text-sm text-primary-700/70">
+            {new Date(booking.date).toLocaleDateString("pt-BR")} ·{" "}
+            {booking.startTime} às {booking.endTime}
+          </p>
+          {booking.notes && (
+            <p className="mt-1 text-sm italic text-primary-700/60">
+              &quot;{booking.notes}&quot;
+            </p>
+          )}
+        </div>
+        <span
+          className={`rounded-full px-3 py-1 text-xs font-semibold ${STATUS_COLORS[booking.status]}`}
+        >
+          {STATUS_LABELS[booking.status]}
+        </span>
+      </div>
 
-                {(booking.status === "PENDENTE" ||
-                  booking.status === "CONFIRMADA") && (
-                  <div className="mt-3">
-                    <BookingActions bookingId={booking.id} />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
+      {(booking.status === "PENDENTE" || booking.status === "CONFIRMADA") && (
+        <div className="mt-3">
+          <BookingActions bookingId={booking.id} />
+        </div>
+      )}
     </div>
   );
 }
