@@ -49,6 +49,14 @@ export async function createBookingAction(
     return { error: "Horário inválido. Escolha um dos horários disponíveis." };
   }
 
+  const blockedDate = await prisma.blockedDate.findUnique({
+    where: { teacherId_date: { teacherId: data.teacherId, date: bookingDate } },
+  });
+
+  if (blockedDate) {
+    return { error: "A professora não está disponível nesse dia. Escolha outra data." };
+  }
+
   const conflict = await prisma.booking.findFirst({
     where: {
       teacherId: data.teacherId,

@@ -65,6 +65,18 @@ model TeacherProfile {
   availabilities Availability[]
   bookings       Booking[]       @relation("BookingsAsTeacher")
   reviews        Review[]
+  blockedDates   BlockedDate[]
+}
+
+model BlockedDate {
+  id        String         @id @default(cuid())
+  teacherId String
+  teacher   TeacherProfile @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  date      DateTime
+  reason    String?
+  createdAt DateTime       @default(now())
+
+  @@unique([teacherId, date])
 }
 
 model Availability {

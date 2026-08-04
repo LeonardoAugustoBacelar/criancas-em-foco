@@ -46,6 +46,16 @@ export default async function HorariosPage() {
       })
     : [];
 
+  const blockedDates = teacher
+    ? await prisma.blockedDate.findMany({
+        where: { teacherId: teacher.id, date: { gte: today, lt: rangeEnd } },
+        select: { date: true },
+      })
+    : [];
+  const blockedDateKeys = new Set(
+    blockedDates.map((b) => b.date.toISOString().slice(0, 10))
+  );
+
   const bookedByDate = new Map<string, Set<string>>();
   for (const booking of bookings) {
     const key = booking.date.toISOString().slice(0, 10);
@@ -62,8 +72,9 @@ export default async function HorariosPage() {
       ...slot,
       taken: takenTimes.has(slot.startTime),
     }));
+    const isBlocked = blockedDateKeys.has(key);
     const dayIsFull = takenTimes.size >= SCHEDULE_RULES.maxBookingsPerDay;
-    return { date, slots, dayIsFull };
+    return { date, slots, dayIsFull, isBlocked };
   });
 
   return (
@@ -91,7 +102,7 @@ export default async function HorariosPage() {
       ) : (
         <>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {days.map(({ date, slots, dayIsFull }, index) => (
+            {days.map(({ date, slots, dayIsFull, isBlocked }, index) => (
               <div
                 key={date.toISOString()}
                 data-reveal
@@ -110,7 +121,11 @@ export default async function HorariosPage() {
                     </span>
                   )}
                 </p>
-                {dayIsFull ? (
+                {isBlocked ? (
+                  <p className="mt-2 text-sm text-primary-700/60">
+                    Indisponível
+                  </p>
+                ) : dayIsFull ? (
                   <p className="mt-2 text-sm text-primary-700/60">
                     Dia lotado
                   </p>
@@ -149,6 +164,53 @@ export default async function HorariosPage() {
       <div className="mt-10 max-w-lg">
         <PixPaymentInfo />
       </div>
+
+      <div className="mt-12 max-w-2xl">
+        <h2 className="font-serif-display text-2xl font-semibold text-primary-700">
+          Perguntas frequentes
+        </h2>
+        <SectionMark color="accent" align="left" />
+        <div className="mt-6 divide-y divide-primary-100 rounded-lg border border-primary-100 bg-white">
+          {FAQ_ITEMS.map((item) => (
+            <details key={item.question} className="group p-4">
+              <summary className="cursor-pointer list-none font-semibold text-primary-700">
+                {item.question}
+              </summary>
+              <p className="mt-2 text-sm text-primary-700/80">
+                {item.answer}
+              </p>
+            </details>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
+
+const FAQ_ITEMS = [
+  {
+    question: "Como funciona o pagamento?",
+    answer:
+      "Você agenda o horário no site e paga via PIX direto para a professora (chave ou QR code, já com o valor preenchido). Depois de pagar, envie o comprovante pelo WhatsApp para confirmar sua vaga.",
+  },
+  {
+    question: "Posso cancelar ou remarcar minha aula?",
+    answer:
+      "Sim, quando quiser, sem multa, direto no seu painel. Se já tiver pago e precisar cancelar, combine o reembolso ou reagendamento com a professora pelo WhatsApp.",
+  },
+  {
+    question: "E se a professora precisar cancelar (viagem, imprevisto)?",
+    answer:
+      "Dias em que ela sabe que não vai poder atender já aparecem como indisponíveis aqui em Horários — você nem consegue agendar neles. Se algo imprevisto acontecer depois de uma aula já marcada, ela avisa direto pelo WhatsApp para reagendar.",
+  },
+  {
+    question: "A aula é gravada?",
+    answer:
+      "Não. A chamada acontece pelo Google Meet, é privada e não é gravada.",
+  },
+  {
+    question: "Quantas aulas posso agendar?",
+    answer:
+      "Quantas quiser, em dias diferentes — o limite é de até 3 aulas por dia (capacidade da professora), não por semana.",
+  },
+];

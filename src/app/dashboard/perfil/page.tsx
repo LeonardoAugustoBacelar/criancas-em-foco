@@ -5,6 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import TeacherProfileForm from "@/components/dashboard/TeacherProfileForm";
+import BlockedDatesManager from "@/components/dashboard/BlockedDatesManager";
 
 export const metadata: Metadata = {
   title: "Editar perfil",
@@ -22,6 +23,12 @@ export default async function EditarPerfilPage() {
 
   const teacherProfile = await prisma.teacherProfile.findUnique({
     where: { userId: session.user.id },
+    include: {
+      blockedDates: {
+        where: { date: { gte: new Date(new Date().toDateString()) } },
+        orderBy: { date: "asc" },
+      },
+    },
   });
 
   if (!teacherProfile) {
@@ -56,6 +63,13 @@ export default async function EditarPerfilPage() {
           photoUrl={teacherProfile.photoUrl}
           videoCallLink={teacherProfile.videoCallLink}
         />
+      </div>
+
+      <h2 className="mt-10 font-serif-display text-xl font-semibold text-primary-700">
+        Bloquear dias
+      </h2>
+      <div className="mt-4 rounded-lg border border-primary-100 bg-white p-6">
+        <BlockedDatesManager blockedDates={teacherProfile.blockedDates} />
       </div>
     </div>
   );

@@ -11,10 +11,12 @@ export default function BookingForm({
   teacherId,
   teacherWhatsapp,
   bookedSlots = [],
+  blockedDates = [],
 }: {
   teacherId: string;
   teacherWhatsapp: string;
   bookedSlots?: { date: string; startTime: string }[];
+  blockedDates?: string[];
 }) {
   const [state, formAction, isPending] = useActionState(
     createBookingAction,
@@ -41,6 +43,7 @@ export default function BookingForm({
   );
 
   const dayIsFull = bookedCountForDate >= SCHEDULE_RULES.maxBookingsPerDay;
+  const dayIsBlocked = date ? blockedDates.includes(date) : false;
 
   const slotsForDay = useMemo(
     () =>
@@ -53,9 +56,8 @@ export default function BookingForm({
     [date, takenTimesForDate]
   );
 
-  const availableSlotsForDay = dayIsFull
-    ? []
-    : slotsForDay.filter((s) => !s.taken);
+  const availableSlotsForDay =
+    dayIsFull || dayIsBlocked ? [] : slotsForDay.filter((s) => !s.taken);
 
   if (state.success) {
     const dateLabel = date
@@ -130,20 +132,26 @@ export default function BookingForm({
         />
       </label>
 
-      {date && dayIsFull && (
+      {date && dayIsBlocked && (
+        <p className="text-sm text-accent-600">
+          A professora não está disponível nesse dia. Escolha outra data.
+        </p>
+      )}
+
+      {date && !dayIsBlocked && dayIsFull && (
         <p className="text-sm text-accent-600">
           Esse dia já atingiu o limite de {SCHEDULE_RULES.maxBookingsPerDay}{" "}
           aulas. Escolha outra data.
         </p>
       )}
 
-      {date && !dayIsFull && availableSlotsForDay.length === 0 && (
+      {date && !dayIsBlocked && !dayIsFull && availableSlotsForDay.length === 0 && (
         <p className="text-sm text-accent-600">
           Todos os horários desse dia já estão reservados. Escolha outra data.
         </p>
       )}
 
-      {slotsForDay.length > 0 && (
+      {slotsForDay.length > 0 && !dayIsBlocked && (
         <label className="block text-sm font-medium text-primary-700">
           Horário
           <select

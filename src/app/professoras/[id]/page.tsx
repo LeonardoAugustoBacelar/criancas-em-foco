@@ -74,6 +74,17 @@ export default async function TeacherProfilePage({
     startTime: b.startTime,
   }));
 
+  const upcomingBlockedDates = await prisma.blockedDate.findMany({
+    where: {
+      teacherId: teacher.id,
+      date: { gte: new Date(new Date().toDateString()) },
+    },
+    select: { date: true },
+  });
+  const blockedDates = upcomingBlockedDates.map((b) =>
+    b.date.toISOString().slice(0, 10)
+  );
+
   const ratingSummary = summarizeRatings(teacher.reviews);
 
   const whatsappMessage = `Olá, ${teacher.user.name}! Vi seu perfil no site Florescer Kids e gostaria de saber mais sobre suas aulas.`;
@@ -203,6 +214,7 @@ export default async function TeacherProfilePage({
                   teacherId={teacher.id}
                   teacherWhatsapp={teacher.whatsapp}
                   bookedSlots={bookedSlots}
+                  blockedDates={blockedDates}
                 />
               </div>
             )}
