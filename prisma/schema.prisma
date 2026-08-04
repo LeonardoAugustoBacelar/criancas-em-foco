@@ -64,6 +64,10 @@ model TeacherProfile {
   whatsapp     String
   photoUrl     String?
   videoCallLink String?
+  // E-mail real onde ela recebe avisos (nova aula agendada etc). Separado do
+  // e-mail de login, que pode estar num domínio sem caixa de entrada de
+  // verdade — não dá pra assumir que são o mesmo endereço.
+  notificationEmail String?
   pricePerHour Float    @default(0)
   approved     Boolean  @default(true)
   createdAt    DateTime @default(now())

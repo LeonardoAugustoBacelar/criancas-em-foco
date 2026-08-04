@@ -30,6 +30,13 @@ const profileSchema = z.object({
     .refine((value) => !value || /^https?:\/\//.test(value), {
       message: "O link da videochamada precisa ser uma URL válida (http/https)",
     }),
+  notificationEmail: z
+    .string()
+    .trim()
+    .optional()
+    .refine((value) => !value || /^\S+@\S+\.\S+$/.test(value), {
+      message: "Informe um e-mail válido para os avisos",
+    }),
   offersDomicilio: z.coerce.boolean().default(false),
   pricePerHourDomicilio: z.coerce.number().min(0).optional(),
   domicilioAddress: z.string().trim().optional(),
@@ -52,6 +59,7 @@ export async function updateTeacherProfileAction(
     pricePerHour: formData.get("pricePerHour"),
     photoUrl: formData.get("photoUrl") || undefined,
     videoCallLink: formData.get("videoCallLink") || undefined,
+    notificationEmail: formData.get("notificationEmail") || undefined,
     offersDomicilio: formData.get("offersDomicilio"),
     pricePerHourDomicilio: formData.get("pricePerHourDomicilio") || undefined,
     domicilioAddress: formData.get("domicilioAddress") || undefined,
@@ -73,6 +81,7 @@ export async function updateTeacherProfileAction(
       pricePerHour: data.pricePerHour,
       photoUrl: data.photoUrl || null,
       videoCallLink: data.videoCallLink || null,
+      notificationEmail: data.notificationEmail || null,
       offersDomicilio: data.offersDomicilio,
       pricePerHourDomicilio: data.offersDomicilio
         ? (data.pricePerHourDomicilio ?? 0)

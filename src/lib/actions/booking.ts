@@ -10,6 +10,7 @@ import {
   isValidSlot,
   SCHEDULE_RULES,
 } from "@/lib/schedule";
+import { sendNewBookingNotificationEmail } from "@/lib/email";
 
 export type BookingState = {
   error?: string;
@@ -114,7 +115,7 @@ export async function createBookingAction(
   }
 
   try {
-    await prisma.booking.create({
+    const created = await prisma.booking.create({
       data: {
         maeId: session.user.id,
         teacherId: data.teacherId,
@@ -126,7 +127,26 @@ export async function createBookingAction(
         modality: data.modality,
         address: data.modality === "DOMICILIO_CASA_ALUNO" ? data.address : null,
       },
+      include: { teacher: { include: { user: true } }, mae: true },
     });
+
+    try {
+      const notifyEmail =
+        created.teacher.notificationEmail || created.teacher.user.email;
+      await sendNewBookingNotificationEmail(notifyEmail, {
+        maeName: created.mae.name,
+        childName: created.childName,
+        date: bookingDate.toLocaleDateString("pt-BR"),
+        startTime: created.startTime,
+        endTime: created.endTime,
+        modality: created.modality,
+        address: created.address,
+      });
+    } catch (emailError) {
+      // Aviso por e-mail é um extra — se falhar, a reserva já foi criada
+      // com sucesso, então só registramos o erro sem quebrar o fluxo.
+      console.error("Falha ao enviar aviso de novo agendamento", emailError);
+    }
   } catch (error) {
     // Alguém reservou esse mesmo horário entre a checagem acima e agora
     // (corrida) — o índice único no banco (ver migração

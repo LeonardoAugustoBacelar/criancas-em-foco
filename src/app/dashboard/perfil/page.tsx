@@ -62,6 +62,7 @@ export default async function EditarPerfilPage() {
           pricePerHour={teacherProfile.pricePerHour}
           photoUrl={teacherProfile.photoUrl}
           videoCallLink={teacherProfile.videoCallLink}
+          notificationEmail={teacherProfile.notificationEmail}
           offersDomicilio={teacherProfile.offersDomicilio}
           pricePerHourDomicilio={teacherProfile.pricePerHourDomicilio}
           domicilioAddress={teacherProfile.domicilioAddress}

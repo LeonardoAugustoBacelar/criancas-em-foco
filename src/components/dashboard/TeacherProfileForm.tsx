@@ -16,6 +16,7 @@ export default function TeacherProfileForm({
   pricePerHour,
   photoUrl,
   videoCallLink,
+  notificationEmail,
   offersDomicilio,
   pricePerHourDomicilio,
   domicilioAddress,
@@ -27,6 +28,7 @@ export default function TeacherProfileForm({
   pricePerHour: number;
   photoUrl: string | null;
   videoCallLink: string | null;
+  notificationEmail: string | null;
   offersDomicilio: boolean;
   pricePerHourDomicilio: number | null;
   domicilioAddress: string | null;
@@ -97,6 +99,21 @@ export default function TeacherProfileForm({
           />
         </label>
       </div>
+
+      <label className="block text-sm font-medium text-primary-700">
+        E-mail para avisos de agendamento
+        <input
+          name="notificationEmail"
+          type="email"
+          placeholder="seuemail@gmail.com"
+          defaultValue={notificationEmail ?? ""}
+          className="mt-1 w-full rounded-md border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
+        />
+        <span className="mt-1 block text-xs text-primary-700/60">
+          Toda vez que uma mãe agendar, você recebe um aviso nesse e-mail. Se
+          deixar em branco, usamos o e-mail de login.
+        </span>
+      </label>
 
       <label className="block text-sm font-medium text-primary-700">
         URL da foto de perfil (opcional)
