@@ -53,8 +53,10 @@ export function buildPixPayload(amount: number = PIX_CONFIG.amount): string {
   return fieldsWithoutCrc + crc16(fieldsWithoutCrc);
 }
 
-export async function getPixQrCodeDataUrl(): Promise<string> {
-  return QRCode.toDataURL(buildPixPayload(), {
+export async function getPixQrCodeDataUrl(
+  amount: number = PIX_CONFIG.amount
+): Promise<string> {
+  return QRCode.toDataURL(buildPixPayload(amount), {
     margin: 1,
     width: 320,
     color: { dark: "#18181b", light: "#ffffff" },

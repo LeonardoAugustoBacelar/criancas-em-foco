@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import {
   updateTeacherProfileAction,
   type TeacherProfileState,
@@ -16,6 +16,9 @@ export default function TeacherProfileForm({
   pricePerHour,
   photoUrl,
   videoCallLink,
+  offersDomicilio,
+  pricePerHourDomicilio,
+  domicilioAddress,
 }: {
   bio: string;
   specialties: string;
@@ -24,11 +27,15 @@ export default function TeacherProfileForm({
   pricePerHour: number;
   photoUrl: string | null;
   videoCallLink: string | null;
+  offersDomicilio: boolean;
+  pricePerHourDomicilio: number | null;
+  domicilioAddress: string | null;
 }) {
   const [state, formAction, isPending] = useActionState(
     updateTeacherProfileAction,
     initialState
   );
+  const [domicilioEnabled, setDomicilioEnabled] = useState(offersDomicilio);
 
   return (
     <form action={formAction} className="space-y-4">
@@ -120,6 +127,48 @@ export default function TeacherProfileForm({
           ela agenda, e no lembrete por e-mail no dia anterior.
         </span>
       </label>
+
+      <div className="rounded-md border border-primary-100 p-4">
+        <label className="flex items-center gap-2 text-sm font-semibold text-primary-700">
+          <input
+            type="checkbox"
+            name="offersDomicilio"
+            checked={domicilioEnabled}
+            onChange={(e) => setDomicilioEnabled(e.target.checked)}
+            className="h-4 w-4 rounded border-primary-100"
+          />
+          Também atendo a domicílio (Cotia-SP e região)
+        </label>
+
+        {domicilioEnabled && (
+          <div className="mt-4 space-y-4">
+            <label className="block text-sm font-medium text-primary-700">
+              Preço do atendimento a domicílio (R$)
+              <input
+                name="pricePerHourDomicilio"
+                type="number"
+                min={0}
+                step="0.01"
+                defaultValue={pricePerHourDomicilio ?? ""}
+                className="mt-1 w-full rounded-md border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
+              />
+            </label>
+            <label className="block text-sm font-medium text-primary-700">
+              Seu endereço
+              <input
+                name="domicilioAddress"
+                defaultValue={domicilioAddress ?? ""}
+                placeholder="Rua, número, bairro — Cotia/SP"
+                className="mt-1 w-full rounded-md border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
+              />
+              <span className="mt-1 block text-xs text-primary-700/60">
+                Só aparece pra mãe depois que o atendimento é confirmado —
+                nunca fica público.
+              </span>
+            </label>
+          </div>
+        )}
+      </div>
 
       {state.error && (
         <p className="rounded-lg bg-red-50 px-4 py-2 text-sm text-red-600">

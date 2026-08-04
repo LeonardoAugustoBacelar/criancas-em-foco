@@ -5,7 +5,9 @@ import {
   CheckCircle2,
   Clock,
   GraduationCap,
+  Home,
   Lightbulb,
+  MapPin,
   Settings,
   Star,
   Video,
@@ -45,6 +47,16 @@ const STATUS_COLORS: Record<string, string> = {
   CONFIRMADA: "bg-primary-50 text-primary-700",
   CANCELADA: "bg-red-50 text-red-600",
   CONCLUIDA: "bg-emerald-50 text-emerald-700",
+};
+
+const MAE_MODALITY_LABELS: Record<string, string> = {
+  DOMICILIO_CASA_ALUNO: "Domicílio · a professora vai até vocês",
+  DOMICILIO_CASA_PROFESSORA: "Domicílio · vocês vão até a professora",
+};
+
+const PROFESSORA_MODALITY_LABELS: Record<string, string> = {
+  DOMICILIO_CASA_ALUNO: "Domicílio · vou até a família",
+  DOMICILIO_CASA_PROFESSORA: "Domicílio · família vem até mim",
 };
 
 export default async function DashboardPage() {
@@ -118,6 +130,12 @@ async function MaeDashboard({ userId }: { userId: string }) {
                     {new Date(booking.date).toLocaleDateString("pt-BR")} ·{" "}
                     {booking.startTime} às {booking.endTime}
                   </p>
+                  {booking.modality !== "ONLINE" && (
+                    <p className="mt-1 flex items-center gap-1.5 text-xs font-semibold text-accent-600">
+                      <Home className="h-3.5 w-3.5" />
+                      {MAE_MODALITY_LABELS[booking.modality]}
+                    </p>
+                  )}
                 </div>
                 <span
                   className={`rounded-full px-3 py-1 text-xs font-semibold ${STATUS_COLORS[booking.status]}`}
@@ -125,8 +143,38 @@ async function MaeDashboard({ userId }: { userId: string }) {
                   {STATUS_LABELS[booking.status]}
                 </span>
               </div>
+
+              {booking.modality === "DOMICILIO_CASA_ALUNO" && booking.address && (
+                <p className="mt-3 flex items-start gap-2 rounded-md bg-primary-50 p-3 text-sm text-primary-700/90">
+                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-accent-600" />
+                  <span>
+                    <span className="font-semibold">Endereço informado: </span>
+                    {booking.address}
+                  </span>
+                </p>
+              )}
+
+              {booking.modality === "DOMICILIO_CASA_PROFESSORA" && (
+                <p className="mt-3 flex items-start gap-2 rounded-md bg-primary-50 p-3 text-sm text-primary-700/90">
+                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-accent-600" />
+                  {booking.status === "CONFIRMADA" && booking.teacher.domicilioAddress ? (
+                    <span>
+                      <span className="font-semibold">Endereço da professora: </span>
+                      {booking.teacher.domicilioAddress}
+                    </span>
+                  ) : (
+                    <span className="text-primary-700/60">
+                      O endereço da professora aparece aqui assim que a aula
+                      for confirmada.
+                    </span>
+                  )}
+                </p>
+              )}
+
               <div className="mt-3 flex flex-wrap items-center gap-2">
-                {booking.status === "CONFIRMADA" && booking.teacher.videoCallLink && (
+                {booking.modality === "ONLINE" &&
+                  booking.status === "CONFIRMADA" &&
+                  booking.teacher.videoCallLink && (
                   <a
                     href={booking.teacher.videoCallLink}
                     target="_blank"
@@ -217,7 +265,14 @@ async function ProfessoraDashboard({ userId }: { userId: string }) {
     )
     .reverse();
   const ratingSummary = summarizeRatings(teacherProfile.reviews);
-  const projectedEarnings = confirmed.length * teacherProfile.pricePerHour;
+  const projectedEarnings = confirmed.reduce(
+    (sum, b) =>
+      sum +
+      (b.modality === "ONLINE"
+        ? teacherProfile.pricePerHour
+        : (teacherProfile.pricePerHourDomicilio ?? 0)),
+    0
+  );
 
   const tipOfTheDay =
     TEACHER_TIPS[new Date().getDate() % TEACHER_TIPS.length];
@@ -394,6 +449,8 @@ function TeacherBookingCard({
     notes: string | null;
     teacherNote: string | null;
     status: string;
+    modality: string;
+    address: string | null;
   };
   accent: "amber" | "primary" | "muted" | "done";
 }) {
@@ -418,6 +475,18 @@ function TeacherBookingCard({
             {new Date(booking.date).toLocaleDateString("pt-BR")} ·{" "}
             {booking.startTime} às {booking.endTime}
           </p>
+          {booking.modality !== "ONLINE" && (
+            <p className="mt-1 flex items-center gap-1.5 text-xs font-semibold text-accent-600">
+              <Home className="h-3.5 w-3.5" />
+              {PROFESSORA_MODALITY_LABELS[booking.modality]}
+            </p>
+          )}
+          {booking.address && (
+            <p className="mt-1 flex items-start gap-1.5 text-sm text-primary-700/70">
+              <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-accent-600" />
+              {booking.address}
+            </p>
+          )}
           {booking.notes && (
             <p className="mt-1 text-sm italic text-primary-700/60">
               &quot;{booking.notes}&quot;

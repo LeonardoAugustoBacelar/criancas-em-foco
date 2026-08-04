@@ -42,6 +42,11 @@ export default function Footer() {
               </Link>
             </li>
             <li>
+              <Link href="/domicilio" className="transition hover:text-white">
+                Atendimento a domicílio
+              </Link>
+            </li>
+            <li>
               <Link href="/cadastro" className="transition hover:text-white">
                 Criar conta
               </Link>

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { cache } from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { GraduationCap, ShieldCheck, Video } from "lucide-react";
+import { GraduationCap, Home, ShieldCheck, Video } from "lucide-react";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import WhatsAppInlineButton from "@/components/WhatsAppInlineButton";
@@ -148,6 +148,16 @@ export default async function TeacherProfilePage({
             <ShieldCheck className="h-4 w-4 text-accent-600" />
             Chamada privada pelo Google Meet, não é gravada
           </p>
+
+          {teacher.offersDomicilio && (
+            <Link
+              href="/domicilio"
+              className="mt-3 flex items-center gap-1.5 text-sm font-semibold text-accent-600 hover:underline"
+            >
+              <Home className="h-4 w-4" />
+              Também atende a domicílio em Cotia-SP →
+            </Link>
+          )}
 
           <div className="mt-6 flex flex-wrap gap-3">
             <WhatsAppInlineButton

@@ -23,6 +23,12 @@ enum BookingStatus {
   CONCLUIDA
 }
 
+enum BookingModality {
+  ONLINE
+  DOMICILIO_CASA_ALUNO
+  DOMICILIO_CASA_PROFESSORA
+}
+
 model User {
   id            String   @id @default(cuid())
   name          String
@@ -61,6 +67,14 @@ model TeacherProfile {
   pricePerHour Float    @default(0)
   approved     Boolean  @default(true)
   createdAt    DateTime @default(now())
+
+  // Atendimento a domicílio (Cotia-SP e região) — opcional, além do online.
+  offersDomicilio        Boolean @default(false)
+  pricePerHourDomicilio  Float?
+  // Endereço da professora, usado quando o aluno vai até a casa dela.
+  // Só é revelado pra mãe depois que a aula é confirmada (mesmo padrão do
+  // videoCallLink no atendimento online).
+  domicilioAddress       String?
 
   availabilities Availability[]
   bookings       Booking[]       @relation("BookingsAsTeacher")
@@ -106,6 +120,11 @@ model Booking {
   notes      String?
   teacherNote String?
   status     BookingStatus @default(PENDENTE)
+  modality   BookingModality @default(ONLINE)
+  // Endereço do aluno, só usado quando modality = DOMICILIO_CASA_ALUNO (a
+  // professora vai até a casa da família). Visível só pra essa mãe e pra
+  // professora, nunca público.
+  address    String?
   createdAt  DateTime      @default(now())
 
   review     Review?

@@ -2,15 +2,19 @@ import Image from "next/image";
 import { getPixQrCodeDataUrl, PIX_CONFIG } from "@/lib/pix";
 import PixKeyCopy from "@/components/PixKeyCopy";
 
-export default async function PixPaymentInfo() {
-  const qrCodeDataUrl = await getPixQrCodeDataUrl();
+export default async function PixPaymentInfo({
+  amount = PIX_CONFIG.amount,
+}: {
+  amount?: number;
+}) {
+  const qrCodeDataUrl = await getPixQrCodeDataUrl(amount);
 
   return (
     <div className="rounded-lg border border-primary-100 bg-white p-6">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <p className="font-bold text-primary-700">Pagamento via PIX</p>
         <p className="text-lg font-bold text-accent-600">
-          R$ {PIX_CONFIG.amount.toFixed(2)}
+          R$ {amount.toFixed(2)}
         </p>
       </div>
       <p className="mt-1 text-sm text-primary-700/80">

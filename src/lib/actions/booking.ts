@@ -5,21 +5,39 @@ import { z } from "zod";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { Prisma } from "@/generated/prisma/client";
-import { isValidSlot, SCHEDULE_RULES } from "@/lib/schedule";
+import {
+  DOMICILIO_SCHEDULE_RULES,
+  isValidSlot,
+  SCHEDULE_RULES,
+} from "@/lib/schedule";
 
 export type BookingState = {
   error?: string;
   success?: boolean;
 };
 
-const bookingSchema = z.object({
-  teacherId: z.string().min(1),
-  childName: z.string().min(2, "Informe o nome da criança"),
-  date: z.string().min(1, "Escolha uma data"),
-  startTime: z.string().min(1, "Escolha um horário"),
-  endTime: z.string().min(1),
-  notes: z.string().optional(),
-});
+const bookingSchema = z
+  .object({
+    teacherId: z.string().min(1),
+    childName: z.string().min(2, "Informe o nome da criança"),
+    date: z.string().min(1, "Escolha uma data"),
+    startTime: z.string().min(1, "Escolha um horário"),
+    endTime: z.string().min(1),
+    notes: z.string().optional(),
+    modality: z
+      .enum(["ONLINE", "DOMICILIO_CASA_ALUNO", "DOMICILIO_CASA_PROFESSORA"])
+      .default("ONLINE"),
+    address: z.string().optional(),
+  })
+  .refine(
+    (data) =>
+      data.modality !== "DOMICILIO_CASA_ALUNO" ||
+      (data.address && data.address.trim().length >= 5),
+    {
+      message: "Informe o endereço completo para a professora ir até você",
+      path: ["address"],
+    }
+  );
 
 export async function createBookingAction(
   _prevState: BookingState,
@@ -37,6 +55,8 @@ export async function createBookingAction(
     startTime: formData.get("startTime"),
     endTime: formData.get("endTime"),
     notes: formData.get("notes") || undefined,
+    modality: formData.get("modality") || undefined,
+    address: formData.get("address") || undefined,
   });
 
   if (!parsed.success) {
@@ -45,8 +65,13 @@ export async function createBookingAction(
 
   const data = parsed.data;
   const bookingDate = new Date(data.date);
+  const isDomicilio = data.modality !== "ONLINE";
+  const rules = isDomicilio ? DOMICILIO_SCHEDULE_RULES : SCHEDULE_RULES;
+  const sameModalityGroup = isDomicilio
+    ? (["DOMICILIO_CASA_ALUNO", "DOMICILIO_CASA_PROFESSORA"] as const)
+    : (["ONLINE"] as const);
 
-  if (!isValidSlot(bookingDate, data.startTime, data.endTime)) {
+  if (!isValidSlot(bookingDate, data.startTime, data.endTime, rules)) {
     return { error: "Horário inválido. Escolha um dos horários disponíveis." };
   }
 
@@ -76,12 +101,15 @@ export async function createBookingAction(
       teacherId: data.teacherId,
       date: bookingDate,
       status: { in: ["PENDENTE", "CONFIRMADA"] },
+      modality: { in: [...sameModalityGroup] },
     },
   });
 
-  if (bookingsThisDay >= SCHEDULE_RULES.maxBookingsPerDay) {
+  if (bookingsThisDay >= rules.maxBookingsPerDay) {
     return {
-      error: `Esse dia já atingiu o limite de ${SCHEDULE_RULES.maxBookingsPerDay} aulas. Escolha outro dia.`,
+      error: isDomicilio
+        ? "Esse dia já tem um atendimento a domicílio marcado. Escolha outro dia."
+        : `Esse dia já atingiu o limite de ${rules.maxBookingsPerDay} aulas. Escolha outro dia.`,
     };
   }
 
@@ -95,6 +123,8 @@ export async function createBookingAction(
         startTime: data.startTime,
         endTime: data.endTime,
         notes: data.notes,
+        modality: data.modality,
+        address: data.modality === "DOMICILIO_CASA_ALUNO" ? data.address : null,
       },
     });
   } catch (error) {

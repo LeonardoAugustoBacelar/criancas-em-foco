@@ -30,6 +30,8 @@ No apoio pedagógico, ela acompanha o processo de alfabetização e letramento, 
 
 Cada aula é adaptada à realidade da família, sempre com orientação direta para a mãe sobre como agir no dia a dia.`,
   pricePerHour: 60,
+  offersDomicilio: true,
+  pricePerHourDomicilio: 90,
 };
 
 async function main() {
@@ -59,6 +61,8 @@ async function main() {
             whatsapp: GILDA.whatsapp,
             pricePerHour: GILDA.pricePerHour,
             photoUrl: GILDA.photoUrl,
+            offersDomicilio: GILDA.offersDomicilio,
+            pricePerHourDomicilio: GILDA.pricePerHourDomicilio,
           },
         },
       },

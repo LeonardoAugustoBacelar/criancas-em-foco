@@ -30,6 +30,9 @@ const profileSchema = z.object({
     .refine((value) => !value || /^https?:\/\//.test(value), {
       message: "O link da videochamada precisa ser uma URL válida (http/https)",
     }),
+  offersDomicilio: z.coerce.boolean().default(false),
+  pricePerHourDomicilio: z.coerce.number().min(0).optional(),
+  domicilioAddress: z.string().trim().optional(),
 });
 
 export async function updateTeacherProfileAction(
@@ -49,6 +52,9 @@ export async function updateTeacherProfileAction(
     pricePerHour: formData.get("pricePerHour"),
     photoUrl: formData.get("photoUrl") || undefined,
     videoCallLink: formData.get("videoCallLink") || undefined,
+    offersDomicilio: formData.get("offersDomicilio"),
+    pricePerHourDomicilio: formData.get("pricePerHourDomicilio") || undefined,
+    domicilioAddress: formData.get("domicilioAddress") || undefined,
   });
 
   if (!parsed.success) {
@@ -67,11 +73,19 @@ export async function updateTeacherProfileAction(
       pricePerHour: data.pricePerHour,
       photoUrl: data.photoUrl || null,
       videoCallLink: data.videoCallLink || null,
+      offersDomicilio: data.offersDomicilio,
+      pricePerHourDomicilio: data.offersDomicilio
+        ? (data.pricePerHourDomicilio ?? 0)
+        : null,
+      domicilioAddress: data.offersDomicilio
+        ? data.domicilioAddress || null
+        : null,
     },
   });
 
   revalidatePath("/dashboard");
   revalidatePath("/professoras");
+  revalidatePath("/domicilio");
   revalidatePath("/");
   return { success: true };
 }
