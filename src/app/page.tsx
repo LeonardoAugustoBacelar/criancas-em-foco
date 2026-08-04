@@ -18,10 +18,9 @@ import {
 import { prisma } from "@/lib/prisma";
 import { CLINIC_WHATSAPP } from "@/lib/whatsapp";
 import WhatsAppInlineButton from "@/components/WhatsAppInlineButton";
+import TeacherCard from "@/components/TeacherCard";
 import RatingStars from "@/components/RatingStars";
-import SpecialtyTags from "@/components/SpecialtyTags";
 import SectionMark from "@/components/SectionMark";
-import { summarizeRatings } from "@/lib/reviews";
 
 const STOCK_PHOTOS = {
   hug: "https://images.unsplash.com/photo-1752652011858-302f08a6dc9f?auto=format&fit=crop&w=1200&q=80",
@@ -417,44 +416,7 @@ export default async function HomePage() {
         ) : (
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {teachers.map((teacher, index) => (
-              <Link
-                key={teacher.id}
-                href={`/professoras/${teacher.id}`}
-                data-reveal
-                style={{ "--reveal-delay": `${index * 80}ms` } as CSSProperties}
-                className="group rounded-lg border border-primary-100 bg-white p-6 transition hover:shadow-sm"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-full bg-primary-100">
-                    {teacher.photoUrl ? (
-                      <Image
-                        src={teacher.photoUrl}
-                        alt={teacher.user.name}
-                        fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
-                    ) : (
-                      <span className="flex h-full w-full items-center justify-center text-3xl font-bold text-primary-500">
-                        {teacher.user.name.charAt(0)}
-                      </span>
-                    )}
-                  </div>
-                  <div>
-                    <p className="font-bold text-primary-700 group-hover:text-accent-600">
-                      {teacher.user.name}
-                    </p>
-                    <div className="mt-1">
-                      <SpecialtyTags specialties={teacher.specialties} />
-                    </div>
-                    <div className="mt-1.5">
-                      <RatingStars {...summarizeRatings(teacher.reviews)} />
-                    </div>
-                  </div>
-                </div>
-                <p className="mt-4 line-clamp-3 text-sm text-primary-700/80">
-                  {teacher.bio}
-                </p>
-              </Link>
+              <TeacherCard key={teacher.id} teacher={teacher} index={index} />
             ))}
           </div>
         )}

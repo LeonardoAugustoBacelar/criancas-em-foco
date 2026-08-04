@@ -30,16 +30,22 @@ function colorForTag(tag: string, index: number): keyof typeof TAG_COLORS {
 export default function SpecialtyTags({
   specialties,
   size = "sm",
+  max,
 }: {
   specialties: string;
   size?: "sm" | "md";
+  /** Mostra só as primeiras `max` tags e resume o resto num chip "+N". */
+  max?: number;
 }) {
-  const tags = specialties
+  const allTags = specialties
     .split(",")
     .map((tag) => tag.trim())
     .filter(Boolean);
 
-  if (tags.length === 0) return null;
+  if (allTags.length === 0) return null;
+
+  const tags = max ? allTags.slice(0, max) : allTags;
+  const hiddenCount = allTags.length - tags.length;
 
   const sizeClasses =
     size === "md"
@@ -56,6 +62,13 @@ export default function SpecialtyTags({
           {tag}
         </span>
       ))}
+      {hiddenCount > 0 && (
+        <span
+          className={`rounded-full font-medium bg-primary-50 text-primary-500 ${sizeClasses}`}
+        >
+          +{hiddenCount}
+        </span>
+      )}
     </div>
   );
 }
