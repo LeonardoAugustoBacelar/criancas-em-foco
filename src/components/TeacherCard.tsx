@@ -71,7 +71,7 @@ export default function TeacherCard({
           ) : (
             <span />
           )}
-          <span className="inline-flex items-center gap-1 rounded-full bg-accent-50 px-2.5 py-1 text-[11px] font-medium text-accent-600">
+          <span className="inline-flex items-center gap-1 rounded-full bg-accent-100 px-2.5 py-1 text-[11px] font-medium text-accent-600">
             <Video className="h-3 w-3" />
             100% online
           </span>

@@ -1,14 +1,31 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
-import { CheckCircle2, Clock, Video } from "lucide-react";
+import {
+  CheckCircle2,
+  Clock,
+  GraduationCap,
+  Lightbulb,
+  Settings,
+  Star,
+  Video,
+  Wallet,
+} from "lucide-react";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import BookingActions from "@/components/dashboard/BookingActions";
 import CancelBookingButton from "@/components/dashboard/CancelBookingButton";
-import TeacherProfileForm from "@/components/dashboard/TeacherProfileForm";
 import WhatsAppInlineButton from "@/components/WhatsAppInlineButton";
 import ReviewForm from "@/components/forms/ReviewForm";
+import { summarizeRatings } from "@/lib/reviews";
+
+const TEACHER_TIPS = [
+  "Responda as mensagens no WhatsApp o mais rápido possível — é o primeiro contato da mãe e ele pesa bastante na decisão de agendar.",
+  "Confirme a aula assim que receber o comprovante do PIX, assim a mãe já sabe que está tudo certo antes do dia combinado.",
+  "De vez em quando, entre no seu link fixo do Google Meet pra garantir que ele ainda está funcionando.",
+  "Depois da aula, peça pra mãe deixar uma avaliação — perfis com avaliações reais passam mais confiança pra quem está decidindo.",
+  "Anote mentalmente (ou em algum lugar seu) o que percebeu em cada aula — ajuda a dar continuidade na próxima conversa com a família.",
+];
 
 export const metadata: Metadata = {
   title: "Minha área",
@@ -155,6 +172,7 @@ async function ProfessoraDashboard({ userId }: { userId: string }) {
         include: { mae: true },
         orderBy: { date: "asc" },
       },
+      reviews: true,
     },
   });
 
@@ -170,9 +188,15 @@ async function ProfessoraDashboard({ userId }: { userId: string }) {
 
   const pending = teacherProfile.bookings.filter((b) => b.status === "PENDENTE");
   const confirmed = teacherProfile.bookings.filter((b) => b.status === "CONFIRMADA");
+  const concluded = teacherProfile.bookings.filter((b) => b.status === "CONCLUIDA");
   const history = teacherProfile.bookings
     .filter((b) => b.status === "CONCLUIDA" || b.status === "CANCELADA")
     .reverse();
+  const ratingSummary = summarizeRatings(teacherProfile.reviews);
+  const projectedEarnings = confirmed.length * teacherProfile.pricePerHour;
+
+  const tipOfTheDay =
+    TEACHER_TIPS[new Date().getDate() % TEACHER_TIPS.length];
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
@@ -180,20 +204,62 @@ async function ProfessoraDashboard({ userId }: { userId: string }) {
         <h1 className="font-serif-display text-3xl font-semibold text-primary-700">
           Painel da professora
         </h1>
-        {(pending.length > 0 || confirmed.length > 0) && (
-          <div className="flex flex-wrap gap-2">
-            {pending.length > 0 && (
-              <span className="rounded-full bg-amber-50 px-3 py-1 text-sm font-semibold text-amber-700">
-                {pending.length} aguardando confirmação
-              </span>
-            )}
-            {confirmed.length > 0 && (
-              <span className="rounded-full bg-primary-50 px-3 py-1 text-sm font-semibold text-primary-700">
-                {confirmed.length} confirmada{confirmed.length > 1 ? "s" : ""}
-              </span>
-            )}
-          </div>
-        )}
+        <div className="flex flex-wrap items-center gap-2">
+          {pending.length > 0 && (
+            <span className="rounded-full bg-amber-50 px-3 py-1 text-sm font-semibold text-amber-700">
+              {pending.length} aguardando confirmação
+            </span>
+          )}
+          {confirmed.length > 0 && (
+            <span className="rounded-full bg-primary-50 px-3 py-1 text-sm font-semibold text-primary-700">
+              {confirmed.length} confirmada{confirmed.length > 1 ? "s" : ""}
+            </span>
+          )}
+          <Link
+            href="/dashboard/perfil"
+            className="inline-flex items-center gap-1.5 rounded-full border border-primary-100 px-3 py-1 text-sm font-semibold text-primary-700 hover:bg-primary-50"
+          >
+            <Settings className="h-3.5 w-3.5" />
+            Editar perfil
+          </Link>
+        </div>
+      </div>
+
+      <div className="mt-6 grid gap-4 sm:grid-cols-3">
+        <div className="rounded-lg border border-primary-100 bg-white p-4">
+          <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-primary-700/60">
+            <Wallet className="h-3.5 w-3.5" />
+            Ganhos previstos
+          </p>
+          <p className="mt-1 text-2xl font-bold text-primary-700">
+            R$ {projectedEarnings.toFixed(2)}
+          </p>
+          <p className="text-xs text-primary-700/60">
+            das aulas confirmadas
+          </p>
+        </div>
+        <div className="rounded-lg border border-primary-100 bg-white p-4">
+          <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-primary-700/60">
+            <GraduationCap className="h-3.5 w-3.5" />
+            Aulas dadas
+          </p>
+          <p className="mt-1 text-2xl font-bold text-primary-700">
+            {concluded.length}
+          </p>
+          <p className="text-xs text-primary-700/60">no total</p>
+        </div>
+        <div className="rounded-lg border border-primary-100 bg-white p-4">
+          <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-primary-700/60">
+            <Star className="h-3.5 w-3.5" />
+            Avaliação média
+          </p>
+          <p className="mt-1 text-2xl font-bold text-primary-700">
+            {ratingSummary.count > 0 ? ratingSummary.average.toFixed(1) : "—"}
+          </p>
+          <p className="text-xs text-primary-700/60">
+            {ratingSummary.count} avaliaç{ratingSummary.count === 1 ? "ão" : "ões"}
+          </p>
+        </div>
       </div>
 
       <section className="mt-6">
@@ -259,20 +325,14 @@ async function ProfessoraDashboard({ userId }: { userId: string }) {
         </details>
       )}
 
-      <section className="mt-10 rounded-lg border border-primary-100 bg-primary-50/40 p-6">
-        <h2 className="text-sm font-bold uppercase tracking-wide text-primary-700/70">
-          Meu perfil público
+      <section className="mt-10 rounded-lg border border-accent-100 bg-accent-100/40 p-6">
+        <h2 className="flex items-center gap-1.5 text-sm font-bold uppercase tracking-wide text-accent-600">
+          <Lightbulb className="h-4 w-4" />
+          Dica pra você
         </h2>
-        <div className="mt-4">
-          <TeacherProfileForm
-            bio={teacherProfile.bio}
-            specialties={teacherProfile.specialties}
-            whatsapp={teacherProfile.whatsapp}
-            pricePerHour={teacherProfile.pricePerHour}
-            photoUrl={teacherProfile.photoUrl}
-            videoCallLink={teacherProfile.videoCallLink}
-          />
-        </div>
+        <p className="mt-2 text-sm leading-relaxed text-primary-700/90">
+          {tipOfTheDay}
+        </p>
       </section>
     </div>
   );
