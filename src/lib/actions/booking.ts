@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@/generated/prisma/client";
 import { isValidSlot, SCHEDULE_RULES } from "@/lib/schedule";
 
 export type BookingState = {
@@ -84,17 +85,32 @@ export async function createBookingAction(
     };
   }
 
-  await prisma.booking.create({
-    data: {
-      maeId: session.user.id,
-      teacherId: data.teacherId,
-      childName: data.childName,
-      date: bookingDate,
-      startTime: data.startTime,
-      endTime: data.endTime,
-      notes: data.notes,
-    },
-  });
+  try {
+    await prisma.booking.create({
+      data: {
+        maeId: session.user.id,
+        teacherId: data.teacherId,
+        childName: data.childName,
+        date: bookingDate,
+        startTime: data.startTime,
+        endTime: data.endTime,
+        notes: data.notes,
+      },
+    });
+  } catch (error) {
+    // Alguém reservou esse mesmo horário entre a checagem acima e agora
+    // (corrida) — o índice único no banco (ver migração
+    // add_booking_slot_unique_index) é quem garante isso de verdade.
+    if (
+      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error.code === "P2002"
+    ) {
+      return {
+        error: "Esse horário acabou de ser reservado por outra pessoa. Escolha outro horário.",
+      };
+    }
+    throw error;
+  }
 
   revalidatePath("/dashboard");
   return { success: true };

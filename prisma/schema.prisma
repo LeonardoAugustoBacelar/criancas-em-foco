@@ -88,6 +88,11 @@ model Availability {
   endTime   String
 }
 
+// Também existe um índice único parcial no banco (teacherId, date, startTime
+// onde status IN (PENDENTE, CONFIRMADA)) — não representável aqui na sintaxe
+// do Prisma, criado à mão na migração add_booking_slot_unique_index. É ele
+// que garante, no banco, que duas reservas não fiquem com o mesmo horário
+// mesmo em caso de corrida entre requisições simultâneas.
 model Booking {
   id         String        @id @default(cuid())
   maeId      String
