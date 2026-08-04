@@ -29,8 +29,8 @@ const siteDescription =
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Crianças em Foco | Apoio para mães e professoras especializadas",
-    template: "%s | Crianças em Foco",
+    default: "Florescer Kids | Apoio para mães e professoras especializadas",
+    template: "%s | Florescer Kids",
   },
   description: siteDescription,
   keywords: [
@@ -46,16 +46,16 @@ export const metadata: Metadata = {
     "aula de reforço",
   ],
   openGraph: {
-    title: "Crianças em Foco",
+    title: "Florescer Kids",
     description: siteDescription,
     url: siteUrl,
-    siteName: "Crianças em Foco",
+    siteName: "Florescer Kids",
     locale: "pt_BR",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Crianças em Foco",
+    title: "Florescer Kids",
     description: siteDescription,
   },
   robots: {

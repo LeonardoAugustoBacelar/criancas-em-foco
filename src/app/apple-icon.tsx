@@ -23,7 +23,7 @@ export default function AppleIcon() {
           fontFamily: "sans-serif",
         }}
       >
-        CF
+        FK
       </div>
     ),
     { ...size }

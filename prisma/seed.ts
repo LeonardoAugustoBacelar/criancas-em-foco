@@ -14,7 +14,7 @@ const REMOVED_TEACHER_EMAILS = [
 
 const GILDA = {
   name: "Gilda Bacelar",
-  email: "gilda@criancasemfoco.com.br",
+  email: "gilda@florescerkids.com.br",
   phone: "11970406208",
   whatsapp: "5511970406208",
   photoUrl: "/images/gilda.jpg",
@@ -27,7 +27,7 @@ No apoio comportamental, ela trabalha com crianças que têm crises de birra fre
 No apoio pedagógico, ela acompanha o processo de alfabetização e letramento, leitura e escrita, matemática e as tarefas escolares, com atividades adequadas ao ritmo de cada criança. O objetivo não é só o conteúdo: é fortalecer, aos poucos, a autonomia e a confiança da criança nos próprios estudos.
 
 Cada aula é adaptada à realidade da família, sempre com orientação direta para a mãe sobre como agir no dia a dia.`,
-  pricePerHour: 35,
+  pricePerHour: 60,
 };
 
 async function main() {
@@ -62,7 +62,7 @@ async function main() {
     });
   }
 
-  const maeEmail = "mae.exemplo@criancasemfoco.com.br";
+  const maeEmail = "mae.exemplo@florescerkids.com.br";
   const existingMae = await prisma.user.findUnique({ where: { email: maeEmail } });
   if (!existingMae) {
     await prisma.user.create({
@@ -76,7 +76,7 @@ async function main() {
     });
   }
 
-  const adminEmail = "admin@criancasemfoco.com.br";
+  const adminEmail = "admin@florescerkids.com.br";
   const existingAdmin = await prisma.user.findUnique({ where: { email: adminEmail } });
   if (!existingAdmin) {
     await prisma.user.create({
@@ -91,9 +91,9 @@ async function main() {
   }
 
   console.log("Seed concluído. Logins de teste (senha: senha123):");
-  console.log("  Mãe: mae.exemplo@criancasemfoco.com.br");
-  console.log("  Professora: gilda@criancasemfoco.com.br");
-  console.log("  Admin: admin@criancasemfoco.com.br");
+  console.log("  Mãe: mae.exemplo@florescerkids.com.br");
+  console.log("  Professora: gilda@florescerkids.com.br");
+  console.log("  Admin: admin@florescerkids.com.br");
 }
 
 main()

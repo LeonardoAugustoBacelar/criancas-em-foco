@@ -15,9 +15,9 @@ export default function Footer() {
         <div>
           <div className="flex items-center gap-2.5">
             <span className="flex h-8 w-8 items-center justify-center rounded-md bg-white/10 text-sm font-bold text-white">
-              CF
+              FK
             </span>
-            <p className="text-lg font-bold text-white">Crianças em Foco</p>
+            <p className="text-lg font-bold text-white">Florescer Kids</p>
           </div>
           <p className="mt-4 text-sm leading-relaxed text-primary-100">
             Apoio especializado para mães que enfrentam desafios de
@@ -72,11 +72,11 @@ export default function Footer() {
             </li>
             <li>
               <a
-                href="mailto:contato@criancasemfoco.com.br"
+                href="mailto:contato@florescerkids.com.br"
                 className="flex items-center gap-2 transition hover:text-white"
               >
                 <Mail className="h-4 w-4 shrink-0" />
-                contato@criancasemfoco.com.br
+                contato@florescerkids.com.br
               </a>
             </li>
           </ul>
@@ -85,7 +85,7 @@ export default function Footer() {
 
       <div className="border-t border-white/10 px-4 py-5 text-center text-xs text-primary-100/70 sm:px-6">
         <p>
-          © {new Date().getFullYear()} Crianças em Foco. Todos os direitos
+          © {new Date().getFullYear()} Florescer Kids. Todos os direitos
           reservados.
         </p>
         <p className="mt-1.5">

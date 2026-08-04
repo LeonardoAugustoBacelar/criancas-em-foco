@@ -371,7 +371,7 @@ export default async function HomePage() {
           </div>
           <div className="order-1 md:order-2" data-reveal>
             <span className="font-mono text-xs uppercase tracking-[0.2em] text-warm-600">
-              Para quem é o Crianças em Foco
+              Para quem é o Florescer Kids
             </span>
             <h2 className="mt-3 font-serif-display text-3xl font-semibold text-primary-700">
               Se você se identifica com alguma dessas situações,

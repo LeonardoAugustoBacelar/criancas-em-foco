@@ -1,4 +1,4 @@
-// Prisma schema — Crianças em Foco
+// Prisma schema — Florescer Kids
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {

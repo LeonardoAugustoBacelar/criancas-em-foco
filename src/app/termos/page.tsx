@@ -16,7 +16,7 @@ export default function TermosPage() {
       <div className="mt-8 space-y-6 text-sm leading-relaxed text-primary-700/90">
         <p>
           Estes Termos de Uso regulam o acesso e a utilização do site
-          Crianças em Foco (&quot;plataforma&quot;), que conecta mães e
+          Florescer Kids (&quot;plataforma&quot;), que conecta mães e
           responsáveis a professoras especializadas em comportamento
           infantil para aulas particulares e orientação. Ao criar uma
           conta, você concorda com estes termos.
@@ -56,7 +56,7 @@ export default function TermosPage() {
           </h2>
           <p className="mt-2">
             As professoras cadastradas atuam como profissionais autônomas,
-            não como funcionárias da plataforma. A Crianças em Foco
+            não como funcionárias da plataforma. A Florescer Kids
             facilita o agendamento e o contato, mas a relação de prestação
             de serviço (conteúdo da aula, condução pedagógica) é entre a
             mãe/responsável e a professora.
@@ -69,7 +69,7 @@ export default function TermosPage() {
           </h2>
           <p className="mt-2">
             As aulas são pagas por PIX, diretamente para a professora, após o
-            agendamento. A Crianças em Foco não processa nem armazena dados
+            agendamento. A Florescer Kids não processa nem armazena dados
             de pagamento — a chave PIX e o QR code exibidos no site
             pertencem à professora responsável pela aula.
           </p>
@@ -92,7 +92,7 @@ export default function TermosPage() {
             6. Limitação de responsabilidade
           </h2>
           <p className="mt-2">
-            A Crianças em Foco atua como intermediadora entre famílias e
+            A Florescer Kids atua como intermediadora entre famílias e
             professoras, e envida esforços para verificar as professoras
             cadastradas, mas não garante resultados específicos das aulas
             nem se responsabiliza por condutas das professoras fora do
@@ -117,10 +117,10 @@ export default function TermosPage() {
           <p className="mt-2">
             Dúvidas sobre estes termos podem ser enviadas para{" "}
             <a
-              href="mailto:contato@criancasemfoco.com.br"
+              href="mailto:contato@florescerkids.com.br"
               className="font-semibold text-accent-600 hover:underline"
             >
-              contato@criancasemfoco.com.br
+              contato@florescerkids.com.br
             </a>{" "}
             ou pelo WhatsApp disponível no site.
           </p>

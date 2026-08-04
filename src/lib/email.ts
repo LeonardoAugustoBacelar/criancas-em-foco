@@ -6,13 +6,13 @@ const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
 
 export async function sendPasswordResetEmail(to: string, resetUrl: string) {
   const { error } = await resend.emails.send({
-    from: `Crianças em Foco <${FROM_EMAIL}>`,
+    from: `Florescer Kids <${FROM_EMAIL}>`,
     to,
-    subject: "Redefinir sua senha — Crianças em Foco",
+    subject: "Redefinir sua senha — Florescer Kids",
     html: `
       <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto;">
         <h2 style="color: #18181b;">Redefinir sua senha</h2>
-        <p>Recebemos um pedido para redefinir a senha da sua conta no Crianças em Foco.</p>
+        <p>Recebemos um pedido para redefinir a senha da sua conta no Florescer Kids.</p>
         <p>
           <a href="${resetUrl}" style="display:inline-block; background:#18181b; color:white; padding:12px 24px; border-radius:8px; text-decoration:none; font-weight:bold;">
             Criar nova senha
@@ -40,7 +40,7 @@ export async function sendBookingReminderEmail(
   }
 ) {
   const { error } = await resend.emails.send({
-    from: `Crianças em Foco <${FROM_EMAIL}>`,
+    from: `Florescer Kids <${FROM_EMAIL}>`,
     to,
     subject: `Lembrete: aula de ${data.childName} amanhã às ${data.startTime}`,
     html: `

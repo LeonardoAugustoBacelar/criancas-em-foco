@@ -11,7 +11,7 @@ export const PIX_CONFIG = {
   city: "Sao Paulo",
   // Valor fixo de uma aula. O QR sempre pede esse valor ao ser escaneado
   // (o app do banco ainda deixa a pessoa editar antes de confirmar).
-  amount: 35,
+  amount: 60,
 } as const;
 
 function crc16(payload: string): string {

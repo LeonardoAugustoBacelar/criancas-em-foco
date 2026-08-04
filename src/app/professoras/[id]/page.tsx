@@ -41,7 +41,7 @@ export async function generateMetadata({
 
   return {
     title: teacher.user.name,
-    description: `${teacher.specialties} — conheça o trabalho de ${teacher.user.name}, professora especializada em comportamento infantil e pedagogia na Crianças em Foco.`,
+    description: `${teacher.specialties} — conheça o trabalho de ${teacher.user.name}, professora especializada em comportamento infantil e pedagogia na Florescer Kids.`,
   };
 }
 
@@ -76,7 +76,7 @@ export default async function TeacherProfilePage({
 
   const ratingSummary = summarizeRatings(teacher.reviews);
 
-  const whatsappMessage = `Olá, ${teacher.user.name}! Vi seu perfil no site Crianças em Foco e gostaria de saber mais sobre suas aulas.`;
+  const whatsappMessage = `Olá, ${teacher.user.name}! Vi seu perfil no site Florescer Kids e gostaria de saber mais sobre suas aulas.`;
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">

@@ -1,4 +1,4 @@
-// Regras fixas de horário do Crianças em Foco: aulas de 1h, começando às
+// Regras fixas de horário do Florescer Kids: aulas de 1h, começando às
 // 17h em dias de semana e às 14h em finais de semana, até as 20h, com no
 // máximo 3 aulas por dia (capacidade da professora).
 

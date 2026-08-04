@@ -17,7 +17,7 @@ export default function PrivacidadePage() {
 
       <div className="mt-8 space-y-6 text-sm leading-relaxed text-primary-700/90">
         <p>
-          Esta política explica como a Crianças em Foco coleta, usa e
+          Esta política explica como a Florescer Kids coleta, usa e
           protege dados pessoais, em conformidade com a Lei Geral de
           Proteção de Dados (LGPD — Lei 13.709/2018).
         </p>
@@ -111,10 +111,10 @@ export default function PrivacidadePage() {
             e revogação do consentimento. Para exercer esses direitos,
             entre em contato pelo e-mail{" "}
             <a
-              href="mailto:contato@criancasemfoco.com.br"
+              href="mailto:contato@florescerkids.com.br"
               className="font-semibold text-accent-600 hover:underline"
             >
-              contato@criancasemfoco.com.br
+              contato@florescerkids.com.br
             </a>
             .
           </p>

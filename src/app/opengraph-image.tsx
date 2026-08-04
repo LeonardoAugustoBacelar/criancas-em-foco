@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Crianças em Foco";
+export const alt = "Florescer Kids";
 export const size = {
   width: 1200,
   height: 630,
@@ -37,7 +37,7 @@ export default function Image() {
               fontWeight: 700,
             }}
           >
-            CF
+            FK
           </div>
           <div
             style={{
@@ -48,7 +48,7 @@ export default function Image() {
               letterSpacing: -1,
             }}
           >
-            Crianças em Foco
+            Florescer Kids
           </div>
         </div>
         <div

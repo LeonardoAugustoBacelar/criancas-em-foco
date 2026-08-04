@@ -1,14 +1,14 @@
-# Crianças em Foco
+# Florescer Kids
 
 Plataforma que conecta mães a professoras especializadas em **comportamento infantil e pedagogia** — aulas particulares (TDAH, TEA, birras, ansiedade, alfabetização, reforço escolar), com agendamento online, pagamento por PIX e contato direto por WhatsApp.
 
 ![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js) ![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue?logo=typescript) ![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-38bdf8?logo=tailwindcss) ![Prisma](https://img.shields.io/badge/Prisma-v7-2D3748?logo=prisma) ![Deploy](https://img.shields.io/badge/deploy-Vercel-black?logo=vercel)
 
-![Página inicial do Crianças em Foco](docs/screenshot-home.png)
+![Página inicial do Florescer Kids](docs/screenshot-home.png)
 
 ## Sobre o projeto
 
-Mães que enfrentam desafios de comportamento ou aprendizagem com os filhos costumam pesquisar ajuda sozinhas, à noite, cansadas, sem saber por onde começar. O Crianças em Foco existe para tornar esse primeiro passo simples: a mãe conhece o perfil de uma professora especializada, vê especialidades, avaliações reais de outras famílias e preço, e já sai agendando uma aula ou falando direto no WhatsApp — sem formulário longo, sem espera.
+Mães que enfrentam desafios de comportamento ou aprendizagem com os filhos costumam pesquisar ajuda sozinhas, à noite, cansadas, sem saber por onde começar. O Florescer Kids existe para tornar esse primeiro passo simples: a mãe conhece o perfil de uma professora especializada, vê especialidades, avaliações reais de outras famílias e preço, e já sai agendando uma aula ou falando direto no WhatsApp — sem formulário longo, sem espera.
 
 O modelo é intencionalmente enxuto: cada professora tem um perfil completo (bio, especialidades, fotos), a mãe agenda diretamente num horário fixo de atendimento (segunda a sexta a partir das 17h, fins de semana a partir das 14h) e paga a aula via PIX, direto para a professora. Um painel de administração permite acompanhar reservas e aprovar novas professoras.
 
