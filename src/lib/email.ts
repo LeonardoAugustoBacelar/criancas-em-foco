@@ -1,12 +1,16 @@
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const GMAIL_USER = process.env.GMAIL_USER ?? "";
+const GMAIL_APP_PASSWORD = process.env.GMAIL_APP_PASSWORD ?? "";
 
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: { user: GMAIL_USER, pass: GMAIL_APP_PASSWORD },
+});
 
 export async function sendPasswordResetEmail(to: string, resetUrl: string) {
-  const { error } = await resend.emails.send({
-    from: `Florescer Kids <${FROM_EMAIL}>`,
+  await transporter.sendMail({
+    from: `Florescer Kids <${GMAIL_USER}>`,
     to,
     subject: "Redefinir sua senha — Florescer Kids",
     html: `
@@ -22,10 +26,6 @@ export async function sendPasswordResetEmail(to: string, resetUrl: string) {
       </div>
     `,
   });
-
-  if (error) {
-    throw new Error(error.message);
-  }
 }
 
 export async function sendBookingReminderEmail(
@@ -39,8 +39,8 @@ export async function sendBookingReminderEmail(
     videoCallLink?: string | null;
   }
 ) {
-  const { error } = await resend.emails.send({
-    from: `Florescer Kids <${FROM_EMAIL}>`,
+  await transporter.sendMail({
+    from: `Florescer Kids <${GMAIL_USER}>`,
     to,
     subject: `Lembrete: aula de ${data.childName} amanhã às ${data.startTime}`,
     html: `
@@ -68,8 +68,4 @@ export async function sendBookingReminderEmail(
       </div>
     `,
   });
-
-  if (error) {
-    throw new Error(error.message);
-  }
 }
