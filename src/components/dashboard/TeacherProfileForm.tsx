@@ -11,6 +11,7 @@ const initialState: TeacherProfileState = {};
 export default function TeacherProfileForm({
   bio,
   specialties,
+  credentials,
   whatsapp,
   pricePerHour,
   photoUrl,
@@ -18,6 +19,7 @@ export default function TeacherProfileForm({
 }: {
   bio: string;
   specialties: string;
+  credentials: string | null;
   whatsapp: string;
   pricePerHour: number;
   photoUrl: string | null;
@@ -49,6 +51,20 @@ export default function TeacherProfileForm({
           required
           className="mt-1 w-full rounded-md border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
         />
+      </label>
+
+      <label className="block text-sm font-medium text-primary-700">
+        Formação e experiência (opcional)
+        <input
+          name="credentials"
+          defaultValue={credentials ?? ""}
+          placeholder="Ex: Pedagoga e psicopedagoga, 15 anos de experiência..."
+          className="mt-1 w-full rounded-md border border-primary-100 bg-white px-4 py-2.5 text-sm text-primary-700 outline-none focus:border-primary-400"
+        />
+        <span className="mt-1 block text-xs text-primary-700/60">
+          Aparece em destaque no seu perfil público, separado da bio — ajuda a
+          mãe a confiar mais rápido.
+        </span>
       </label>
 
       <div className="grid gap-4 sm:grid-cols-2">

@@ -42,6 +42,13 @@ export default async function PixPaymentInfo() {
         Depois de pagar, envie o comprovante pelo WhatsApp para confirmar sua
         vaga — o link aparece assim que você agenda a aula.
       </p>
+
+      <p className="mt-2 text-xs text-primary-700/60">
+        Pode cancelar ou remarcar quando quiser, sem multa, direto no seu
+        painel — só avise a professora com antecedência. Se já tiver pago e
+        precisar cancelar, combine o reembolso ou reagendamento com ela pelo
+        WhatsApp.
+      </p>
     </div>
   );
 }

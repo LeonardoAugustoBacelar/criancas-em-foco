@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ShieldCheck } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { getDaySlots, isWeekend, SCHEDULE_RULES } from "@/lib/schedule";
 import PixPaymentInfo from "@/components/PixPaymentInfo";
@@ -78,6 +78,10 @@ export default async function HorariosPage() {
         partir das {SCHEDULE_RULES.weekdayStart}. Sábado e domingo, a partir
         das {SCHEDULE_RULES.weekendStart}. Até no máximo{" "}
         {SCHEDULE_RULES.maxBookingsPerDay} aulas por dia.
+      </p>
+      <p className="mt-2 flex max-w-2xl items-center gap-1.5 text-sm text-primary-700/70">
+        <ShieldCheck className="h-4 w-4 shrink-0 text-accent-600" />
+        Chamada privada pelo Google Meet, não é gravada.
       </p>
 
       {!teacher ? (

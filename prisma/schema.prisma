@@ -54,6 +54,7 @@ model TeacherProfile {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   bio          String
   specialties  String
+  credentials  String?
   whatsapp     String
   photoUrl     String?
   videoCallLink String?
@@ -86,6 +87,7 @@ model Booking {
   startTime  String
   endTime    String
   notes      String?
+  teacherNote String?
   status     BookingStatus @default(PENDENTE)
   createdAt  DateTime      @default(now())
 

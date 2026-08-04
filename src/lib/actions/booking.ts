@@ -141,3 +141,35 @@ export async function updateBookingStatusAction(
 
   revalidatePath("/dashboard");
 }
+
+export async function addTeacherNoteAction(bookingId: string, note: string) {
+  const session = await auth();
+  if (!session?.user || session.user.role !== "PROFESSORA") {
+    throw new Error("Não autorizado");
+  }
+
+  const trimmed = note.trim();
+  if (trimmed.length === 0) {
+    throw new Error("A nota não pode ficar vazia.");
+  }
+
+  const booking = await prisma.booking.findUnique({
+    where: { id: bookingId },
+    include: { teacher: true },
+  });
+
+  if (!booking || booking.teacher.userId !== session.user.id) {
+    throw new Error("Não autorizado");
+  }
+
+  if (booking.status !== "CONCLUIDA") {
+    throw new Error("Só é possível anotar aulas já concluídas.");
+  }
+
+  await prisma.booking.update({
+    where: { id: bookingId },
+    data: { teacherNote: trimmed },
+  });
+
+  revalidatePath("/dashboard");
+}

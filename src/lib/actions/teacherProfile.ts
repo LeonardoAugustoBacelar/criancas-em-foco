@@ -13,6 +13,7 @@ export type TeacherProfileState = {
 const profileSchema = z.object({
   bio: z.string().min(10, "Conte um pouco mais sobre você"),
   specialties: z.string().min(3, "Informe suas especialidades"),
+  credentials: z.string().trim().optional(),
   whatsapp: z.string().min(8, "Informe um WhatsApp válido"),
   pricePerHour: z.coerce.number().min(0),
   photoUrl: z
@@ -43,6 +44,7 @@ export async function updateTeacherProfileAction(
   const parsed = profileSchema.safeParse({
     bio: formData.get("bio"),
     specialties: formData.get("specialties"),
+    credentials: formData.get("credentials") || undefined,
     whatsapp: formData.get("whatsapp"),
     pricePerHour: formData.get("pricePerHour"),
     photoUrl: formData.get("photoUrl") || undefined,
@@ -60,6 +62,7 @@ export async function updateTeacherProfileAction(
     data: {
       bio: data.bio,
       specialties: data.specialties,
+      credentials: data.credentials || null,
       whatsapp: data.whatsapp,
       pricePerHour: data.pricePerHour,
       photoUrl: data.photoUrl || null,

@@ -20,6 +20,8 @@ const GILDA = {
   photoUrl: "/images/gilda.jpg",
   specialties:
     "TDAH, TEA, birras, ansiedade infantil, dificuldades escolares e regulação emocional, Alfabetização e letramento, Leitura e escrita, Matemática, Auxílio nas tarefas escolares, Desenvolvimento da autonomia e da confiança",
+  credentials:
+    "Pedagoga e psicopedagoga · Mais de 15 anos de experiência em alfabetização, reforço escolar e apoio comportamental infantil (TDAH, TEA e regulação emocional)",
   bio: `Pedagoga e psicopedagoga com mais de 15 anos de experiência, Gilda acredita que cada criança aprende e se desenvolve no seu próprio tempo. Por isso, toda aula é construída a partir da realidade específica da sua família — nunca de um roteiro pronto.
 
 No apoio comportamental, ela trabalha com crianças que têm crises de birra frequentes, dificuldade de concentração (TDAH), características do espectro autista (TEA) ou sinais de ansiedade. Antes de qualquer estratégia, ela escuta o que você já tentou e o que realmente acontece no dia a dia — e te orienta sobre como agir em casa, entre um encontro e outro.
@@ -53,6 +55,7 @@ async function main() {
           create: {
             bio: GILDA.bio,
             specialties: GILDA.specialties,
+            credentials: GILDA.credentials,
             whatsapp: GILDA.whatsapp,
             pricePerHour: GILDA.pricePerHour,
             photoUrl: GILDA.photoUrl,

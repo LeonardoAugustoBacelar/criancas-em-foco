@@ -50,6 +50,7 @@ export default async function EditarPerfilPage() {
         <TeacherProfileForm
           bio={teacherProfile.bio}
           specialties={teacherProfile.specialties}
+          credentials={teacherProfile.credentials}
           whatsapp={teacherProfile.whatsapp}
           pricePerHour={teacherProfile.pricePerHour}
           photoUrl={teacherProfile.photoUrl}

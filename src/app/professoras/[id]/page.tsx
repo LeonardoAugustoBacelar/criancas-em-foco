@@ -3,7 +3,7 @@ import Link from "next/link";
 import { cache } from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { Video } from "lucide-react";
+import { GraduationCap, ShieldCheck, Video } from "lucide-react";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import WhatsAppInlineButton from "@/components/WhatsAppInlineButton";
@@ -113,6 +113,13 @@ export default async function TeacherProfilePage({
             </div>
           </div>
 
+          {teacher.credentials && (
+            <p className="mt-6 flex items-start gap-2 rounded-md bg-accent-100/50 p-3 text-sm font-medium text-accent-600">
+              <GraduationCap className="mt-0.5 h-4 w-4 shrink-0" />
+              {teacher.credentials}
+            </p>
+          )}
+
           <p className="mt-8 whitespace-pre-line text-lg leading-relaxed text-primary-700/90">
             {teacher.bio}
           </p>
@@ -125,6 +132,10 @@ export default async function TeacherProfilePage({
           <p className="mt-1 flex items-center gap-1.5 text-sm text-primary-700/70">
             <Video className="h-4 w-4 text-accent-600" />
             Atendimento 100% online, por videochamada
+          </p>
+          <p className="mt-1 flex items-center gap-1.5 text-sm text-primary-700/70">
+            <ShieldCheck className="h-4 w-4 text-accent-600" />
+            Chamada privada pelo Google Meet, não é gravada
           </p>
 
           <div className="mt-6 flex flex-wrap gap-3">

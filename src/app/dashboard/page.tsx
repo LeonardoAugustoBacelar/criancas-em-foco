@@ -15,6 +15,7 @@ import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import BookingActions from "@/components/dashboard/BookingActions";
 import CancelBookingButton from "@/components/dashboard/CancelBookingButton";
+import TeacherNoteForm from "@/components/dashboard/TeacherNoteForm";
 import WhatsAppInlineButton from "@/components/WhatsAppInlineButton";
 import ReviewForm from "@/components/forms/ReviewForm";
 import { summarizeRatings } from "@/lib/reviews";
@@ -70,12 +71,22 @@ async function MaeDashboard({ userId }: { userId: string }) {
     orderBy: { date: "desc" },
   });
 
+  const concludedCount = bookings.filter((b) => b.status === "CONCLUIDA").length;
+
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <h1 className="font-serif-display text-3xl font-semibold text-primary-700">
-          Minhas aulas
-        </h1>
+        <div>
+          <h1 className="font-serif-display text-3xl font-semibold text-primary-700">
+            Minhas aulas
+          </h1>
+          {concludedCount > 0 && (
+            <p className="mt-1 text-sm text-primary-700/70">
+              Você e a professora já fizeram {concludedCount}{" "}
+              {concludedCount === 1 ? "aula" : "aulas"} juntas.
+            </p>
+          )}
+        </div>
         <Link
           href="/professoras"
           className="rounded-md bg-accent-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-accent-600"
@@ -151,6 +162,15 @@ async function MaeDashboard({ userId }: { userId: string }) {
                 )}
               </div>
 
+              {booking.teacherNote && (
+                <p className="mt-3 rounded-md bg-primary-50 p-3 text-sm text-primary-700/90">
+                  <span className="font-semibold">
+                    Nota da professora:{" "}
+                  </span>
+                  {booking.teacherNote}
+                </p>
+              )}
+
               {booking.status === "CONCLUIDA" && !booking.review && (
                 <div className="mt-3">
                   <ReviewForm bookingId={booking.id} />
@@ -189,8 +209,12 @@ async function ProfessoraDashboard({ userId }: { userId: string }) {
   const pending = teacherProfile.bookings.filter((b) => b.status === "PENDENTE");
   const confirmed = teacherProfile.bookings.filter((b) => b.status === "CONFIRMADA");
   const concluded = teacherProfile.bookings.filter((b) => b.status === "CONCLUIDA");
+  const concludedNoNote = concluded.filter((b) => !b.teacherNote);
   const history = teacherProfile.bookings
-    .filter((b) => b.status === "CONCLUIDA" || b.status === "CANCELADA")
+    .filter(
+      (b) =>
+        b.status === "CANCELADA" || (b.status === "CONCLUIDA" && b.teacherNote)
+    )
     .reverse();
   const ratingSummary = summarizeRatings(teacherProfile.reviews);
   const projectedEarnings = confirmed.length * teacherProfile.pricePerHour;
@@ -308,6 +332,24 @@ async function ProfessoraDashboard({ userId }: { userId: string }) {
         )}
       </section>
 
+      {concludedNoNote.length > 0 && (
+        <section className="mt-6">
+          <h2 className="flex items-center gap-1.5 text-sm font-bold uppercase tracking-wide text-emerald-700">
+            <GraduationCap className="h-4 w-4" />
+            Aulas concluídas — adicionar nota
+          </h2>
+          <div className="mt-3 space-y-3">
+            {concludedNoNote.map((booking) => (
+              <TeacherBookingCard
+                key={booking.id}
+                booking={booking}
+                accent="done"
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
       {history.length > 0 && (
         <details className="mt-8 rounded-lg border border-primary-100 bg-white p-5">
           <summary className="cursor-pointer text-sm font-semibold text-primary-700/70">
@@ -350,14 +392,16 @@ function TeacherBookingCard({
     startTime: string;
     endTime: string;
     notes: string | null;
+    teacherNote: string | null;
     status: string;
   };
-  accent: "amber" | "primary" | "muted";
+  accent: "amber" | "primary" | "muted" | "done";
 }) {
   const accentBorder = {
     amber: "border-l-4 border-l-amber-400",
     primary: "border-l-4 border-l-primary-400",
     muted: "border-l-4 border-l-primary-100",
+    done: "border-l-4 border-l-emerald-400",
   }[accent];
 
   return (
@@ -391,6 +435,17 @@ function TeacherBookingCard({
         <div className="mt-3">
           <BookingActions bookingId={booking.id} />
         </div>
+      )}
+
+      {booking.status === "CONCLUIDA" && !booking.teacherNote && (
+        <TeacherNoteForm bookingId={booking.id} />
+      )}
+
+      {booking.teacherNote && (
+        <p className="mt-3 rounded-md bg-emerald-50 p-3 text-sm text-emerald-800">
+          <span className="font-semibold">Sua nota: </span>
+          {booking.teacherNote}
+        </p>
       )}
     </div>
   );
