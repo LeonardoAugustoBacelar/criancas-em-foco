@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import TeacherApprovalToggle from "@/components/dashboard/TeacherApprovalToggle";
+import DenyTeacherButton from "@/components/dashboard/DenyTeacherButton";
+import DeleteBookingButton from "@/components/dashboard/DeleteBookingButton";
 
 export const metadata: Metadata = {
   title: "Administração",
@@ -68,6 +70,9 @@ export default async function AdminPage() {
                   teacherId={teacher.id}
                   approved={teacher.approved}
                 />
+                {!teacher.approved && (
+                  <DenyTeacherButton teacherId={teacher.id} />
+                )}
               </div>
             </div>
           ))}
@@ -105,9 +110,14 @@ export default async function AdminPage() {
                     {booking.startTime} às {booking.endTime}
                   </p>
                 </div>
-                <span className="rounded-full bg-primary-50 px-3 py-1 text-xs font-semibold text-primary-700">
-                  {booking.status}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="rounded-full bg-primary-50 px-3 py-1 text-xs font-semibold text-primary-700">
+                    {booking.status}
+                  </span>
+                  {booking.status === "CANCELADA" && (
+                    <DeleteBookingButton bookingId={booking.id} />
+                  )}
+                </div>
               </div>
             ))}
           </div>
