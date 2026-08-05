@@ -9,29 +9,15 @@ import { isRateLimited, recordAttempt, RATE_LIMIT_MESSAGE } from "@/lib/rateLimi
 const MAX_ATTEMPTS = 5;
 const WINDOW_MINUTES = 60;
 
-const registerSchema = z
-  .object({
-    name: z.string().min(2, "Informe seu nome completo"),
-    email: z.string().email("E-mail inválido"),
-    phone: z.string().min(8, "Informe um telefone válido"),
-    password: z.string().min(6, "A senha precisa ter ao menos 6 caracteres"),
-    role: z.enum(["MAE", "PROFESSORA"]),
-    bio: z.string().optional(),
-    specialties: z.string().optional(),
-    whatsapp: z.string().optional(),
-    acceptedTerms: z.literal("on", {
-      message: "Você precisa aceitar os Termos de Uso e a Política de Privacidade",
-    }),
-  })
-  .refine(
-    (data) =>
-      data.role !== "PROFESSORA" ||
-      (data.bio && data.specialties && data.whatsapp),
-    {
-      message: "Preencha bio, especialidades e WhatsApp para se cadastrar como professora",
-      path: ["bio"],
-    }
-  );
+const registerSchema = z.object({
+  name: z.string().min(2, "Informe seu nome completo"),
+  email: z.string().email("E-mail inválido"),
+  phone: z.string().min(8, "Informe um telefone válido"),
+  password: z.string().min(6, "A senha precisa ter ao menos 6 caracteres"),
+  acceptedTerms: z.literal("on", {
+    message: "Você precisa aceitar os Termos de Uso e a Política de Privacidade",
+  }),
+});
 
 export type RegisterState = {
   error?: string;
@@ -54,10 +40,6 @@ export async function registerAction(
     email: formData.get("email"),
     phone: formData.get("phone"),
     password: formData.get("password"),
-    role: formData.get("role"),
-    bio: formData.get("bio") || undefined,
-    specialties: formData.get("specialties") || undefined,
-    whatsapp: formData.get("whatsapp") || undefined,
     acceptedTerms: formData.get("acceptedTerms") || undefined,
   });
 
@@ -80,17 +62,7 @@ export async function registerAction(
       email: data.email,
       phone: data.phone,
       password: hashed,
-      role: data.role,
-      teacherProfile:
-        data.role === "PROFESSORA"
-          ? {
-              create: {
-                bio: data.bio!,
-                specialties: data.specialties!,
-                whatsapp: data.whatsapp!,
-              },
-            }
-          : undefined,
+      role: "MAE",
     },
   });
 

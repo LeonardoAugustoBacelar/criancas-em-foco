@@ -33,7 +33,7 @@ export default function PrivacidadePage() {
               simples).
             </li>
             <li>
-              <strong>Dados de professoras:</strong> bio, especialidades,
+              <strong>Dados da professora:</strong> bio, especialidades,
               WhatsApp e valor da hora/aula, exibidos publicamente no
               perfil.
             </li>

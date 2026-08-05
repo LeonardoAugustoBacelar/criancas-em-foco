@@ -101,9 +101,9 @@ const STEPS: {
   },
   {
     step: "2",
-    title: "Escolha uma professora",
+    title: "Conheça a Gilda",
     description:
-      "Veja perfis de professoras especializadas em comportamento infantil e escolha quem combina com sua família.",
+      "Veja o perfil da Gilda, nossa professora especializada em comportamento infantil, e entenda como ela pode ajudar sua família.",
     icon: UserCheck,
     color: "warm",
   },
@@ -205,10 +205,11 @@ export default async function HomePage() {
               e a avançar nos estudos
             </h1>
             <p className="mt-5 text-lg text-primary-500">
-              Conectamos mães a professoras especializadas em comportamento
-              infantil e pedagogia, com aulas individuais de alfabetização,
-              reforço escolar, orientação para a família e acompanhamento
-              contínuo — tudo começando por uma conversa no WhatsApp.
+              Conectamos mães à Gilda, professora especializada em
+              comportamento infantil e pedagogia, com aulas individuais de
+              alfabetização, reforço escolar, orientação para a família e
+              acompanhamento contínuo — tudo começando por uma conversa no
+              WhatsApp.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <WhatsAppInlineButton
@@ -221,7 +222,7 @@ export default async function HomePage() {
                 href="/professoras"
                 className="btn-press group inline-flex items-center gap-2 rounded-md border border-primary-100 px-6 py-3 font-semibold text-primary-700 transition-colors hover:bg-primary-50"
               >
-                Conhecer as professoras
+                Conhecer a professora
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Link>
             </div>
@@ -391,12 +392,12 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Professoras em destaque */}
+      {/* Professora em destaque */}
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <h2 className="font-serif-display text-3xl font-semibold text-primary-700">
-              Professoras especializadas
+              Nossa professora
             </h2>
             <SectionMark color="sky" align="left" />
           </div>
@@ -404,14 +405,14 @@ export default async function HomePage() {
             href="/professoras"
             className="group inline-flex items-center gap-1 font-semibold text-accent-600 hover:underline"
           >
-            Ver todas
+            Ver perfil completo
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </Link>
         </div>
 
         {teachers.length === 0 ? (
           <p className="mt-8 text-primary-700/70">
-            Em breve novas professoras estarão disponíveis por aqui.
+            Em breve mais informações estarão disponíveis por aqui.
           </p>
         ) : (
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -513,8 +514,8 @@ export default async function HomePage() {
         </h2>
         <SectionMark color="accent" />
         <p className="mt-4 text-primary-700/80">
-          Fale com a nossa equipe agora mesmo pelo WhatsApp ou crie sua conta
-          para agendar uma aula com uma professora especializada.
+          Fale com a Gilda agora mesmo pelo WhatsApp ou crie sua conta para
+          agendar uma aula com ela.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-4">
           <WhatsAppInlineButton

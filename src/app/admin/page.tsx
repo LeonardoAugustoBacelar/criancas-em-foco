@@ -36,7 +36,7 @@ export default async function AdminPage() {
       </h1>
 
       <section className="mt-8">
-        <h2 className="text-xl font-bold text-primary-700">Professoras</h2>
+        <h2 className="text-xl font-bold text-primary-700">Professora</h2>
         <div className="mt-4 space-y-3">
           {teachers.map((teacher) => (
             <div

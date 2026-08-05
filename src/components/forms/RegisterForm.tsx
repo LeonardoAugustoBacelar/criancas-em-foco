@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState } from "react";
 import Link from "next/link";
 import { registerAction, type RegisterState } from "@/lib/actions/register";
 
@@ -11,7 +11,6 @@ export default function RegisterForm() {
     registerAction,
     initialState
   );
-  const [role, setRole] = useState<"MAE" | "PROFESSORA">("MAE");
 
   if (state.success) {
     return (
@@ -34,62 +33,10 @@ export default function RegisterForm() {
 
   return (
     <form action={formAction} className="space-y-5">
-      <div className="flex gap-1 rounded-md border border-primary-100 bg-primary-50 p-1">
-        <button
-          type="button"
-          onClick={() => setRole("MAE")}
-          className={`flex-1 rounded-md px-4 py-2 text-sm font-semibold transition ${
-            role === "MAE"
-              ? "bg-primary-700 text-white"
-              : "text-primary-700"
-          }`}
-        >
-          Sou mãe
-        </button>
-        <button
-          type="button"
-          onClick={() => setRole("PROFESSORA")}
-          className={`flex-1 rounded-md px-4 py-2 text-sm font-semibold transition ${
-            role === "PROFESSORA"
-              ? "bg-primary-700 text-white"
-              : "text-primary-700"
-          }`}
-        >
-          Sou professora
-        </button>
-      </div>
-      <input type="hidden" name="role" value={role} />
-
       <Field label="Nome completo" name="name" type="text" required />
       <Field label="E-mail" name="email" type="email" required />
       <Field label="Telefone" name="phone" type="tel" required />
       <Field label="Senha" name="password" type="password" required />
-
-      {role === "PROFESSORA" && (
-        <div className="space-y-5 rounded-lg border border-primary-100 bg-primary-50 p-4">
-          <p className="text-sm font-semibold text-primary-700">
-            Conte um pouco sobre seu trabalho
-          </p>
-          <Field
-            label="Sobre você (bio)"
-            name="bio"
-            type="textarea"
-            required
-          />
-          <Field
-            label="Especialidades (ex: TEA, TDAH, birras)"
-            name="specialties"
-            type="text"
-            required
-          />
-          <Field
-            label="WhatsApp para contato"
-            name="whatsapp"
-            type="tel"
-            required
-          />
-        </div>
-      )}
 
       <label className="flex items-start gap-2 text-xs text-primary-700/80">
         <input

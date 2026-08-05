@@ -22,7 +22,7 @@ export default function Footer() {
           <p className="mt-4 text-sm leading-relaxed text-primary-100">
             Apoio especializado para mães que enfrentam desafios de
             comportamento com seus filhos, em casa ou na escola. Aulas e
-            acompanhamento com professoras especializadas.
+            acompanhamento com a Gilda, nossa professora especializada.
           </p>
         </div>
 
@@ -33,7 +33,7 @@ export default function Footer() {
           <ul className="mt-4 space-y-2.5 text-sm text-primary-100">
             <li>
               <Link href="/professoras" className="transition hover:text-white">
-                Professoras
+                Professora
               </Link>
             </li>
             <li>

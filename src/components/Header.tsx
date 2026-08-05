@@ -23,7 +23,7 @@ export default async function Header() {
             Serviços
           </Link>
           <Link href="/professoras" className="nav-link transition-colors hover:text-primary-700">
-            Professoras
+            Professora
           </Link>
           <Link href="/horarios" className="nav-link transition-colors hover:text-primary-700">
             Horários

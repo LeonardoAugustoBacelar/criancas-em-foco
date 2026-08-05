@@ -4,7 +4,7 @@ import RegisterForm from "@/components/forms/RegisterForm";
 export const metadata: Metadata = {
   title: "Criar conta",
   description:
-    "Crie sua conta para agendar aulas com professoras especializadas ou oferecer seus serviços como professora.",
+    "Crie sua conta de mãe para agendar aulas com a professora Gilda, especializada em comportamento infantil e pedagogia.",
 };
 
 export default function CadastroPage() {
@@ -14,8 +14,8 @@ export default function CadastroPage() {
         Crie sua conta
       </h1>
       <p className="mt-2 text-center text-sm text-primary-700/80">
-        Mães podem buscar professoras e agendar aulas. Professoras podem
-        criar seu perfil e receber agendamentos.
+        Crie sua conta de mãe para agendar aulas com a Gilda, nossa
+        professora especializada em comportamento infantil e pedagogia.
       </p>
       <div className="mt-8 rounded-lg border border-primary-100 bg-white p-6">
         <RegisterForm />

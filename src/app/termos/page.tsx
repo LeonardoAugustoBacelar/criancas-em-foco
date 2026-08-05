@@ -17,9 +17,10 @@ export default function TermosPage() {
         <p>
           Estes Termos de Uso regulam o acesso e a utilização do site
           Florescer Kids (&quot;plataforma&quot;), que conecta mães e
-          responsáveis a professoras especializadas em comportamento
-          infantil para aulas particulares e orientação. Ao criar uma
-          conta, você concorda com estes termos.
+          responsáveis à professora especializada em comportamento
+          infantil para aulas particulares e orientação. Atualmente a
+          Florescer Kids conta com uma única professora, Gilda Bacelar. Ao
+          criar uma conta, você concorda com estes termos.
         </p>
 
         <section>
@@ -27,8 +28,8 @@ export default function TermosPage() {
             1. Natureza do serviço
           </h2>
           <p className="mt-2">
-            A plataforma é um espaço de conexão entre mães/responsáveis e
-            professoras autônomas que oferecem aulas e orientação sobre
+            A plataforma é um espaço de conexão entre mães/responsáveis e a
+            professora autônoma que oferece aulas e orientação sobre
             comportamento infantil. As aulas têm caráter pedagógico e de
             orientação familiar — <strong>não substituem</strong>{" "}
             acompanhamento médico, psicológico ou terapêutico
@@ -45,20 +46,19 @@ export default function TermosPage() {
           <p className="mt-2">
             Você é responsável por fornecer informações verdadeiras,
             completas e atualizadas no cadastro, e por manter sua senha em
-            sigilo. Contas de professora estão sujeitas à aprovação da
-            nossa equipe antes de ficarem visíveis publicamente.
+            sigilo.
           </p>
         </section>
 
         <section>
           <h2 className="text-lg font-bold text-primary-700">
-            3. Professoras
+            3. Professora
           </h2>
           <p className="mt-2">
-            As professoras cadastradas atuam como profissionais autônomas,
-            não como funcionárias da plataforma. A Florescer Kids
-            facilita o agendamento e o contato, mas a relação de prestação
-            de serviço (conteúdo da aula, condução pedagógica) é entre a
+            A professora atua como profissional autônoma, não como
+            funcionária da plataforma. A Florescer Kids facilita o
+            agendamento e o contato, mas a relação de prestação de serviço
+            (conteúdo da aula, condução pedagógica) é entre a
             mãe/responsável e a professora.
           </p>
         </section>
@@ -92,10 +92,9 @@ export default function TermosPage() {
             6. Limitação de responsabilidade
           </h2>
           <p className="mt-2">
-            A Florescer Kids atua como intermediadora entre famílias e
-            professoras, e envida esforços para verificar as professoras
-            cadastradas, mas não garante resultados específicos das aulas
-            nem se responsabiliza por condutas das professoras fora do
+            A Florescer Kids atua como intermediadora entre famílias e a
+            professora, mas não garante resultados específicos das aulas
+            nem se responsabiliza por condutas da professora fora do
             escopo das aulas agendadas pela plataforma.
           </p>
         </section>

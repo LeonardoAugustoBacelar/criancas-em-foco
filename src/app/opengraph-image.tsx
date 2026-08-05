@@ -60,7 +60,7 @@ export default function Image() {
             fontWeight: 600,
           }}
         >
-          Apoio especializado para mães e professoras
+          Apoio especializado para mães, com a professora Gilda
         </div>
         <div
           style={{

@@ -25,12 +25,12 @@ const sourceSerif = Source_Serif_4({
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 const siteDescription =
-  "Ajudamos mães a lidar com desafios de comportamento e aprendizagem dos filhos, em casa e na escola, com aulas e acompanhamento de professoras especializadas em comportamento infantil e pedagogia. Fale conosco pelo WhatsApp.";
+  "Ajudamos mães a lidar com desafios de comportamento e aprendizagem dos filhos, em casa e na escola, com aulas e acompanhamento da professora Gilda, especializada em comportamento infantil e pedagogia. Fale conosco pelo WhatsApp.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Florescer Kids | Apoio para mães e professoras especializadas",
+    default: "Florescer Kids | Apoio para mães com a professora Gilda",
     template: "%s | Florescer Kids",
   },
   description: siteDescription,
