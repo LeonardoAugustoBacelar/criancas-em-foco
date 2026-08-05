@@ -134,6 +134,19 @@ model Booking {
   review     Review?
 }
 
+// Registro simples de tentativas (login, cadastro, recuperação de senha) pra
+// rate limiting — cada linha é uma tentativa; contamos quantas existem numa
+// janela de tempo pra decidir se bloqueia. Sem TTL automático: linhas antigas
+// só ficam ocupando espaço (irrelevante no volume desse site), não é
+// limpo por enquanto.
+model RateLimitAttempt {
+  id        String   @id @default(cuid())
+  key       String
+  createdAt DateTime @default(now())
+
+  @@index([key, createdAt])
+}
+
 model Review {
   id        String   @id @default(cuid())
   bookingId String   @unique

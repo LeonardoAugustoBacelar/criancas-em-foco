@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { sendPasswordResetEmail } from "@/lib/email";
+import { isRateLimited, recordAttempt } from "@/lib/rateLimit";
 
 export type RequestResetState = {
   message?: string;
@@ -18,6 +19,9 @@ const requestSchema = z.object({
 const GENERIC_MESSAGE =
   "Se esse e-mail estiver cadastrado, você vai receber um link para redefinir sua senha em instantes.";
 
+const MAX_ATTEMPTS = 3;
+const WINDOW_MINUTES = 15;
+
 export async function requestPasswordResetAction(
   _prevState: RequestResetState,
   formData: FormData
@@ -27,8 +31,22 @@ export async function requestPasswordResetAction(
     return { error: parsed.error.issues[0]?.message ?? "E-mail inválido" };
   }
 
+  const email = parsed.data.email.toLowerCase();
+  const key = `reset:${email}`;
+
+  // Verifica o limite antes de mexer no banco, mas sempre registra a
+  // tentativa — mesmo resultado (limitado ou não) exista ou não a conta,
+  // pra não virar um jeito de descobrir quais e-mails estão cadastrados.
+  const limited = await isRateLimited(key, { maxAttempts: MAX_ATTEMPTS, windowMinutes: WINDOW_MINUTES });
+  await recordAttempt(key);
+
+  if (limited) {
+    return { message: GENERIC_MESSAGE };
+  }
+
   const user = await prisma.user.findUnique({
-    where: { email: parsed.data.email },
+    where: { email },
+    include: { teacherProfile: true },
   });
 
   if (user) {
@@ -42,8 +60,13 @@ export async function requestPasswordResetAction(
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
     const resetUrl = `${siteUrl}/redefinir-senha?token=${token}`;
 
+    // O e-mail de LOGIN pode estar num domínio sem caixa de entrada de
+    // verdade (já aconteceu) — se a pessoa tiver um e-mail de avisos
+    // configurado, o link vai pra lá em vez do e-mail de login.
+    const deliveryEmail = user.teacherProfile?.notificationEmail || user.email;
+
     try {
-      await sendPasswordResetEmail(user.email, resetUrl);
+      await sendPasswordResetEmail(deliveryEmail, resetUrl);
     } catch (error) {
       console.error("Falha ao enviar e-mail de redefinição de senha", error);
     }

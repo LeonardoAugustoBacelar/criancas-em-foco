@@ -3,6 +3,11 @@
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
+import { getClientIp } from "@/lib/clientIp";
+import { isRateLimited, recordAttempt, RATE_LIMIT_MESSAGE } from "@/lib/rateLimit";
+
+const MAX_ATTEMPTS = 5;
+const WINDOW_MINUTES = 60;
 
 const registerSchema = z
   .object({
@@ -37,6 +42,13 @@ export async function registerAction(
   _prevState: RegisterState,
   formData: FormData
 ): Promise<RegisterState> {
+  const ip = await getClientIp();
+  const key = `cadastro:${ip}`;
+  if (await isRateLimited(key, { maxAttempts: MAX_ATTEMPTS, windowMinutes: WINDOW_MINUTES })) {
+    return { error: RATE_LIMIT_MESSAGE };
+  }
+  await recordAttempt(key);
+
   const parsed = registerSchema.safeParse({
     name: formData.get("name"),
     email: formData.get("email"),
